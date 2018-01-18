@@ -1,5 +1,7 @@
 package com.spikes2212.robot.subsystems;
 
-public class SubsystemComponents {
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+public class SubsystemComponents {
+	public static WPI_TalonSRX climber;
 }
