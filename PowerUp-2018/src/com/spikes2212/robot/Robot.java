@@ -7,6 +7,13 @@
 
 package com.spikes2212.robot;
 
+import java.util.function.Function;
+
+import com.spikes2212.genericsubsystems.BasicSubsystem;
+import com.spikes2212.genericsubsystems.limitationFunctions.Limitless;
+import com.spikes2212.robot.subsystems.SubsystemComponents;
+import com.spikes2212.robot.subsystems.SubsystemConstants;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,7 +29,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 	public static OI m_oi;
-
+	public static BasicSubsystem climber;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -32,6 +39,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		climber = new BasicSubsystem(SubsystemComponents.CLIMBER::set,
+				(Double speed) -> SubsystemConstants.CLIMBER_MAX_VOLTAGE.get() >= SubsystemComponents.CLIMBER
+						.getOutputCurrent());
 		m_oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
