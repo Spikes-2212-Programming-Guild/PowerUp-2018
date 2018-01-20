@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		roller = new BasicSubsystem(SubsystemComponents.Roller.MOTOR::set, new Limitless());
+		roller = new BasicSubsystem(SubsystemComponents.Roller.MOTOR::set, new TwoLimits(() -> true, SubsystemComponents.Roller.LIGHT_SENSOR::get));
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
 				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
 						.getOutputCurrent());
