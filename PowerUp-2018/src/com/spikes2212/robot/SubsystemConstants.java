@@ -1,4 +1,4 @@
-package com.spikes2212.robot.subsystems;
+package com.spikes2212.robot;
 
 import java.util.function.Supplier;
 

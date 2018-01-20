@@ -10,8 +10,6 @@ package com.spikes2212.robot;
 
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.limitationFunctions.TwoLimits;
-import com.spikes2212.robot.subsystems.SubsystemComponents;
-import com.spikes2212.robot.subsystems.SubsystemConstants;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
