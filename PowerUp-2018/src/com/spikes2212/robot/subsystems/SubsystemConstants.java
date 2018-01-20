@@ -8,4 +8,8 @@ public class SubsystemConstants {
 	public static interface Climber {
 		public static final Supplier<Double> CLIMBER_MAX_VOLTAGE = ConstantHandler.addConstantDouble("Climber Max Voltage", 25);
 	}
+	
+	public static interface Claw {
+		public static final Supplier<Double> CLAW_MAX_VOLTAGE = ConstantHandler.addConstantDouble("Claw Max Voltage", 10);
+	}
 }

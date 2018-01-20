@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
 	public static OI m_oi;
 	public static BasicSubsystem climber;
 	public static BasicSubsystem folder;
+	public static BasicSubsystem claw;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -44,7 +45,11 @@ public class Robot extends TimedRobot {
 		climber = new BasicSubsystem(SubsystemComponents.Climber.CLIMBER_MOTOR::set,
 				(Double speed) -> SubsystemConstants.Climber.CLIMBER_MAX_VOLTAGE
 						.get() >= SubsystemComponents.Climber.CLIMBER_MOTOR.getOutputCurrent());
-		folder = new BasicSubsystem(SubsystemComponents.Folder.FOLDER_MOTOR::set, new TwoLimits(SubsystemComponents.Folder.FOLDER_MAX_LIMIT::get, SubsystemComponents.Folder.FOLDER_MIN_LIMIT::get));
+		folder = new BasicSubsystem(SubsystemComponents.Folder.FOLDER_MOTOR::set, new TwoLimits(
+				SubsystemComponents.Folder.FOLDER_MAX_LIMIT::get, SubsystemComponents.Folder.FOLDER_MIN_LIMIT::get));
+		claw = new BasicSubsystem(SubsystemComponents.Claw.CLAW_MOTOR::set,
+				new TwoLimits( () -> SubsystemConstants.Claw.CLAW_MAX_VOLTAGE
+						.get() >= SubsystemComponents.Claw.CLAW_MOTOR.getOutputCurrent() ,SubsystemComponents.Claw.CLAW_LIMIT::get));
 		m_oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
