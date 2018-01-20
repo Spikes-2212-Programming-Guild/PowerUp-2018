@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
 				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() >= SubsystemComponents.Claw.MOTOR.getOutputCurrent(),
 				SubsystemComponents.Claw.LIMIT::get));
 		oi = new OI();
-		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi.getForward(), oi.getRotation()));
+		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 		// chooser.addObject("My Auto", new MyAutoCommand());
 	}
 
