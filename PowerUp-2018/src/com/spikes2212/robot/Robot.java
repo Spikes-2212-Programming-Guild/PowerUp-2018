@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		
 		climber = new BasicSubsystem(SubsystemComponents.Climber.CLIMBER_MOTOR::set,
 				(Double speed) -> SubsystemConstants.Climber.CLIMBER_MAX_VOLTAGE
 						.get() >= SubsystemComponents.Climber.CLIMBER_MOTOR.getOutputCurrent());
