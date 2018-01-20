@@ -29,12 +29,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static OI m_oi;
+	public static OI oi;
 	public static BasicSubsystem climber;
 	public static BasicSubsystem folder;
 	public static BasicSubsystem claw;
-	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -42,18 +40,17 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		
-		climber = new BasicSubsystem(SubsystemComponents.Climber.CLIMBER_MOTOR::set,
-				(Double speed) -> SubsystemConstants.Climber.CLIMBER_MAX_VOLTAGE
-						.get() >= SubsystemComponents.Climber.CLIMBER_MOTOR.getOutputCurrent());
-		folder = new BasicSubsystem(SubsystemComponents.Folder.FOLDER_MOTOR::set, new TwoLimits(
-				SubsystemComponents.Folder.FOLDER_MAX_LIMIT::get, SubsystemComponents.Folder.FOLDER_MIN_LIMIT::get));
-		claw = new BasicSubsystem(SubsystemComponents.Claw.CLAW_MOTOR::set,
-				new TwoLimits( () -> SubsystemConstants.Claw.CLAW_MAX_VOLTAGE
-						.get() >= SubsystemComponents.Claw.CLAW_MOTOR.getOutputCurrent() ,SubsystemComponents.Claw.CLAW_LIMIT::get));
-		m_oi = new OI();
+
+		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
+				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
+						.getOutputCurrent());
+		folder = new BasicSubsystem(SubsystemComponents.Folder.MOTOR::set,
+				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
+		claw = new BasicSubsystem(SubsystemComponents.Claw.MOTOR::set, new TwoLimits(
+				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() >= SubsystemComponents.Claw.MOTOR.getOutputCurrent(),
+				SubsystemComponents.Claw.LIMIT::get));
+		oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
 	/**
@@ -85,7 +82,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -95,9 +91,6 @@ public class Robot extends TimedRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
-		}
 	}
 
 	/**
@@ -114,9 +107,6 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
-		}
 	}
 
 	/**
