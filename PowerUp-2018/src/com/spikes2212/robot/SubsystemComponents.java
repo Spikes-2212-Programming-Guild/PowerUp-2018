@@ -21,4 +21,9 @@ public class SubsystemComponents {
 		public static final WPI_TalonSRX MOTOR = new WPI_TalonSRX(RobotMap.CAN.CLAW);
 		public static final DigitalInput LIMIT = new DigitalInput(RobotMap.DIO.CLAW_LIMIT);
 	}
+	
+	public static interface Roller{
+		public static final VictorSP MOTOR = new VictorSP(RobotMap.PWM.ROLLER);
+		public static final DigitalInput LIGHT_SENSOR = new DigitalInput(RobotMap.DIO.ROLLER_LIGHT_SENSOR);
+	}
 }
