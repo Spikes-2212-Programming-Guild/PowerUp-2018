@@ -21,12 +21,14 @@ public class RobotMap {
 	
 	public static interface PWM{
 		public static final int FOLDER = 1;
+		public static final int ROLLER = 6;
 	}
 	
 	public static interface DIO{
 		public static final int FOLDER_MAX_LIMIT = 2;
 		public static final int FOLDER_MIN_LIMIT = 3;
 		public static final int CLAW_LIMIT = 5;
+		public static final int ROLLER_LIGHT_SENSOR = 7;
 	}
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
