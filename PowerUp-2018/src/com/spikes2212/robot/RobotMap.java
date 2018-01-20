@@ -16,6 +16,7 @@ package com.spikes2212.robot;
 public class RobotMap {
 	public static interface CAN{
 		public static final int CLIMBER = 0;
+		public static final int CLAW = 4;
 	}
 	
 	public static interface PWM{
@@ -25,6 +26,7 @@ public class RobotMap {
 	public static interface DIO{
 		public static final int FOLDER_MAX_LIMIT = 2;
 		public static final int FOLDER_MIN_LIMIT = 3;
+		public static final int CLAW_LIMIT = 5;
 	}
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
