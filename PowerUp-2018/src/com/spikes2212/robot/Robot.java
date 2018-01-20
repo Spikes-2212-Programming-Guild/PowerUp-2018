@@ -11,6 +11,7 @@ import java.util.function.Function;
 
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.limitationFunctions.Limitless;
+import com.spikes2212.genericsubsystems.limitationFunctions.TwoLimits;
 import com.spikes2212.robot.subsystems.SubsystemComponents;
 import com.spikes2212.robot.subsystems.SubsystemConstants;
 
@@ -30,6 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 	public static OI m_oi;
 	public static BasicSubsystem climber;
+	public static BasicSubsystem folder;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -42,6 +44,7 @@ public class Robot extends TimedRobot {
 		climber = new BasicSubsystem(SubsystemComponents.Climber.CLIMBER_MOTOR::set,
 				(Double speed) -> SubsystemConstants.Climber.CLIMBER_MAX_VOLTAGE
 						.get() >= SubsystemComponents.Climber.CLIMBER_MOTOR.getOutputCurrent());
+		folder = new BasicSubsystem(SubsystemComponents.Folder.FOLDER_MOTOR::set, new TwoLimits(SubsystemComponents.Folder.FOLDER_MAX_LIMIT::get, SubsystemComponents.Folder.FOLDER_MIN_LIMIT::get));
 		m_oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
