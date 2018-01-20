@@ -7,15 +7,14 @@
 
 package com.spikes2212.robot;
 
-
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.limitationFunctions.TwoLimits;
 import com.spikes2212.robot.SubsystemComponents.Drivetrain;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,7 +36,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set, SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);	
+		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
+				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
 				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
 						.getOutputCurrent());
@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
 				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() >= SubsystemComponents.Claw.MOTOR.getOutputCurrent(),
 				SubsystemComponents.Claw.LIMIT::get));
 		oi = new OI();
+		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi.getForward(), oi.getRotation()));
 		// chooser.addObject("My Auto", new MyAutoCommand());
 	}
 
