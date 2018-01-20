@@ -39,9 +39,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		climber = new BasicSubsystem(SubsystemComponents.CLIMBER::set,
-				(Double speed) -> SubsystemConstants.CLIMBER_MAX_VOLTAGE.get() >= SubsystemComponents.CLIMBER
-						.getOutputCurrent());
+		climber = new BasicSubsystem(SubsystemComponents.Climber.CLIMBER_MOTOR::set,
+				(Double speed) -> SubsystemConstants.Climber.CLIMBER_MAX_VOLTAGE
+						.get() >= SubsystemComponents.Climber.CLIMBER_MOTOR.getOutputCurrent());
 		m_oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
