@@ -31,8 +31,8 @@ public class SubsystemComponents {
 				new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT1), new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT2));
 		public static final DoubleSpeedcontroller RIGHT_MOTOR = new DoubleSpeedcontroller(
 				new WPI_TalonSRX(RobotMap.CAN.DRIVE_LEFT1), new WPI_TalonSRX(RobotMap.CAN.DRIVE_LEFT2));
-		public static final Encoder RIGHT_ENCODER = new Encoder(RobotMap.DIO.DRIVE_RIGHT_A, RobotMap.DIO.DRIVE_RIGHT_B);
-		public static final Encoder LEFT_ENCODER = new Encoder(RobotMap.DIO.DRIVE_LEFT_A, RobotMap.DIO.DRIVE_LEFT_B);
+		public static final Encoder RIGHT_ENCODER = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
+		public static final Encoder LEFT_ENCODER = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
 		public static final Gyro GYRO = new ADXRS450_Gyro();
 	}
 }
