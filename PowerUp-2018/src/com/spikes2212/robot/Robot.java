@@ -48,8 +48,8 @@ public class Robot extends TimedRobot {
 		folder = new BasicSubsystem(SubsystemComponents.Folder.FOLDER_MOTOR::set, new TwoLimits(
 				SubsystemComponents.Folder.FOLDER_MAX_LIMIT::get, SubsystemComponents.Folder.FOLDER_MIN_LIMIT::get));
 		claw = new BasicSubsystem(SubsystemComponents.Claw.CLAW_MOTOR::set,
-				new TwoLimits(SubsystemComponents.Claw.CLAW_LIMIT::get, () -> SubsystemConstants.Claw.CLAW_MAX_VOLTAGE
-						.get() >= SubsystemComponents.Claw.CLAW_MOTOR.getOutputCurrent()));
+				new TwoLimits( () -> SubsystemConstants.Claw.CLAW_MAX_VOLTAGE
+						.get() >= SubsystemComponents.Claw.CLAW_MOTOR.getOutputCurrent() ,SubsystemComponents.Claw.CLAW_LIMIT::get));
 		m_oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
