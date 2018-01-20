@@ -9,7 +9,9 @@ package com.spikes2212.robot;
 
 
 import com.spikes2212.genericsubsystems.BasicSubsystem;
+import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.limitationFunctions.TwoLimits;
+import com.spikes2212.robot.SubsystemComponents.Drivetrain;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -27,6 +29,7 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem climber;
 	public static BasicSubsystem folder;
 	public static BasicSubsystem claw;
+	public static TankDrivetrain drivetrain;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -34,7 +37,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-
+		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set, SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);	
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
 				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
 						.getOutputCurrent());
