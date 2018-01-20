@@ -17,4 +17,9 @@ public class SubsystemComponents {
 		public static final DigitalInput FOLDER_MAX_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MAX_LIMIT);
 		public static final DigitalInput FOLDER_MIN_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MIN_LIMIT); 
 	}
+	
+	public static interface Claw{
+		public static final WPI_TalonSRX CLAW_MOTOR = new WPI_TalonSRX(RobotMap.CAN.CLAW);
+		public static final DigitalInput CLAW_LIMIT = new DigitalInput(RobotMap.DIO.CLAW_LIMIT);
+	}
 }
