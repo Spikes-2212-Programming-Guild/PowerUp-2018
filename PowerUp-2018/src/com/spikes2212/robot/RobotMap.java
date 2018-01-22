@@ -24,18 +24,20 @@ public class RobotMap {
 	}
 
 	public static interface PWM {
-		public static final int FOLDER = 0;
-	}
+        public static final int FOLDER = 0;
+        public static final int ROLLER = 6;
+    }
 
 	public static interface DIO {
-		public static final int FOLDER_MAX_LIMIT = 0;
-		public static final int FOLDER_MIN_LIMIT = 1;
-		public static final int CLAW_LIMIT = 2;
-		public static final int DRIVE_RIGHT_ENCODER_A = 3;
-		public static final int DRIVE_RIGHT_ENCODER_B = 4;
-		public static final int DRIVE_LEFT_ENCODER_A = 5;
-		public static final int DRIVE_LEFT_ENCODER_B = 6;
-	}
+        public static final int FOLDER_MAX_LIMIT = 0;
+        public static final int FOLDER_MIN_LIMIT = 1;
+        public static final int CLAW_LIMIT = 2;
+        public static final int DRIVE_RIGHT_ENCODER_A = 3;
+        public static final int DRIVE_RIGHT_ENCODER_B = 4;
+        public static final int DRIVE_LEFT_ENCODER_A = 5;
+        public static final int DRIVE_LEFT_ENCODER_B = 6;
+        public static final int ROLLER_LIGHT_SENSOR = 7;
+    }
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;

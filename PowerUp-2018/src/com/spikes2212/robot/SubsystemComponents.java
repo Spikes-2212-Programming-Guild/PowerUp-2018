@@ -35,4 +35,9 @@ public class SubsystemComponents {
 		public static final Encoder LEFT_ENCODER = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
 		public static final Gyro GYRO = new ADXRS450_Gyro();
 	}
+
+	public static interface Roller{
+		public static final VictorSP MOTOR = new VictorSP(RobotMap.PWM.ROLLER);
+		public static final DigitalInput LIGHT_SENSOR = new DigitalInput(RobotMap.DIO.ROLLER_LIGHT_SENSOR);
+	}
 }

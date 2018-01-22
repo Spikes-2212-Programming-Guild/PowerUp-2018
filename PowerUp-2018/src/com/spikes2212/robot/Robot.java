@@ -8,6 +8,7 @@
 package com.spikes2212.robot;
 
 import com.spikes2212.genericsubsystems.BasicSubsystem;
+import com.spikes2212.genericsubsystems.limitationFunctions.Limitless;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.limitationFunctions.TwoLimits;
@@ -28,6 +29,7 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem climber;
 	public static BasicSubsystem folder;
 	public static BasicSubsystem claw;
+	public static BasicSubsystem roller;
 	public static TankDrivetrain drivetrain;
 
 	/**
@@ -36,6 +38,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		roller = new BasicSubsystem(SubsystemComponents.Roller.MOTOR::set, new TwoLimits(() -> true, SubsystemComponents.Roller.LIGHT_SENSOR::get));
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
