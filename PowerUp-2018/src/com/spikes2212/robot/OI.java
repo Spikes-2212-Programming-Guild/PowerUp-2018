@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.Joystick;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI /* GEVALD */ {
-	Joystick driverLeft = new Joystick(0); 
-	Joystick driverRight = new Joystick(1); 
+	private Joystick driverLeft = new Joystick(0); 
+	private Joystick driverRight = new Joystick(1); 
 	
 	public double getForward() {
 		return driverRight.getY();
