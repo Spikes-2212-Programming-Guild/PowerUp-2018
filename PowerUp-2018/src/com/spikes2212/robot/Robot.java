@@ -29,6 +29,7 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem folder;
 	public static BasicSubsystem claw;
 	public static BasicSubsystem roller;
+	public static BasicSubsystem lift;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
 		claw = new BasicSubsystem(SubsystemComponents.Claw.MOTOR::set, new TwoLimits(
 				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() >= SubsystemComponents.Claw.MOTOR.getOutputCurrent(),
 				SubsystemComponents.Claw.LIMIT::get));
+		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTOR::set, new TwoLimits(SubsystemComponents.Lift.LIMIT_UP::get, SubsystemComponents.Lift.LIMIT_DOWN::get));
 		oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 	}
