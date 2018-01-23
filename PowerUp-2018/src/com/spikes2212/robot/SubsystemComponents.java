@@ -29,9 +29,7 @@ public class SubsystemComponents {
 	}
 
 	public static interface Lift {
-		public static final VictorSP MOTOR_A = new VictorSP(RobotMap.PWM.LIFT_MOTOR_A);
-		public static final VictorSP MOTOR_B = new VictorSP(RobotMap.PWM.LIFT_MOTOR_B);
-		public static final DoubleSpeedcontroller MOTOR = new DoubleSpeedcontroller(MOTOR_A, MOTOR_B);
+		public static final DoubleSpeedcontroller MOTOR = new DoubleSpeedcontroller(new VictorSP(RobotMap.PWM.LIFT_MOTOR_A), new VictorSP(RobotMap.PWM.LIFT_MOTOR_B));
 		public static final DigitalInput HALL_EFFECTS_SWITCH = new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_SWITCH);
 		public static final DigitalInput HALL_EFFECTS_MID_SCALE = new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_MID_SCALE);
 		public static final DigitalInput HALL_EFFECTS_LOW_SCALE = new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_LOW_SCALE);

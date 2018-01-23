@@ -7,14 +7,12 @@
 
 package com.spikes2212.robot;
 
-
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.limitationFunctions.Limitless;
 import com.spikes2212.genericsubsystems.limitationFunctions.TwoLimits;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,7 +35,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		roller = new BasicSubsystem(SubsystemComponents.Roller.MOTOR::set, new TwoLimits(() -> true, SubsystemComponents.Roller.LIGHT_SENSOR::get));
+		roller = new BasicSubsystem(SubsystemComponents.Roller.MOTOR::set,
+				new TwoLimits(() -> true, SubsystemComponents.Roller.LIGHT_SENSOR::get));
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
 				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
 						.getOutputCurrent());
@@ -46,7 +45,8 @@ public class Robot extends TimedRobot {
 		claw = new BasicSubsystem(SubsystemComponents.Claw.MOTOR::set, new TwoLimits(
 				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() >= SubsystemComponents.Claw.MOTOR.getOutputCurrent(),
 				SubsystemComponents.Claw.LIMIT::get));
-		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTOR::set, new TwoLimits(SubsystemComponents.Lift.LIMIT_UP::get, SubsystemComponents.Lift.LIMIT_DOWN::get));
+		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTOR::set,
+				new TwoLimits(SubsystemComponents.Lift.LIMIT_UP::get, SubsystemComponents.Lift.LIMIT_DOWN::get));
 		oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 	}
