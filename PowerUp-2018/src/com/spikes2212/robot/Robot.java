@@ -12,7 +12,6 @@ import com.spikes2212.genericsubsystems.limitationFunctions.Limitless;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.limitationFunctions.TwoLimits;
-import com.spikes2212.robot.SubsystemComponents.Drivetrain;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -30,6 +29,7 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem folder;
 	public static BasicSubsystem claw;
 	public static BasicSubsystem roller;
+	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
 	public static TankDrivetrain drivetrain;
 
@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
 		claw = new BasicSubsystem(SubsystemComponents.Claw.MOTOR::set, new TwoLimits(
 				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() >= SubsystemComponents.Claw.MOTOR.getOutputCurrent(),
 				SubsystemComponents.Claw.LIMIT::get));
+		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(SubsystemComponents.LiftLocker.LIMIT_UP::get, SubsystemComponents.LiftLocker.LIMIT_DOWN::get));
 		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set,
 				new TwoLimits(SubsystemComponents.Lift.LIMIT_UP::get, SubsystemComponents.Lift.LIMIT_DOWN::get));
 		oi = new OI();
