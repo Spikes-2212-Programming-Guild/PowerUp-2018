@@ -14,6 +14,7 @@ import com.spikes2212.genericsubsystems.limitationFunctions.TwoLimits;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,7 +32,6 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
 	public static TankDrivetrain drivetrain;
-
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -55,6 +55,7 @@ public class Robot extends TimedRobot {
 		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set,
 				new TwoLimits(SubsystemComponents.Lift.LIMIT_UP::get, SubsystemComponents.Lift.LIMIT_DOWN::get));
 		oi = new OI();
+		Protocol54657374x0.dashboardInit();
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 		// chooser.addObject("My Auto", new MyAutoCommand());
 	}
