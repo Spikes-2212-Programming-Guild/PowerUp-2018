@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
 		claw = new BasicSubsystem(SubsystemComponents.Claw.MOTOR::set, new TwoLimits(
 				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() >= SubsystemComponents.Claw.MOTOR.getOutputCurrent(),
 				SubsystemComponents.Claw.LIMIT::get));
-		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTOR::set,
+		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set,
 				new TwoLimits(SubsystemComponents.Lift.LIMIT_UP::get, SubsystemComponents.Lift.LIMIT_DOWN::get));
 		oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
