@@ -30,7 +30,9 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem claw;
 	public static BasicSubsystem roller;
 	public static BasicSubsystem liftLocker;
+	public static BasicSubsystem lift;
 	public static TankDrivetrain drivetrain;
+
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -38,7 +40,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		roller = new BasicSubsystem(SubsystemComponents.Roller.MOTOR::set, new TwoLimits(() -> true, SubsystemComponents.Roller.LIGHT_SENSOR::get));
+		roller = new BasicSubsystem(SubsystemComponents.Roller.MOTOR::set,
+				new TwoLimits(() -> true, SubsystemComponents.Roller.LIGHT_SENSOR::get));
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
@@ -50,6 +53,8 @@ public class Robot extends TimedRobot {
 				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() >= SubsystemComponents.Claw.MOTOR.getOutputCurrent(),
 				SubsystemComponents.Claw.LIMIT::get));
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(SubsystemComponents.LiftLocker.LIMIT_UP::get, SubsystemComponents.LiftLocker.LIMIT_DOWN::get));
+		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set,
+				new TwoLimits(SubsystemComponents.Lift.LIMIT_UP::get, SubsystemComponents.Lift.LIMIT_DOWN::get));
 		oi = new OI();
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 		// chooser.addObject("My Auto", new MyAutoCommand());
