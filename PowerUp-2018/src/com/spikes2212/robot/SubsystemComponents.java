@@ -40,4 +40,10 @@ public class SubsystemComponents {
 		public static final VictorSP MOTOR = new VictorSP(RobotMap.PWM.ROLLER);
 		public static final DigitalInput LIGHT_SENSOR = new DigitalInput(RobotMap.DIO.ROLLER_LIGHT_SENSOR);
 	}
+	
+	public static interface LiftLocker{
+		public static final VictorSP MOTOR = new VictorSP(RobotMap.PWM.LIFT_LOCKER);
+		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LOCKER_UP_LIMIT);
+		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LOCKER_DOWN_LIMIT);
+	}
 }

@@ -26,6 +26,8 @@ public class RobotMap {
 	public static interface PWM {
         public static final int FOLDER = 0;
         public static final int ROLLER = 6;
+        // TODO real port
+        public static final int LIFT_LOCKER = 1;
     }
 
 	public static interface DIO {
@@ -37,6 +39,8 @@ public class RobotMap {
         public static final int DRIVE_LEFT_ENCODER_A = 5;
         public static final int DRIVE_LEFT_ENCODER_B = 6;
         public static final int ROLLER_LIGHT_SENSOR = 7;
+        public static final int LIFT_LOCKER_UP_LIMIT = 8;
+        public static final int LIFT_LOCKER_DOWN_LIMIT = 9;
     }
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
