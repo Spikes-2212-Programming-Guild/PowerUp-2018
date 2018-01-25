@@ -9,7 +9,10 @@ package com.spikes2212.robot;
 
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.limitationFunctions.Limitless;
+import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.limitationFunctions.TwoLimits;
+import com.spikes2212.robot.SubsystemComponents.Drivetrain;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -28,6 +31,8 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem claw;
 	public static BasicSubsystem roller;
 	public static BasicSubsystem lift;
+	public static TankDrivetrain drivetrain;
+
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -37,6 +42,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		roller = new BasicSubsystem(SubsystemComponents.Roller.MOTOR::set,
 				new TwoLimits(() -> true, SubsystemComponents.Roller.LIGHT_SENSOR::get));
+		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
+				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
 				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
 						.getOutputCurrent());
@@ -48,6 +55,7 @@ public class Robot extends TimedRobot {
 		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set,
 				new TwoLimits(SubsystemComponents.Lift.LIMIT_UP::get, SubsystemComponents.Lift.LIMIT_DOWN::get));
 		oi = new OI();
+		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 		// chooser.addObject("My Auto", new MyAutoCommand());
 	}
 
