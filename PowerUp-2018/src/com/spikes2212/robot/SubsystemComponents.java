@@ -11,22 +11,22 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public class SubsystemComponents {
 
-	public static interface Climber {
+	public static class Climber {
 		public static final WPI_TalonSRX MOTOR = new WPI_TalonSRX(RobotMap.CAN.CLIMBER);
 	}
 
-	public static interface Folder {
+	public static class Folder {
 		public static final VictorSP MOTOR = new VictorSP(RobotMap.PWM.FOLDER);
 		public static final DigitalInput MAX_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MAX_LIMIT);
 		public static final DigitalInput MIN_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MIN_LIMIT);
 	}
 
-	public static interface Claw {
+	public static class Claw {
 		public static final WPI_TalonSRX MOTOR = new WPI_TalonSRX(RobotMap.CAN.CLAW);
 		public static final DigitalInput LIMIT = new DigitalInput(RobotMap.DIO.CLAW_LIMIT);
 	}
 
-	public static interface Drivetrain {
+	public static class Drivetrain {
 		public static final DoubleSpeedcontroller RIGHT_MOTOR = new DoubleSpeedcontroller(
 				new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT1), new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT2));
 		public static final DoubleSpeedcontroller LEFT_MOTOR = new DoubleSpeedcontroller(
@@ -38,12 +38,12 @@ public class SubsystemComponents {
 		public static final Gyro GYRO = new ADXRS450_Gyro();
 	}
 
-	public static interface Roller {
+	public static class Roller {
 		public static final VictorSP MOTOR = new VictorSP(RobotMap.PWM.ROLLER);
 		public static final DigitalInput LIGHT_SENSOR = new DigitalInput(RobotMap.DIO.ROLLER_LIGHT_SENSOR);
 	}
 
-	public static interface LiftLocker {
+	public static class LiftLocker {
 		public static final VictorSP MOTOR = new VictorSP(RobotMap.PWM.LIFT_LOCKER);
 		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LOCKER_UP_LIMIT);
 		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LOCKER_DOWN_LIMIT);
