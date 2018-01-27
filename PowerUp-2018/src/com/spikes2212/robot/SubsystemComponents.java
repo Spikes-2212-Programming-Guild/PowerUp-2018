@@ -59,9 +59,7 @@ public class SubsystemComponents {
 				RobotMap.DIO.LIFT_HALL_EFFECTS_LOW_SCALE);
 		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_UP);
 		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_DOWN);
+		//stores the position of the lift to display on shuffleBoard
 		public static double position = 0;
-
-		// TODO docs
-		// public static double position = 0;
 	}
 }
