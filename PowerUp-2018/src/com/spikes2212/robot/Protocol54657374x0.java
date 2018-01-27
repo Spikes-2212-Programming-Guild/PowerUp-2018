@@ -16,7 +16,7 @@ public class Protocol54657374x0 {
 		initRoller();
 	}
 	
-	public static void initClimber() {
+	public static void initClaw() {
 		SmartDashboard.putData("OpenClaw", new MoveBasicSubsystem(Robot.claw, SubsystemConstants.Claw.OPEN_SPEED));
 		SmartDashboard.putData("CloseClaw", new MoveBasicSubsystem(Robot.claw, SubsystemConstants.Claw.CLOSE_SPEED));
 	}
@@ -26,5 +26,7 @@ public class Protocol54657374x0 {
 		SmartDashboard.putData("MoveLift Down",new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED));
 	}
 	
-	public static void
+	public static void initClimber() {
+		SmartDashboard.putData("Climb",new MoveBasicSubsystem(Robot.climber, SubsystemConstants.Climber.SPEED));
+	}
 }

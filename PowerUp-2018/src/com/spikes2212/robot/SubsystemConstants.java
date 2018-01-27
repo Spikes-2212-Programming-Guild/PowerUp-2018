@@ -7,6 +7,8 @@ import com.spikes2212.dashboard.ConstantHandler;
 public class SubsystemConstants {
 	public static interface Climber {
 		public static final Supplier<Double> MAX_VOLTAGE = ConstantHandler.addConstantDouble("Climber Max Voltage", 25);
+		
+		public static final Supplier<Double> SPEED = ConstantHandler.addConstantDouble("Climber Speed", 0.9);
 	}
 	
 	public static interface Claw {
