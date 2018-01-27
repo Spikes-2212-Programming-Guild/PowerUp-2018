@@ -22,4 +22,9 @@ public class SubsystemConstants {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.75);
 		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Folder Down Speed", 0.4);
 	}
+	
+	public static interface Roller{
+		public static final Supplier<Double> TAKE_SPEED = ConstantHandler.addConstantDouble("Roller In Speed", 0.7);
+		public static final Supplier<Double> THROW_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed", 0.6);
+	}
 }

@@ -29,4 +29,9 @@ public class Protocol54657374x0 {
 	public static void initClimber() {
 		SmartDashboard.putData("Climb",new MoveBasicSubsystem(Robot.climber, SubsystemConstants.Climber.SPEED));
 	}
+	
+	public static void initRoller() {
+		SmartDashboard.putData("Take Cube",new MoveBasicSubsystem(Robot.roller, SubsystemConstants.Roller.TAKE_SPEED));
+		SmartDashboard.putData("Throw Cube",new MoveBasicSubsystem(Robot.roller, SubsystemConstants.Roller.THROW_SPEED) );
+	}
 }
