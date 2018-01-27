@@ -1,6 +1,7 @@
 package com.spikes2212.robot;
 
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
+import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -33,5 +34,10 @@ public class Protocol54657374x0 {
 	public static void initRoller() {
 		SmartDashboard.putData("Take Cube",new MoveBasicSubsystem(Robot.roller, SubsystemConstants.Roller.TAKE_SPEED));
 		SmartDashboard.putData("Throw Cube",new MoveBasicSubsystem(Robot.roller, SubsystemConstants.Roller.THROW_SPEED) );
+	}
+	
+	public static void initLift() {
+		SmartDashboard.putData("Move Lift Up",new MoveLiftToTarget(true));
+		SmartDashboard.putData("Move Lift Down", new MoveLiftToTarget(false));
 	}
 }

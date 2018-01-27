@@ -48,20 +48,20 @@ public class SubsystemComponents {
 		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LOCKER_UP_LIMIT);
 		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LOCKER_DOWN_LIMIT);
 	}
-	
-	public static interface Lift {
+
+	public static class Lift {
 		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(
 				new VictorSP(RobotMap.PWM.LIFT_MOTOR_A), new VictorSP(RobotMap.PWM.LIFT_MOTOR_B));
-		public static final DigitalInput HALL_EFFECTS_SWITCH = new DigitalInput(
-				RobotMap.DIO.LIFT_HALL_EFFECTS_SWITCH);
+		public static final DigitalInput HALL_EFFECTS_SWITCH = new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_SWITCH);
 		public static final DigitalInput HALL_EFFECTS_MID_SCALE = new DigitalInput(
 				RobotMap.DIO.LIFT_HALL_EFFECTS_MID_SCALE);
 		public static final DigitalInput HALL_EFFECTS_LOW_SCALE = new DigitalInput(
 				RobotMap.DIO.LIFT_HALL_EFFECTS_LOW_SCALE);
 		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_UP);
 		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_DOWN);
-		
+		public static double position = 0;
+
 		// TODO docs
-		public static int position = 0;
+		// public static double position = 0;
 	}
 }
