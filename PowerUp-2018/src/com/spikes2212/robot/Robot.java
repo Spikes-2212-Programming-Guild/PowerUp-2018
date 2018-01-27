@@ -7,10 +7,11 @@
 
 package com.spikes2212.robot;
 
+import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
-import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.genericsubsystems.limitationFunctions.TwoLimits;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
 	public static TankDrivetrain drivetrain;
+	public static DashBoardController dbc = new DashBoardController();
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -40,7 +42,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		roller = new BasicSubsystem(SubsystemComponents.Roller.MOTOR::set,
-				new TwoLimits(() -> true, SubsystemComponents.Roller.LIGHT_SENSOR::get));
+				new TwoLimits(() -> false, () -> !SubsystemComponents.Roller.LIGHT_SENSOR.get()));
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
@@ -49,7 +51,7 @@ public class Robot extends TimedRobot {
 		folder = new BasicSubsystem(SubsystemComponents.Folder.MOTOR::set,
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
 		claw = new BasicSubsystem(SubsystemComponents.Claw.MOTOR::set, new TwoLimits(
-				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() >= SubsystemComponents.Claw.MOTOR.getOutputCurrent(),
+				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() < SubsystemComponents.Claw.MOTOR.getOutputCurrent(),
 				SubsystemComponents.Claw.LIMIT::get));
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(SubsystemComponents.LiftLocker.LIMIT_UP::get, SubsystemComponents.LiftLocker.LIMIT_DOWN::get));
 		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set,
@@ -73,6 +75,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		dbc.update();
 	}
 
 	/**
@@ -122,6 +125,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		dbc.update();
 	}
 
 	/**

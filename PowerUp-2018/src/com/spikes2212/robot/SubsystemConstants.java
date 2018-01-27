@@ -12,7 +12,7 @@ public class SubsystemConstants {
 	}
 	
 	public static interface Claw {
-		public static final Supplier<Double> MAX_VOLTAGE = ConstantHandler.addConstantDouble("Claw Max Voltage", 10);
+		public static final Supplier<Double> MAX_VOLTAGE = ConstantHandler.addConstantDouble("Claw Max Voltage", 25);
 		
 		public static final Supplier<Double> OPEN_SPEED = ConstantHandler.addConstantDouble("Claw Open Speed", 0.5);
 		public static final Supplier<Double> CLOSE_SPEED = ConstantHandler.addConstantDouble("Claw Close Speed",- 0.6);
