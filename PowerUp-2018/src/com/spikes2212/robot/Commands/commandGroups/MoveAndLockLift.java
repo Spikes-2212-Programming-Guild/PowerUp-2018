@@ -12,25 +12,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class MoveAndLockLift extends CommandGroup {
 
-	public MoveAndLockLift(boolean up) {
+	//The variable moveUp tells the command group if the lift should move up or down
+	public MoveAndLockLift(boolean moveUp) {
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.CLOSE_SPEED));
-		addSequential(new MoveLift((up) ? SubsystemConstants.Lift.UP_SPEED : SubsystemConstants.Lift.DOWN_SPEED));
+		addSequential(new MoveLift((moveUp) ? SubsystemConstants.Lift.UP_SPEED : SubsystemConstants.Lift.DOWN_SPEED));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.OPEN_SPEED));
-		// Add Commands here:
-		// e.g. addSequential(new Command1());
-		// addSequential(new Command2());
-		// these will run in order.
-
-		// To run multiple commands at the same time,
-		// use addParallel()
-		// e.g. addParallel(new Command1());
-		// addSequential(new Command2());
-		// Command1 and Command2 will run in parallel.
-
-		// A command group will require all of the subsystems that each member
-		// would require.
-		// e.g. if Command1 requires chassis, and Command2 requires arm,
-		// a CommandGroup containing them would require both the chassis and the
-		// arm.
 	}
 }
