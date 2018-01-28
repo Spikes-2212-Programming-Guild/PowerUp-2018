@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class MoveLiftToTarget extends CommandGroup {
+public class MoveAndLockLift extends CommandGroup {
 
-	public MoveLiftToTarget(boolean up) {
+	public MoveAndLockLift(boolean up) {
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.CLOSE_SPEED));
 		addSequential(new MoveLift((up) ? SubsystemConstants.Lift.UP_SPEED : SubsystemConstants.Lift.DOWN_SPEED));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.OPEN_SPEED));
