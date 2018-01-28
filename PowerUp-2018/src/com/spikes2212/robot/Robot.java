@@ -32,7 +32,6 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
 	public static TankDrivetrain drivetrain;
-	public static DashBoardController dbc = new DashBoardController();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -74,7 +73,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		dbc.update();
 	}
 
 	/**
@@ -124,7 +122,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		dbc.update();
 	}
 
 	/**
