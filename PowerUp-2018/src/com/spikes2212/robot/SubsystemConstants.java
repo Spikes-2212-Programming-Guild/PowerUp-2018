@@ -30,9 +30,9 @@ public class SubsystemConstants {
 	}
 
 	public static interface LiftLocker {
-		public static final Supplier<Double> CLOSE_SPEED = ConstantHandler.addConstantDouble("LiftLocker Close Speed",
+		public static final Supplier<Double> LOCK_SPEED = ConstantHandler.addConstantDouble("LiftLocker Close Speed",
 				-0.5);
-		public static final Supplier<Double> OPEN_SPEED = ConstantHandler.addConstantDouble("LiftLocker Open Speed",
+		public static final Supplier<Double> UNLOCK_SPEED = ConstantHandler.addConstantDouble("LiftLocker Open Speed",
 				0.5);
 	}
 
