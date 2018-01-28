@@ -25,8 +25,8 @@ public class SubsystemConstants {
 	}
 
 	public static interface Roller {
-		public static final Supplier<Double> TAKE_SPEED = ConstantHandler.addConstantDouble("Roller In Speed", 0.7);
-		public static final Supplier<Double> THROW_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed", -0.6);
+		public static final Supplier<Double> TAKE_SPEED = ConstantHandler.addConstantDouble("Roller In Speed", -0.6);
+		public static final Supplier<Double> THROW_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed", 0.7);
 	}
 
 	public static interface LiftLocker {
