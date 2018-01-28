@@ -14,8 +14,8 @@ public class MoveAndLockLift extends CommandGroup {
 
 	//The variable moveUp tells the command group if the lift should move up or down
 	public MoveAndLockLift(boolean moveUp) {
-		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.CLOSE_SPEED));
+		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
 		addSequential(new MoveLift((moveUp) ? SubsystemConstants.Lift.UP_SPEED : SubsystemConstants.Lift.DOWN_SPEED));
-		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.OPEN_SPEED));
+		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 	}
 }
