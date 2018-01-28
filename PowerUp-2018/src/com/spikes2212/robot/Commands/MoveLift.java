@@ -20,6 +20,7 @@ public class MoveLift extends MoveBasicSubsystem {
 		super.execute();
 		if (SubsystemComponents.Lift.LIMIT_UP.get())
 			SubsystemComponents.Lift.position = (speedSupplier.get() >= 0) ? 4 : 3.5;
+		// The hall effects are wired to say false when there is magnet near them so we need to invert them in code
 		else if (!SubsystemComponents.Lift.HALL_EFFECTS_MID_SCALE.get())
 			SubsystemComponents.Lift.position = (speedSupplier.get() >= 0) ? 3.5 : 2.5;
 		else if (!SubsystemComponents.Lift.HALL_EFFECTS_LOW_SCALE.get())
