@@ -40,4 +40,8 @@ public class SubsystemConstants {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Lift Up Speed", 0.7);
 		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Lift Down Speed", -0.6);
 	}
+	
+	public static interface Drivetrain{
+		public static final Supplier<Double> AUTO_STRAIGHT_SPEED = ConstantHandler.addConstantDouble("Drivetrain Straight Auto Speed", 1);
+	}
 }
