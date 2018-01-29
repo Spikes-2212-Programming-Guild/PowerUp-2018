@@ -8,6 +8,8 @@
 package com.spikes2212.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -16,7 +18,24 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI /* GEVALD */ {
 	private Joystick driverLeft = new Joystick(0);
 	private Joystick driverRight = new Joystick(1);
+	private XboxController navigator = new XboxController(2);
 
+	private JoystickButton MoveLiftAndOpenFolder;
+	private JoystickButton MoveLiftToTarget;
+	private JoystickButton PrepareToPick;
+	private JoystickButton PickUpCube;
+
+	public OI() {
+		initJoystickNavigator();
+	}
+
+	private void initJoystickNavigator() {
+		MoveLiftAndOpenFolder = new JoystickButton(navigator, 2);
+		MoveLiftToTarget = new JoystickButton(navigator, 3);
+		PrepareToPick = new JoystickButton(navigator, 4);
+		PickUpCube = new JoystickButton(navigator, 5);
+	}
+	
 	public double getForward() {
 		return driverRight.getY();
 	}
@@ -24,6 +43,7 @@ public class OI /* GEVALD */ {
 	public double getRotation() {
 		return driverLeft.getX();
 	}
+
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
