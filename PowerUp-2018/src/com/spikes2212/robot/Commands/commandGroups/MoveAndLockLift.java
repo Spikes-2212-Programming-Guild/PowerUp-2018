@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class MoveAndLockLift extends CommandGroup {
 
-	//The variable moveUp tells the command group if the lift should move up or down
 	public MoveAndLockLift(Supplier<Double> speed) {
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
 		addSequential(new MoveLift( speed));
