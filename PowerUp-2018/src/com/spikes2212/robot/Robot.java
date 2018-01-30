@@ -10,7 +10,7 @@ package com.spikes2212.robot;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
-import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.genericsubsystems.limitationFunctions.TwoLimits;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
