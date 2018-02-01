@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class MoveLiftToTargetAndLock extends CommandGroup {
 
-    public MoveLiftToTargetAndLock(Supplier<Double> speed, Supplier<Boolean> onTarget) {
+    public MoveLiftToTargetAndLock(Supplier<Double> liftSpeed, Supplier<Boolean> liftTarget) {
       addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
-      addSequential(new MoveBasicSubsystemToTarget(Robot.lift,speed,onTarget));
+      addSequential(new MoveBasicSubsystemToTarget(Robot.lift,liftSpeed,liftTarget));
       addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
     }
 }
