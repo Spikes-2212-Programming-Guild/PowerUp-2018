@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class MoveAndLockLift extends CommandGroup {
+public class MoveLift extends CommandGroup {
 
-	public MoveAndLockLift(Supplier<Double> speed) {
+	public MoveLift(Supplier<Double> speed) {
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
 		addSequential(new MoveBasicSubsystem(Robot.lift, speed));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));

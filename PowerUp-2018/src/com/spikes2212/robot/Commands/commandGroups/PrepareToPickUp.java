@@ -14,7 +14,7 @@ public class PrepareToPickUp extends CommandGroup {
 
     public PrepareToPickUp() {
     	//moving the lift down to the ground in the level of the cubes
-    	addSequential(new MoveAndLockLift(SubsystemConstants.Lift.DOWN_SPEED));
+    	addSequential(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
     	//moving the folder down so it can hold a cube
     	addSequential(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED));
     	//making sure the claw is open so the cube can get in the folder
