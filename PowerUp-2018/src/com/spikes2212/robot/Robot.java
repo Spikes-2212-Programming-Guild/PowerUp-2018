@@ -38,7 +38,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		roller = new BasicSubsystem(SubsystemComponents.Roller.MOTOR::set, new TwoLimits(() -> false,
+		//TODO check which motor is inverted
+		roller = new BasicSubsystem((Double speed) -> {
+			SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
+			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
+		}, new TwoLimits(() -> false,
 				() -> !/* TODO retest the light sensor and change accordingly */SubsystemComponents.Roller.LIGHT_SENSOR
 						.get()));
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
