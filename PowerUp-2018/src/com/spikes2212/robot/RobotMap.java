@@ -25,11 +25,13 @@ public class RobotMap {
 
 	public static interface PWM {
 
-		public static final int FOLDER = 0;
-		public static final int ROLLER = 1;
-		public static final int LIFT_LOCKER = 2;
-		public static final int LIFT_MOTOR_A = 3;
-		public static final int LIFT_MOTOR_B = 4;
+		public static final int FOLDER_1 = 0;
+		public static final int FOLDER_2 = 1;
+		public static final int ROLLER_RIGHT = 2;
+		public static final int ROLLER_LEFT = 3;
+		public static final int LIFT_LOCKER = 4;
+		public static final int LIFT_MOTOR_A = 5;
+		public static final int LIFT_MOTOR_B = 6;
 	}
 
 	public static interface DIO {
