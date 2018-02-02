@@ -56,7 +56,9 @@ public class SubsystemComponents {
 	public static class Lift {
 
 		public enum HallEffects {
-			SWITCH(1, HALL_EFFECTS_SWITCH), LOW_SCALE(2, HALL_EFFECTS_LOW_SCALE), MID_SCALE(3, HALL_EFFECTS_MID_SCALE);
+			SWITCH(1, new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_SWITCH)), LOW_SCALE(2,
+					new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_LOW_SCALE)), MID_SCALE(3,
+							new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_MID_SCALE));
 
 			private final int index;
 			private DigitalInput hallEffect;
@@ -77,11 +79,6 @@ public class SubsystemComponents {
 
 		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(
 				new VictorSP(RobotMap.PWM.LIFT_MOTOR_A), new VictorSP(RobotMap.PWM.LIFT_MOTOR_B));
-		public static final DigitalInput HALL_EFFECTS_SWITCH = new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_SWITCH);
-		public static final DigitalInput HALL_EFFECTS_MID_SCALE = new DigitalInput(
-				RobotMap.DIO.LIFT_HALL_EFFECTS_MID_SCALE);
-		public static final DigitalInput HALL_EFFECTS_LOW_SCALE = new DigitalInput(
-				RobotMap.DIO.LIFT_HALL_EFFECTS_LOW_SCALE);
 		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_UP);
 		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_DOWN);
 		// stores the position of the lift to display on shuffleBoard
@@ -92,11 +89,11 @@ public class SubsystemComponents {
 				position = (MOTORS.get() >= 0) ? 4 : 3.5;
 			// The hall effects are wired to say false when there is magnet near
 			// them so we need to invert them in code
-			else if (!HALL_EFFECTS_MID_SCALE.get())
+			else if (!HallEffects.MID_SCALE.getHallEffect().get())
 				position = (MOTORS.get() >= 0) ? 3.5 : 2.5;
-			else if (!HALL_EFFECTS_LOW_SCALE.get())
+			else if (!HallEffects.LOW_SCALE.getHallEffect().get())
 				position = (MOTORS.get() >= 0) ? 2.5 : 1.5;
-			else if (!HALL_EFFECTS_SWITCH.get())
+			else if (!HallEffects.SWITCH.getHallEffect().get())
 				position = (MOTORS.get() >= 0) ? 1.5 : 0.5;
 			else if (LIMIT_DOWN.get())
 				position = (MOTORS.get() >= 0) ? 0.5 : 0;
