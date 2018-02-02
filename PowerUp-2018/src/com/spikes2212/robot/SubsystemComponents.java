@@ -1,5 +1,7 @@
 package com.spikes2212.robot;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.spikes2212.utils.DoubleSpeedcontroller;
 
@@ -16,7 +18,8 @@ public class SubsystemComponents {
 	}
 
 	public static class Folder {
-		public static final DoubleSpeedcontroller MOTOR = new DoubleSpeedcontroller(new VictorSP(RobotMap.PWM.FOLDER_1), new VictorSP(RobotMap.PWM.FOLDER_2));
+		public static final DoubleSpeedcontroller MOTOR = new DoubleSpeedcontroller(new VictorSP(RobotMap.PWM.FOLDER_1),
+				new VictorSP(RobotMap.PWM.FOLDER_2));
 		public static final DigitalInput MAX_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MAX_LIMIT);
 		public static final DigitalInput MIN_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MIN_LIMIT);
 	}
@@ -51,6 +54,27 @@ public class SubsystemComponents {
 	}
 
 	public static class Lift {
+
+		public enum HallEffects {
+			SWITCH(1, HALL_EFFECTS_SWITCH), LOW_SCALE(2, HALL_EFFECTS_LOW_SCALE), MID_SCALE(3, HALL_EFFECTS_MID_SCALE);
+
+			private final int index;
+			private DigitalInput hallEffect;
+
+			private HallEffects(int index, DigitalInput hallEffect) {
+				this.index = index;
+				this.hallEffect = hallEffect;
+			}
+
+			public int getIndex() {
+				return index;
+			}
+
+			public DigitalInput getHallEffect() {
+				return hallEffect;
+			}
+		}
+
 		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(
 				new VictorSP(RobotMap.PWM.LIFT_MOTOR_A), new VictorSP(RobotMap.PWM.LIFT_MOTOR_B));
 		public static final DigitalInput HALL_EFFECTS_SWITCH = new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_SWITCH);
@@ -60,13 +84,14 @@ public class SubsystemComponents {
 				RobotMap.DIO.LIFT_HALL_EFFECTS_LOW_SCALE);
 		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_UP);
 		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_DOWN);
-		//stores the position of the lift to display on shuffleBoard
+		// stores the position of the lift to display on shuffleBoard
 		public static double position = 0;
-		
-		public static void updateLiftPosition(){
+
+		public static void updateLiftPosition() {
 			if (LIMIT_UP.get())
 				position = (MOTORS.get() >= 0) ? 4 : 3.5;
-			// The hall effects are wired to say false when there is magnet near them so we need to invert them in code
+			// The hall effects are wired to say false when there is magnet near
+			// them so we need to invert them in code
 			else if (!HALL_EFFECTS_MID_SCALE.get())
 				position = (MOTORS.get() >= 0) ? 3.5 : 2.5;
 			else if (!HALL_EFFECTS_LOW_SCALE.get())
