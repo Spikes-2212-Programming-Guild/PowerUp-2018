@@ -82,7 +82,7 @@ public class SubsystemComponents {
 		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_UP);
 		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_DOWN);
 		// stores the position of the lift to display on shuffleBoard
-		public static double position = 0;
+		private static double position = 0;
 
 		public static void updateLiftPosition() {
 			if (LIMIT_UP.get())
@@ -98,6 +98,10 @@ public class SubsystemComponents {
 			else if (LIMIT_DOWN.get())
 				position = (MOTORS.get() >= 0) ? 0.5 : 0;
 
+		}
+		
+		public static double getPosition() {
+			return position;
 		}
 	}
 }
