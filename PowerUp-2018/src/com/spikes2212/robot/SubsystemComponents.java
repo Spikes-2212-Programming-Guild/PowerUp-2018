@@ -1,5 +1,7 @@
 package com.spikes2212.robot;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.spikes2212.utils.DoubleSpeedcontroller;
 
@@ -16,7 +18,8 @@ public class SubsystemComponents {
 	}
 
 	public static class Folder {
-		public static final DoubleSpeedcontroller MOTOR = new DoubleSpeedcontroller(new VictorSP(RobotMap.PWM.FOLDER_1), new VictorSP(RobotMap.PWM.FOLDER_2));
+		public static final DoubleSpeedcontroller MOTOR = new DoubleSpeedcontroller(new VictorSP(RobotMap.PWM.FOLDER_1),
+				new VictorSP(RobotMap.PWM.FOLDER_2));
 		public static final DigitalInput MAX_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MAX_LIMIT);
 		public static final DigitalInput MIN_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MIN_LIMIT);
 	}
@@ -51,31 +54,54 @@ public class SubsystemComponents {
 	}
 
 	public static class Lift {
+
+		public enum HallEffects {
+			SWITCH(1, new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_SWITCH)), LOW_SCALE(2,
+					new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_LOW_SCALE)), MID_SCALE(3,
+							new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_MID_SCALE));
+
+			private final int index;
+			private DigitalInput hallEffect;
+
+			private HallEffects(int index, DigitalInput hallEffect) {
+				this.index = index;
+				this.hallEffect = hallEffect;
+			}
+
+			public int getIndex() {
+				return index;
+			}
+
+			public DigitalInput getHallEffect() {
+				return hallEffect;
+			}
+		}
+
 		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(
 				new VictorSP(RobotMap.PWM.LIFT_MOTOR_A), new VictorSP(RobotMap.PWM.LIFT_MOTOR_B));
-		public static final DigitalInput HALL_EFFECTS_SWITCH = new DigitalInput(RobotMap.DIO.LIFT_HALL_EFFECTS_SWITCH);
-		public static final DigitalInput HALL_EFFECTS_MID_SCALE = new DigitalInput(
-				RobotMap.DIO.LIFT_HALL_EFFECTS_MID_SCALE);
-		public static final DigitalInput HALL_EFFECTS_LOW_SCALE = new DigitalInput(
-				RobotMap.DIO.LIFT_HALL_EFFECTS_LOW_SCALE);
 		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_UP);
 		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_DOWN);
-		//stores the position of the lift to display on shuffleBoard
-		public static double position = 0;
-		
-		public static void updateLiftPosition(){
-			if (SubsystemComponents.Lift.LIMIT_UP.get())
-				SubsystemComponents.Lift.position = (SubsystemComponents.Lift.MOTORS.get() >= 0) ? 4 : 3.5;
-			// The hall effects are wired to say false when there is magnet near them so we need to invert them in code
-			else if (!SubsystemComponents.Lift.HALL_EFFECTS_MID_SCALE.get())
-				SubsystemComponents.Lift.position = (SubsystemComponents.Lift.MOTORS.get() >= 0) ? 3.5 : 2.5;
-			else if (!SubsystemComponents.Lift.HALL_EFFECTS_LOW_SCALE.get())
-				SubsystemComponents.Lift.position = (SubsystemComponents.Lift.MOTORS.get() >= 0) ? 2.5 : 1.5;
-			else if (!SubsystemComponents.Lift.HALL_EFFECTS_SWITCH.get())
-				SubsystemComponents.Lift.position = (SubsystemComponents.Lift.MOTORS.get() >= 0) ? 1.5 : 0.5;
-			else if (SubsystemComponents.Lift.LIMIT_DOWN.get())
-				SubsystemComponents.Lift.position = (SubsystemComponents.Lift.MOTORS.get() >= 0) ? 0.5 : 0;
+		// stores the position of the lift to display on shuffleBoard
+		private static double position = 0;
 
+		public static void updateLiftPosition() {
+			if (LIMIT_UP.get())
+				position = (MOTORS.get() >= 0) ? 4 : 3.5;
+			// The hall effects are wired to say false when there is magnet near
+			// them so we need to invert them in code
+			else if (!HallEffects.MID_SCALE.getHallEffect().get())
+				position = (MOTORS.get() >= 0) ? 3.5 : 2.5;
+			else if (!HallEffects.LOW_SCALE.getHallEffect().get())
+				position = (MOTORS.get() >= 0) ? 2.5 : 1.5;
+			else if (!HallEffects.SWITCH.getHallEffect().get())
+				position = (MOTORS.get() >= 0) ? 1.5 : 0.5;
+			else if (LIMIT_DOWN.get())
+				position = (MOTORS.get() >= 0) ? 0.5 : 0;
+
+		}
+		
+		public static double getPosition() {
+			return position;
 		}
 	}
 }
