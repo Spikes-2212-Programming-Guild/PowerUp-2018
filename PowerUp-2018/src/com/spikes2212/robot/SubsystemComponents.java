@@ -64,17 +64,17 @@ public class SubsystemComponents {
 		public static double position = 0;
 		
 		public static void updateLiftPosition(){
-			if (SubsystemComponents.Lift.LIMIT_UP.get())
-				SubsystemComponents.Lift.position = (SubsystemComponents.Lift.MOTORS.get() >= 0) ? 4 : 3.5;
+			if (LIMIT_UP.get())
+				position = (MOTORS.get() >= 0) ? 4 : 3.5;
 			// The hall effects are wired to say false when there is magnet near them so we need to invert them in code
-			else if (!SubsystemComponents.Lift.HALL_EFFECTS_MID_SCALE.get())
-				SubsystemComponents.Lift.position = (SubsystemComponents.Lift.MOTORS.get() >= 0) ? 3.5 : 2.5;
-			else if (!SubsystemComponents.Lift.HALL_EFFECTS_LOW_SCALE.get())
-				SubsystemComponents.Lift.position = (SubsystemComponents.Lift.MOTORS.get() >= 0) ? 2.5 : 1.5;
-			else if (!SubsystemComponents.Lift.HALL_EFFECTS_SWITCH.get())
-				SubsystemComponents.Lift.position = (SubsystemComponents.Lift.MOTORS.get() >= 0) ? 1.5 : 0.5;
-			else if (SubsystemComponents.Lift.LIMIT_DOWN.get())
-				SubsystemComponents.Lift.position = (SubsystemComponents.Lift.MOTORS.get() >= 0) ? 0.5 : 0;
+			else if (!HALL_EFFECTS_MID_SCALE.get())
+				position = (MOTORS.get() >= 0) ? 3.5 : 2.5;
+			else if (!HALL_EFFECTS_LOW_SCALE.get())
+				position = (MOTORS.get() >= 0) ? 2.5 : 1.5;
+			else if (!HALL_EFFECTS_SWITCH.get())
+				position = (MOTORS.get() >= 0) ? 1.5 : 0.5;
+			else if (LIMIT_DOWN.get())
+				position = (MOTORS.get() >= 0) ? 0.5 : 0;
 
 		}
 	}
