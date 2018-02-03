@@ -1,7 +1,5 @@
 package com.spikes2212.robot;
 
-import java.util.Map;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.spikes2212.utils.DoubleSpeedcontroller;
 
@@ -99,7 +97,7 @@ public class SubsystemComponents {
 				position = (MOTORS.get() >= 0) ? 0.5 : 0;
 
 		}
-		
+
 		public static double getPosition() {
 			return position;
 		}
