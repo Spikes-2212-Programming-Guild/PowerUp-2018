@@ -22,7 +22,7 @@ public class ImageProcessingConstants {
 	// calculates the center of the two reflectives
 	public static final Supplier<Double> TWO_OBJECTS_CENTER = () -> (BIG_OBJECT_CENTER.get() + SMALL_OBJECT_CENTER.get()) / 2;
 
-	public static PIDSource CENTER = new PIDSource() {
+	public static final PIDSource CENTER = new PIDSource() {
 
 		@Override
 		public void setPIDSourceType(PIDSourceType pidSource) {
