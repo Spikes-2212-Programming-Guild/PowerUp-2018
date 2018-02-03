@@ -20,7 +20,11 @@ public class ImageProcessingConstants {
 	public static final Supplier<Double> SMALL_OBJECT_CENTER = () -> ((NETWORK_TABLE.getEntry("x1").getDouble(0)
 			+ 0.5 * NETWORK_TABLE.getEntry("width1").getDouble(0)) / CAMERA_WIDTH - 0.5);
 	// calculates the center of the two reflectives
-	public static final Supplier<Double> TWO_OBJECTS_CENTER = () -> (BIG_OBJECT_CENTER.get() + SMALL_OBJECT_CENTER.get()) / 2;
+	public static final Supplier<Double> TWO_OBJECTS_CENTER = () -> (BIG_OBJECT_CENTER.get()
+			+ SMALL_OBJECT_CENTER.get()) / 2;
+
+	public static final Supplier<Boolean> IS_UPDATED_0 = () -> NETWORK_TABLE.getEntry("isUpdated0").getBoolean(false);
+	public static final Supplier<Boolean> IS_UPDATED_1 = () -> NETWORK_TABLE.getEntry("isUpdated1").getBoolean(false);
 
 	public static final PIDSource CENTER = new PIDSource() {
 
