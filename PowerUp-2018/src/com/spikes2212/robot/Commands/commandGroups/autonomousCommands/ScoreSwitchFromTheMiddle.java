@@ -33,7 +33,8 @@ public class ScoreSwitchFromTheMiddle extends CommandGroup {
 			.addConstantDouble("ScoreSwitchFromTheMiddle - oriantation kd", 0.1);
 
 	public ScoreSwitchFromTheMiddle() {
-		addSequential(new TurnToReflector(Robot.drivetrain, FORWARDS_SPEED, ROTATION_SPEED));
+		addSequential(new TurnToReflector(Robot.drivetrain, FORWARDS_SPEED,
+				() -> Robot.gameData.charAt(0) == 'L' ? ROTATION_SPEED.get() : ROTATION_SPEED.get() * -1));
 		addSequential(new DriveArcadeWithPID(Robot.drivetrain, ImageProcessingConstants.CENTER, () -> 0.0,
 				ORIENTATION_FORWARDS_SPEED,
 				new PIDSettings(ORIENTATION_KP.get(), ORIENTATION_KI.get(), ORIENTATION_KD.get(), 0, 1), 2));
