@@ -6,6 +6,10 @@ import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.robot.ImageProcessingConstants;
 
+/**
+ * This command moves with a move speed and rotation speed the robot until it
+ * sees a light sensor.
+ */
 public class TurnToReflector extends DriveArcade {
 
 	public TurnToReflector(TankDrivetrain drivetrain, double moveValue, double rotateValue) {
