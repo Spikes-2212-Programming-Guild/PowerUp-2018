@@ -1,6 +1,7 @@
 package com.spikes2212.robot;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.spikes2212.utils.DoubleSpeedcontroller;
@@ -39,6 +40,18 @@ public class SubsystemComponents {
 		public static final Encoder LEFT_ENCODER = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A,
 				RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
 		public static final Gyro GYRO = new ADXRS450_Gyro();
+
+		public static double limitSpeed(double speed) {
+			/*
+			 * n = 1 (max voltage), m = (max limit - 1) / 4 -> top speed =
+			 * position * (max limit - 1) / 4 + 1.
+			 */
+
+			double topSpeed = Lift.position * (SubsystemConstants.Drivetrain.MAX_SPEED_LIMIT.get() - 1) / 4 + 1;
+			if (speed > topSpeed)
+				return topSpeed;
+			return speed;
+		}
 	}
 
 	public static class Roller {
@@ -99,7 +112,7 @@ public class SubsystemComponents {
 				position = (MOTORS.get() >= 0) ? 0.5 : 0;
 
 		}
-		
+
 		public static double getPosition() {
 			return position;
 		}
