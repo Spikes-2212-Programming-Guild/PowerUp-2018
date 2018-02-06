@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class ScoreSwitchFromTheMiddle extends CommandGroup {
+public class ScoreSwitchFromMiddle extends CommandGroup {
 
 	public static final Supplier<Double> FORWARDS_SPEED = ConstantHandler
 			.addConstantDouble("ScoreSwitchFromTheMiddle - forwards speed", 0.2);
@@ -32,7 +32,7 @@ public class ScoreSwitchFromTheMiddle extends CommandGroup {
 	public static final Supplier<Double> ORIENTATION_KD = ConstantHandler
 			.addConstantDouble("ScoreSwitchFromTheMiddle - oriantation kd", 0.1);
 
-	public ScoreSwitchFromTheMiddle() {
+	public ScoreSwitchFromMiddle() {
 		addSequential(new TurnToReflector(Robot.drivetrain, FORWARDS_SPEED,
 				() -> Robot.gameData.charAt(0) == 'L' ? ROTATION_SPEED.get() : ROTATION_SPEED.get() * -1));
 		addSequential(new DriveArcadeWithPID(Robot.drivetrain, ImageProcessingConstants.CENTER, () -> 0.0,
