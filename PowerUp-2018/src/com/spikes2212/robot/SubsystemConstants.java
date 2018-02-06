@@ -6,6 +6,12 @@ import com.spikes2212.dashboard.ConstantHandler;
 
 public class SubsystemConstants {
 	// TODO real numbers
+
+	public static interface Drivetrain {
+		public static final Supplier<Double> MAX_SPEED_LIMIT = ConstantHandler
+				.addConstantDouble("Drivetrain Max Speed limit", 0.25);
+	}
+
 	public static interface Climber {
 		public static final Supplier<Double> MAX_VOLTAGE = ConstantHandler.addConstantDouble("Climber Max Voltage", 25);
 
@@ -26,7 +32,8 @@ public class SubsystemConstants {
 
 	public static interface Roller {
 		public static final Supplier<Double> ROLL_IN_SPEED = ConstantHandler.addConstantDouble("Roller In Speed", -0.6);
-		public static final Supplier<Double> ROLL_OUT_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed", 0.7);
+		public static final Supplier<Double> ROLL_OUT_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed",
+				0.7);
 		public static final Supplier<Double> WAIT_TIME = ConstantHandler.addConstantDouble("Roller Out Wait Time", 5);
 	}
 
