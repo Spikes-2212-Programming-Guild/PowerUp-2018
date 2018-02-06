@@ -3,7 +3,6 @@ package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
 import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
-import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcadeWithPID;
 import com.spikes2212.robot.ImageProcessingConstants;
 import com.spikes2212.robot.Robot;
@@ -14,6 +13,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  * 
+ * This command group moves the robot from the middle to your side of the
+ * switch. First it moves forwards and turns to your side of the switch until it
+ * sees a light sensor and move to it. Might want to first move just forwards
+ * without turning and only afterwards turn.
  */
 public class MoveToSwitchFromMiddle extends CommandGroup {
 
