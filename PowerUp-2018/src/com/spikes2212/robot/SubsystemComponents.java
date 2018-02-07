@@ -41,21 +41,7 @@ public class SubsystemComponents {
 		public static final Encoder LEFT_ENCODER = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A,
 				RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
 		public static final Gyro GYRO = new ADXRS450_Gyro();
-		public static final Consumer<Double> LEFT_CONTROL = limitSpeed(LEFT_MOTOR::set);
-		public static final Consumer<Double> RIGHT_CONTROL = limitSpeed(RIGHT_MOTOR::set);
 
-		private static Consumer<Double> limitSpeed(Consumer<Double> speedConsumer) {
-			/*
-			 * n = 1 (max voltage), m = (max limit - 1) / 4 -> top speed =
-			 * position * (max limit - 1) / 4 + 1.
-			 */
-			return (Double speed) -> {
-				double topSpeed = Lift.position * (SubsystemConstants.Drivetrain.MAX_SPEED_LIMIT.get() - 1) / 4 + 1;
-				if (speed > topSpeed)
-					speed = topSpeed;
-				speedConsumer.accept(speed);
-			};
-		}
 	}
 
 	public static class Roller {

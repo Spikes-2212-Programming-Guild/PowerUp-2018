@@ -45,8 +45,8 @@ public class Robot extends TimedRobot {
 		}, new TwoLimits(() -> false,
 				() -> !/* TODO retest the light sensor and change accordingly */SubsystemComponents.Roller.LIGHT_SENSOR
 						.get()));
-		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_CONTROL,
-				SubsystemComponents.Drivetrain.RIGHT_CONTROL);
+		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
+				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
 				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
 						.getOutputCurrent());
