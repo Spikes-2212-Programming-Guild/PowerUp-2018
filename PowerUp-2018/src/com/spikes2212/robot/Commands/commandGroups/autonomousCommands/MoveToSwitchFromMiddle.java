@@ -15,8 +15,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * 
  * This command group moves the robot from the middle to your side of the
  * switch. First it moves forwards and turns to your side of the switch until it
- * sees a light sensor and move to it. Might want to first move just forwards
- * without turning and only afterwards turn.
+ * sees a light sensor and move to it.
  */
 public class MoveToSwitchFromMiddle extends CommandGroup {
 
@@ -36,6 +35,10 @@ public class MoveToSwitchFromMiddle extends CommandGroup {
 			.addConstantDouble("ScoreSwitchFromTheMiddle - oriantation kd", 0.1);
 
 	public MoveToSwitchFromMiddle() {
+		/*
+		 * Might want to first move just forwards without turning and only
+		 * afterwards turn.
+		 */
 		addSequential(new TurnToReflector(Robot.drivetrain, FORWARDS_SPEED,
 				() -> Robot.gameData.charAt(0) == 'L' ? ROTATION_SPEED.get() : ROTATION_SPEED.get() * -1));
 		addSequential(new DriveArcadeWithPID(Robot.drivetrain, ImageProcessingConstants.CENTER, () -> 0.0,
