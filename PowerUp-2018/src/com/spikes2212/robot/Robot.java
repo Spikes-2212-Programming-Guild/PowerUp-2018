@@ -12,6 +12,7 @@ import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -31,6 +32,8 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
 	public static TankDrivetrain drivetrain;
+
+	public static String gameData;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -90,6 +93,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
