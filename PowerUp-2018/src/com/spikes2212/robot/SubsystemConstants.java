@@ -38,7 +38,7 @@ public class SubsystemConstants {
 	}
 
 	public static interface Lift {
-		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Lift Up Speed", 0.7);
-		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Lift Down Speed", -0.6);
+		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Lift Up Speed", 0.2);
+		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Lift Down Speed", -0.1);
 	}
 }
