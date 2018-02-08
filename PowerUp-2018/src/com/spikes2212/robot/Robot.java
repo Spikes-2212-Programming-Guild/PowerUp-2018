@@ -44,6 +44,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		// TODO check which motor is inverted
+		cameraHandler = new CamerasHandler(360, 640, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		roller = new BasicSubsystem((Double speed) -> {
 			SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
 			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
@@ -65,7 +66,7 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 		
-
+		cameraHandler.setExposure(47);
 		cameraHandler.addCamera(RobotMap.USB.FRONT_CAMERA, 100, 100);
 		cameraHandler.addCamera(RobotMap.USB.REAR_CAMERA, 100, 100);
 		// chooser.addObject("My Auto", new MyAutoCommand());
