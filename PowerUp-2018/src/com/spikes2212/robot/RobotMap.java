@@ -51,6 +51,12 @@ public class RobotMap {
 		public static final int LIFT_LIMIT_UP = 0;
 		public static final int LIFT_LIMIT_DOWN = 1;
 	}
+
+	
+	public static interface USB {
+		public static final int REAR_CAMERA = 0;
+		public static final int FRONT_CAMERA = 1;
+	}
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;

@@ -11,6 +11,7 @@ import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -32,7 +33,8 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
 	public static TankDrivetrain drivetrain;
-
+	public static CamerasHandler cameraHandler;
+	
 	public static String gameData;
 
 	/**
@@ -62,6 +64,10 @@ public class Robot extends TimedRobot {
 				new TwoLimits(SubsystemComponents.Lift.LIMIT_UP::get, SubsystemComponents.Lift.LIMIT_DOWN::get));
 		oi = new OI();
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
+		
+
+		cameraHandler.addCamera(RobotMap.USB.FRONT_CAMERA, 100, 100);
+		cameraHandler.addCamera(RobotMap.USB.REAR_CAMERA, 100, 100);
 		// chooser.addObject("My Auto", new MyAutoCommand());
 	}
 
@@ -93,7 +99,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
+		
+		
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 
 		/*
@@ -113,6 +120,8 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		SubsystemComponents.Lift.updateLiftPosition();
+		
+		
 	}
 
 	@Override
