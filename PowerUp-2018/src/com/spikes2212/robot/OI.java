@@ -15,7 +15,6 @@ import com.spikes2212.utils.XboXUID;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -27,7 +26,6 @@ public class OI /* GEVALD */ {
 	
 	private XboXUID navigatorXbox = new XboXUID(2);
 	
-	
 	//navigator
 	private Button liftSwitchXbox;
 	private Button liftLowScaleXbox;
@@ -37,10 +35,10 @@ public class OI /* GEVALD */ {
 	private Button pickUpCubeXbox;
 	
 	public OI() {
-		initNavigator();
+		initNavigatorXbox();
 	}
 	
-	private void initNavigator() {
+	private void initNavigatorXbox() {
 		liftSwitchXbox = navigatorXbox.getDownButton();
 		liftLowScaleXbox = navigatorXbox.getRightButton();	
 		liftMidScaleXbox = navigatorXbox.getUpButton();
@@ -55,7 +53,7 @@ public class OI /* GEVALD */ {
 		prepareToPickCubeXbox.toggleWhenPressed(new PrepareToPickUp());
 		pickUpCubeXbox.toggleWhenPressed(new PickUpCube());
 	}
-
+	
 	public double getLiftUp() {
 		return navigatorXbox.getRTAxis();
 	}
