@@ -10,6 +10,7 @@ package com.spikes2212.robot;
 import com.spikes2212.utils.XboXUID;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
@@ -20,27 +21,36 @@ public class OI /* GEVALD */ {
 	private Joystick driverLeft = new Joystick(0);
 	private Joystick driverRight = new Joystick(1);
 	
-	private XboXUID navigator = new XboXUID(2);
+	private XboXUID navigatorXbox = new XboXUID(2);
 	
 	
 	//navigator
-	private JoystickButton liftSwitchButton;
-	private JoystickButton liftLowScaleButton;
-	private JoystickButton liftMidScaleButton;
-	private JoystickButton placeCubeButton;
-	private JoystickButton prepareToPickCubeButton;
-	private JoystickButton pickUpCubeButton;
+	private Button liftSwitchXbox;
+	private Button liftLowScaleXbox;
+	private Button liftMidScaleXbox;
+	private Button placeCubeXbox;
+	private Button prepareToPickCubeXbox;
+	private Button pickUpCubeXbox;
 	
 	public OI() {
 		
 	}
+	
+	private void initNavigator() {
+		liftSwitchXbox = navigatorXbox.getDownButton();
+		liftLowScaleXbox = navigatorXbox.getRightButton();	
+		liftMidScaleXbox = navigatorXbox.getUpButton();
+		placeCubeXbox = navigatorXbox.getYellowButton();
+		prepareToPickCubeXbox = navigatorXbox.getGreenButton();
+		pickUpCubeXbox = navigatorXbox.getRedButton();
+	}
 
 	public double getLiftUp() {
-		return navigator.getRTAxis();
+		return navigatorXbox.getRTAxis();
 	}
 	
 	public double getLiftDown() {
-		return navigator.getLTAxis();
+		return navigatorXbox.getLTAxis();
 	}
 	
 	public double getForward() {
