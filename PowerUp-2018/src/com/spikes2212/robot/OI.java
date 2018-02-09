@@ -7,6 +7,10 @@
 
 package com.spikes2212.robot;
 
+import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
+import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
+import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
+import com.spikes2212.robot.Commands.commandGroups.PrepareToPickUp;
 import com.spikes2212.utils.XboXUID;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -33,7 +37,7 @@ public class OI /* GEVALD */ {
 	private Button pickUpCubeXbox;
 	
 	public OI() {
-		
+		initNavigator();
 	}
 	
 	private void initNavigator() {
@@ -43,6 +47,13 @@ public class OI /* GEVALD */ {
 		placeCubeXbox = navigatorXbox.getYellowButton();
 		prepareToPickCubeXbox = navigatorXbox.getGreenButton();
 		pickUpCubeXbox = navigatorXbox.getRedButton();
+		
+		liftSwitchXbox.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
+		liftLowScaleXbox.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.LOW_SCALE));
+		liftMidScaleXbox.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
+		placeCubeXbox.toggleWhenPressed(new PlaceCube());
+		prepareToPickCubeXbox.toggleWhenPressed(new PrepareToPickUp());
+		pickUpCubeXbox.toggleWhenPressed(new PickUpCube());
 	}
 
 	public double getLiftUp() {
