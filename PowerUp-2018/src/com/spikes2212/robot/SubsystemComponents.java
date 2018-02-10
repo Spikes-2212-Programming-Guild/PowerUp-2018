@@ -24,7 +24,8 @@ public class SubsystemComponents {
 
 	public static class Claw {
 		public static final WPI_TalonSRX MOTOR = new WPI_TalonSRX(RobotMap.CAN.CLAW);
-		public static final DigitalInput LIMIT = new DigitalInput(RobotMap.DIO.CLAW_LIMIT);
+		public static final DigitalInput OPEN_LIMIT = new DigitalInput(RobotMap.DIO.CLAW_OPEN_LIMIT);
+		public static final DigitalInput CLOSE_LIMIT = new DigitalInput(RobotMap.DIO.CLAW_OPEN_LIMIT);
 	}
 
 	public static class Drivetrain {
