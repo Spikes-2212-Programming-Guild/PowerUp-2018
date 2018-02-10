@@ -40,7 +40,7 @@ public class OI /* GEVALD */ {
 	
 	private void initNavigator() {
 		liftSwitch = navigator.getDownButton();
-		liftLowScale = navigator.getRightButton();	
+		liftLowScale = navigator.getLeftButton();	
 		liftMidScale = navigator.getUpButton();
 		placeCube = navigator.getYellowButton();
 		prepareToPickCube = navigator.getGreenButton();
