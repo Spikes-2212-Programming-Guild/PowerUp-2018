@@ -24,7 +24,8 @@ public class SubsystemComponents {
 
 	public static class Claw {
 		public static final WPI_TalonSRX MOTOR = new WPI_TalonSRX(RobotMap.CAN.CLAW);
-		public static final DigitalInput LIMIT = new DigitalInput(RobotMap.DIO.CLAW_LIMIT);
+		public static final DigitalInput OPEN_LIMIT = new DigitalInput(RobotMap.DIO.CLAW_OPEN_LIMIT);
+		public static final DigitalInput CLOSE_LIMIT = new DigitalInput(RobotMap.DIO.CLAW_OPEN_LIMIT);
 	}
 
 	public static class Drivetrain {
@@ -47,8 +48,8 @@ public class SubsystemComponents {
 
 	public static class LiftLocker {
 		public static final VictorSP MOTOR = new VictorSP(RobotMap.PWM.LIFT_LOCKER);
-		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LOCKER_UP_LIMIT);
-		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LOCKER_DOWN_LIMIT);
+		public static final DigitalInput LIMIT_UNLOCKED = new DigitalInput(RobotMap.DIO.LIFT_LOCKER_UNLOCKED_LIMIT);
+		public static final DigitalInput LIMIT_LOCKED = new DigitalInput(RobotMap.DIO.LIFT_LOCKER_LOCKED_LIMIT);
 	}
 
 	public static class Lift {

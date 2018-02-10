@@ -8,13 +8,16 @@
 package com.spikes2212.robot;
 
 import com.spikes2212.genericsubsystems.BasicSubsystem;
+import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -54,15 +57,16 @@ public class Robot extends TimedRobot {
 		folder = new BasicSubsystem(SubsystemComponents.Folder.MOTOR::set,
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
 		claw = new BasicSubsystem(SubsystemComponents.Claw.MOTOR::set, new TwoLimits(
-				SubsystemComponents.Claw.LIMIT::get,
-				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() <= SubsystemComponents.Claw.MOTOR.getOutputCurrent()));
+				SubsystemComponents.Claw.OPEN_LIMIT::get,
+				() -> SubsystemComponents.Claw.CLOSE_LIMIT.get() || SubsystemConstants.Claw.MAX_VOLTAGE.get() <= SubsystemComponents.Claw.MOTOR.getOutputCurrent()));
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(
-				SubsystemComponents.LiftLocker.LIMIT_UP::get, SubsystemComponents.LiftLocker.LIMIT_DOWN::get));
+				SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get, SubsystemComponents.LiftLocker.LIMIT_LOCKED::get));
 		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set,
 				new TwoLimits(SubsystemComponents.Lift.LIMIT_UP::get, SubsystemComponents.Lift.LIMIT_DOWN::get));
 		oi = new OI();
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
+		
 	}
 
 	/**
