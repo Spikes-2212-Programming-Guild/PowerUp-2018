@@ -24,42 +24,42 @@ public class OI /* GEVALD */ {
 	private Joystick driverLeft = new Joystick(0);
 	private Joystick driverRight = new Joystick(1);
 	
-	private XboXUID navigatorXbox = new XboXUID(2);
+	private XboXUID navigator = new XboXUID(2);
 	
 	//navigator
-	private Button liftSwitchXbox;
-	private Button liftLowScaleXbox;
-	private Button liftMidScaleXbox;
-	private Button placeCubeXbox;
-	private Button prepareToPickCubeXbox;
-	private Button pickUpCubeXbox;
+	private Button liftSwitch;
+	private Button liftLowScale;
+	private Button liftMidScale;
+	private Button placeCube;
+	private Button prepareToPickCube;
+	private Button pickUpCube;
 	
 	public OI() {
-		initNavigatorXbox();
+		initNavigator();
 	}
 	
-	private void initNavigatorXbox() {
-		liftSwitchXbox = navigatorXbox.getDownButton();
-		liftLowScaleXbox = navigatorXbox.getRightButton();	
-		liftMidScaleXbox = navigatorXbox.getUpButton();
-		placeCubeXbox = navigatorXbox.getYellowButton();
-		prepareToPickCubeXbox = navigatorXbox.getGreenButton();
-		pickUpCubeXbox = navigatorXbox.getRedButton();
+	private void initNavigator() {
+		liftSwitch = navigator.getDownButton();
+		liftLowScale = navigator.getRightButton();	
+		liftMidScale = navigator.getUpButton();
+		placeCube = navigator.getYellowButton();
+		prepareToPickCube = navigator.getGreenButton();
+		pickUpCube = navigator.getRedButton();
 		
-		liftSwitchXbox.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
-		liftLowScaleXbox.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.LOW_SCALE));
-		liftMidScaleXbox.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
-		placeCubeXbox.toggleWhenPressed(new PlaceCube());
-		prepareToPickCubeXbox.toggleWhenPressed(new PrepareToPickUp());
-		pickUpCubeXbox.toggleWhenPressed(new PickUpCube());
+		liftSwitch.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
+		liftLowScale.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.LOW_SCALE));
+		liftMidScale.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
+		placeCube.toggleWhenPressed(new PlaceCube());
+		prepareToPickCube.toggleWhenPressed(new PrepareToPickUp());
+		pickUpCube.toggleWhenPressed(new PickUpCube());
 	}
 	
 	public double getLiftUp() {
-		return navigatorXbox.getRTAxis();
+		return navigator.getRTAxis();
 	}
 	
 	public double getLiftDown() {
-		return navigatorXbox.getLTAxis();
+		return navigator.getLTAxis();
 	}
 	
 	public double getForward() {
