@@ -67,8 +67,6 @@ public class Robot extends TimedRobot {
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 		
 		cameraHandler.setExposure(47);
-		cameraHandler.addCamera(RobotMap.USB.FRONT_CAMERA, 100, 100);
-		cameraHandler.addCamera(RobotMap.USB.REAR_CAMERA, 100, 100);
 		// chooser.addObject("My Auto", new MyAutoCommand());
 	}
 
