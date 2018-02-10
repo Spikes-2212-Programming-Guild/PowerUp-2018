@@ -43,8 +43,8 @@ public class RobotMap {
 		public static final int DRIVE_LEFT_ENCODER_A = 10;
 		public static final int DRIVE_LEFT_ENCODER_B = 11;
 		public static final int ROLLER_LIGHT_SENSOR = 9;
-		public static final int LIFT_LOCKER_UP_LIMIT = 8;
-		public static final int LIFT_LOCKER_DOWN_LIMIT = 2;
+		public static final int LIFT_LOCKER_UNLOCKED_LIMIT = 8;
+		public static final int LIFT_LOCKER_LOCKED_LIMIT = 2;
 		public static final int LIFT_HALL_EFFECTS_SWITCH = 18;
 		public static final int LIFT_HALL_EFFECTS_MID_SCALE = 6;
 		public static final int LIFT_HALL_EFFECTS_LOW_SCALE = 7;
