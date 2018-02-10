@@ -53,6 +53,11 @@ public class RobotMap {
 	
 	public static interface ANALOG_IN{
 		public static final int ROLLER_LASER_SENSOR = 0;
+  }
+	
+	public static interface USB {
+		public static final int REAR_CAMERA = 0;
+		public static final int FRONT_CAMERA = 1;
 	}
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
