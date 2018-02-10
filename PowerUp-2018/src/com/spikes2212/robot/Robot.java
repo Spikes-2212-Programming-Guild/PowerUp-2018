@@ -67,8 +67,6 @@ public class Robot extends TimedRobot {
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 		
-		SmartDashboard.putData("move lift up", new MoveLift(SubsystemConstants.Lift.UP_SPEED));
-		SmartDashboard.putData("move lift down", new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
 	}
 
 	/**
