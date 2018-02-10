@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		// TODO check which motor is inverted
-		cameraHandler = new CamerasHandler(360, 640, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
+		cameraHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		roller = new BasicSubsystem((Double speed) -> {
 			SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
 			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
