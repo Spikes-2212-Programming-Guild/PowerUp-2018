@@ -7,6 +7,8 @@
 
 package com.spikes2212.robot;
 
+import com.spikes2212.dashboard.ConstantHandler;
+import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
@@ -35,6 +37,7 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
 	public static TankDrivetrain drivetrain;
+	public static DashBoardController dbc;
 
 	public static String gameData;
 
@@ -45,28 +48,53 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		// TODO check which motor is inverted
-		roller = new BasicSubsystem((Double speed) -> {
-			SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
-			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
-		}, new TwoLimits(() -> false, () -> !SubsystemComponents.Roller.LIGHT_SENSOR.get()));
-		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
-				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
-		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
-				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
-						.getOutputCurrent());
-		folder = new BasicSubsystem(SubsystemComponents.Folder.MOTOR::set,
-				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
-		claw = new BasicSubsystem(SubsystemComponents.Claw.MOTOR::set, new TwoLimits(
-				SubsystemComponents.Claw.OPEN_LIMIT::get,
-				() -> SubsystemComponents.Claw.CLOSE_LIMIT.get() || SubsystemConstants.Claw.MAX_VOLTAGE.get() <= SubsystemComponents.Claw.MOTOR.getOutputCurrent()));
+		/*
+		 * roller = new BasicSubsystem((Double speed) -> {
+		 * SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
+		 * SubsystemComponents.Roller.MOTOR_LEFT.set(-speed); }, new
+		 * TwoLimits(() -> false, () ->
+		 * !SubsystemComponents.Roller.LIGHT_SENSOR.get())); drivetrain = new
+		 * TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
+		 * SubsystemComponents.Drivetrain.RIGHT_MOTOR::set); climber = new
+		 * BasicSubsystem(SubsystemComponents.Climber.MOTOR::set, (Double speed)
+		 * -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >=
+		 * SubsystemComponents.Climber.MOTOR .getOutputCurrent()); folder = new
+		 * BasicSubsystem(SubsystemComponents.Folder.MOTOR::set, new
+		 * TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get,
+		 * SubsystemComponents.Folder.MIN_LIMIT::get)); claw = new
+		 * BasicSubsystem(SubsystemComponents.Claw.MOTOR::set, new TwoLimits(
+		 * SubsystemComponents.Claw.OPEN_LIMIT::get, () ->
+		 * SubsystemComponents.Claw.CLOSE_LIMIT.get() ||
+		 * SubsystemConstants.Claw.MAX_VOLTAGE.get() <=
+		 * SubsystemComponents.Claw.MOTOR.getOutputCurrent()));
+		 */
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(
 				SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get, SubsystemComponents.LiftLocker.LIMIT_LOCKED::get));
-		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set,
-				new TwoLimits(SubsystemComponents.Lift.LIMIT_UP::get, SubsystemComponents.Lift.LIMIT_DOWN::get));
+		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set, (Double speed) -> {
+			if (SubsystemComponents.Lift.LIMIT_UP.get() && speed > SubsystemConstants.Lift.STAYING_SPEED.get())
+				return false;
+			if (SubsystemComponents.Lift.LIMIT_DOWN.get() && speed < SubsystemConstants.Lift.STAYING_SPEED.get())
+				return false;
+			return true;
+		});
 		oi = new OI();
-		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
+		// drivetrain.setDefaultCommand(new DriveArcade(drivetrain,
+		// oi::getForward, oi::getRotation));
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
-		
+		lift.setDefaultCommand(new MoveBasicSubsystem(lift,
+				() -> SubsystemComponents.Lift.LIMIT_DOWN.get() || SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
+						? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
+
+		dbc = new DashBoardController();
+
+		dbc.addBoolean("limit up", SubsystemComponents.Lift.LIMIT_UP::get);
+		dbc.addBoolean("limit down", SubsystemComponents.Lift.LIMIT_DOWN::get);
+
+		dbc.addBoolean("lock", SubsystemComponents.LiftLocker.LIMIT_LOCKED::get);
+		dbc.addBoolean("unlock", SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get);
+
+		SmartDashboard.putData("up", new MoveLift(SubsystemConstants.Lift.UP_SPEED));
+		SmartDashboard.putData("down", new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
 	}
 
 	/**
@@ -81,6 +109,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		dbc.update();
 	}
 
 	/**
@@ -134,6 +163,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SubsystemComponents.Lift.updateLiftPosition();
+		dbc.update();
 	}
 
 	/**

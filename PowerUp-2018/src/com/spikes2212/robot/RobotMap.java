@@ -29,9 +29,9 @@ public class RobotMap {
 		public static final int FOLDER_2 = 1;
 		public static final int ROLLER_RIGHT = 2;
 		public static final int ROLLER_LEFT = 3;
-		public static final int LIFT_LOCKER = 4;
-		public static final int LIFT_MOTOR_A = 5;
-		public static final int LIFT_MOTOR_B = 6;
+		public static final int LIFT_LOCKER = 3;
+		public static final int LIFT_MOTOR_A = 1;
+		public static final int LIFT_MOTOR_B = 0;
 	}
 
 	public static interface DIO {
@@ -44,13 +44,13 @@ public class RobotMap {
 		public static final int DRIVE_LEFT_ENCODER_A = 10;
 		public static final int DRIVE_LEFT_ENCODER_B = 11;
 		public static final int ROLLER_LIGHT_SENSOR = 9;
-		public static final int LIFT_LOCKER_UNLOCKED_LIMIT = 8;
-		public static final int LIFT_LOCKER_LOCKED_LIMIT = 2;
+		public static final int LIFT_LOCKER_UNLOCKED_LIMIT = 0;
+		public static final int LIFT_LOCKER_LOCKED_LIMIT = 1;
 		public static final int LIFT_HALL_EFFECTS_SWITCH = 18;
 		public static final int LIFT_HALL_EFFECTS_MID_SCALE = 6;
 		public static final int LIFT_HALL_EFFECTS_LOW_SCALE = 7;
-		public static final int LIFT_LIMIT_UP = 0;
-		public static final int LIFT_LIMIT_DOWN = 1;
+		public static final int LIFT_LIMIT_UP = 2;
+		public static final int LIFT_LIMIT_DOWN = 3;
 	}
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
