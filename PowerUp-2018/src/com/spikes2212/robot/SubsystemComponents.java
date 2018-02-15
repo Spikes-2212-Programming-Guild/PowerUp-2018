@@ -72,7 +72,7 @@ public class SubsystemComponents {
 		}
 
 		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(
-				new VictorSP(RobotMap.PWM.LIFT_MOTOR_A), new VictorSP(RobotMap.PWM.LIFT_MOTOR_B));
+				new WPI_TalonSRX(RobotMap.PWM.LIFT_MOTOR_A), new WPI_TalonSRX(RobotMap.PWM.LIFT_MOTOR_B));
 		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_UP);
 		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_DOWN);
 		// stores the position of the lift to display on shuffleBoard
