@@ -31,17 +31,20 @@ public class PutCubeInScale extends CommandGroup {
 			0.1);
 	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("ScoreScaleFromSide - Tolerance",
 			0.5);
-	public static final Supplier<Double> WAIT_TIME = ConstantHandler.addConstantDouble("ScoreScaleFromSide - Wait Time",
-			0.5);
+	public static final Supplier<Double> MOVING_WAIT_TIME = ConstantHandler
+			.addConstantDouble("ScoreScaleFromSide - Wait Time", 0.5);
 	public static final Supplier<Double> DISTANCE_FROM_SCALE = ConstantHandler
 			.addConstantDouble("ScoreScaleFromSide - Distance From Scale", 20);
 
+	public static final Supplier<Double> ROTATE_TIME_OUT = ConstantHandler
+			.addConstantDouble("ScoreScaleFromSide - time out", 1);
+
 	public PutCubeInScale() {
 		addSequential(new DriveArcadeWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
-				DISTANCE_FROM_SCALE, FORWARD_SPEED,
-				new PIDSettings(MOVING_KP.get(), MOVING_KI.get(), MOVING_KD.get(), TOLERANCE.get(), WAIT_TIME.get()),
+				DISTANCE_FROM_SCALE, FORWARD_SPEED, new PIDSettings(MOVING_KP.get(), MOVING_KI.get(), MOVING_KD.get(),
+						TOLERANCE.get(), MOVING_WAIT_TIME.get()),
 				2.0));
-		addSequential(new DriveArcade(Robot.drivetrain, ()->0.0, ROTATE_SPEED));
+		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0, ROTATE_SPEED), ROTATE_TIME_OUT.get());
 		addSequential(new MoveBasicSubsystem(Robot.lift, SubsystemConstants.Lift.UP_SPEED));
 		addSequential(new PlaceCube());
 		addSequential(new MoveBasicSubsystem(Robot.lift, SubsystemConstants.Lift.DOWN_SPEED));
