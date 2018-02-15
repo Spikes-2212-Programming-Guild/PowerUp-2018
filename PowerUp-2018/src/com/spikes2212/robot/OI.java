@@ -7,7 +7,14 @@
 
 package com.spikes2212.robot;
 
+import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
+import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
+import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
+import com.spikes2212.robot.Commands.commandGroups.PrepareToPickUp;
+import com.spikes2212.utils.XboXUID;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -16,7 +23,37 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI /* GEVALD */ {
 	private Joystick driverLeft = new Joystick(0);
 	private Joystick driverRight = new Joystick(1);
-
+	
+	private XboXUID navigator = new XboXUID(2);
+	
+	//navigator
+	private Button liftSwitch;
+	private Button liftLowScale;
+	private Button liftMidScale;
+	private Button placeCube;
+	private Button prepareToPickCube;
+	private Button pickUpCube;
+	
+	public OI() {
+		initNavigator();
+	}
+	
+	private void initNavigator() {
+		liftSwitch = navigator.getDownButton();
+		liftLowScale = navigator.getLeftButton();	
+		liftMidScale = navigator.getUpButton();
+		placeCube = navigator.getYellowButton();
+		prepareToPickCube = navigator.getGreenButton();
+		pickUpCube = navigator.getRedButton();
+		
+		liftSwitch.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
+		liftLowScale.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.LOW_SCALE));
+		liftMidScale.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
+		placeCube.toggleWhenPressed(new PlaceCube());
+		prepareToPickCube.toggleWhenPressed(new PrepareToPickUp());
+		pickUpCube.toggleWhenPressed(new PickUpCube());
+	}
+	
 	public double getForward() {
 		return driverRight.getY();
 	}
@@ -24,31 +61,5 @@ public class OI /* GEVALD */ {
 	public double getRotation() {
 		return driverLeft.getX();
 	}
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
+	
 }
