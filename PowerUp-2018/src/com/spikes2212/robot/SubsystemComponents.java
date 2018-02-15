@@ -23,11 +23,6 @@ public class SubsystemComponents {
 		public static final DigitalInput MIN_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MIN_LIMIT);
 	}
 
-	public static class Claw {
-		public static final WPI_TalonSRX MOTOR = new WPI_TalonSRX(RobotMap.CAN.CLAW);
-		public static final DigitalInput LIMIT = new DigitalInput(RobotMap.DIO.CLAW_LIMIT);
-	}
-
 	public static class Drivetrain {
 		public static final DoubleSpeedcontroller RIGHT_MOTOR = new DoubleSpeedcontroller(
 				new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT1), new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT2));

@@ -28,7 +28,6 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	public static BasicSubsystem climber;
 	public static BasicSubsystem folder;
-	public static BasicSubsystem claw;
 	public static BasicSubsystem roller;
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
@@ -55,9 +54,6 @@ public class Robot extends TimedRobot {
 						.getOutputCurrent());
 		folder = new BasicSubsystem(SubsystemComponents.Folder.MOTOR::set,
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
-		claw = new BasicSubsystem(SubsystemComponents.Claw.MOTOR::set, new TwoLimits(
-				SubsystemComponents.Claw.LIMIT::get,
-				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() <= SubsystemComponents.Claw.MOTOR.getOutputCurrent()));
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(
 				SubsystemComponents.LiftLocker.LIMIT_UP::get, SubsystemComponents.LiftLocker.LIMIT_DOWN::get));
 		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set,
