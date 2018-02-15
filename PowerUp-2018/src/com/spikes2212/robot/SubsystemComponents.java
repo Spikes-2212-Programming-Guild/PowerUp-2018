@@ -36,6 +36,11 @@ public class SubsystemComponents {
 	}
 
 	public static class Roller {
+		
+		public static double calculateDistance() {
+			return SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()/LASER_SENSOR.getVoltage();
+		}
+		
 		public static final VictorSP MOTOR_RIGHT = new VictorSP(RobotMap.PWM.ROLLER_RIGHT);
 		public static final VictorSP MOTOR_LEFT = new VictorSP(RobotMap.PWM.ROLLER_LEFT);
 		public static final AnalogInput LASER_SENSOR = new AnalogInput(RobotMap.ANALOG_IN.ROLLER_LASER_SENSOR);
