@@ -37,8 +37,8 @@ public class SubsystemComponents {
 
 	public static class Roller {
 		
-		public static double calculateDistance() {
-			return SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()/LASER_SENSOR.getVoltage();
+		public static boolean hasCube() {
+			return SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()/LASER_SENSOR.getVoltage() <= SubsystemConstants.Roller.CUBE_DISTANCE.get();
 		}
 		
 		public static final VictorSP MOTOR_RIGHT = new VictorSP(RobotMap.PWM.ROLLER_RIGHT);
@@ -77,7 +77,7 @@ public class SubsystemComponents {
 		}
 
 		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(
-				new WPI_TalonSRX(RobotMap.PWM.LIFT_MOTOR_A), new WPI_TalonSRX(RobotMap.PWM.LIFT_MOTOR_B));
+				new WPI_TalonSRX(RobotMap.CAN.LIFT_MOTOR_A), new WPI_TalonSRX(RobotMap.CAN.LIFT_MOTOR_B));
 		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_UP);
 		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_DOWN);
 		// stores the position of the lift to display on shuffleBoard

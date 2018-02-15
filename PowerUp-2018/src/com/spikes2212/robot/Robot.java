@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
 		roller = new BasicSubsystem((Double speed) -> {
 			SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
 			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
-		}, new TwoLimits(() -> false, () -> SubsystemComponents.Roller.calculateDistance() <= SubsystemConstants.Roller.CUBE_DISTANCE.get()));
+		}, new TwoLimits(() -> false, () -> SubsystemComponents.Roller.hasCube()));
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
