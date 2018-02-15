@@ -16,7 +16,11 @@ public class MoveLift extends CommandGroup {
 
 	public MoveLift(Supplier<Double> speed) {
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
-		addParallel(new MoveBasicSubsystem(Robot.liftLocker, () -> SubsystemComponents.Lift.LIMIT_UP.get() ? SubsystemConstants.LiftLocker.LOCK_SPEED.get() : 0.0));
+		/*
+		 * addParallel(new MoveBasicSubsystem(Robot.liftLocker, () ->
+		 * SubsystemComponents.Lift.LIMIT_UP.get() ?
+		 * SubsystemConstants.LiftLocker.LOCK_SPEED.get() : 0.0));
+		 */
 		addSequential(new MoveBasicSubsystem(Robot.lift, speed));
 	}
 }
