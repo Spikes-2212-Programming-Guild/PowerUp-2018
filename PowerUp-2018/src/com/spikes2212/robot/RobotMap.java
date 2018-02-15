@@ -38,11 +38,10 @@ public class RobotMap {
 		public static final int FOLDER_MAX_LIMIT = 4;
 		public static final int FOLDER_MIN_LIMIT = 5;
 		public static final int CLAW_LIMIT = 3;
-		public static final int DRIVE_RIGHT_ENCODER_A = 14;
+		public static final int DRIVE_RIGHT_ENCODER_A = 9;
 		public static final int DRIVE_RIGHT_ENCODER_B = 12;
 		public static final int DRIVE_LEFT_ENCODER_A = 10;
 		public static final int DRIVE_LEFT_ENCODER_B = 11;
-		public static final int ROLLER_LIGHT_SENSOR = 9;
 		public static final int LIFT_LOCKER_UP_LIMIT = 8;
 		public static final int LIFT_LOCKER_DOWN_LIMIT = 2;
 		public static final int LIFT_HALL_EFFECTS_SWITCH = 18;
@@ -50,6 +49,15 @@ public class RobotMap {
 		public static final int LIFT_HALL_EFFECTS_LOW_SCALE = 7;
 		public static final int LIFT_LIMIT_UP = 0;
 		public static final int LIFT_LIMIT_DOWN = 1;
+	}
+	
+	public static interface ANALOG_IN{
+		public static final int ROLLER_LASER_SENSOR = 0;
+  }
+	
+	public static interface USB {
+		public static final int REAR_CAMERA = 0;
+		public static final int FRONT_CAMERA = 1;
 	}
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
