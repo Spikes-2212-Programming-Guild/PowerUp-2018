@@ -9,9 +9,12 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcadeWithPID;
 import com.spikes2212.robot.Robot;
 import com.spikes2212.robot.SubsystemComponents;
 import com.spikes2212.robot.SubsystemConstants;
+import com.spikes2212.robot.Commands.commandGroups.MoveLift;
+import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.utils.PIDSettings;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -36,13 +39,39 @@ public class PutCubeInScaleAuto extends CommandGroup {
 	public static final Supplier<Double> ROTATE_TIME_OUT = ConstantHandler
 			.addConstantDouble("ScoreScaleFromSide - time out", 1);
 
-	public PutCubeInScaleAuto() {
+	public static final Supplier<Double> DISTANCE_FROM_SWITCH = ConstantHandler
+			.addConstantDouble("ScoreScaleFromSide - Distance From Scale", 0.4);
+
+	public PutCubeInScaleAuto(AutoObjective objective) {
+		
+		
 		addSequential(new DriveArcadeWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
-				DISTANCE_FROM_SCALE, FORWARD_SPEED,
+				objective.setPoint, FORWARD_SPEED,
 				new PIDSettings(KP.get(), KI.get(), KD.get(), TOLERANCE.get(), MOVING_WAIT_TIME.get()), 2.0));
 		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0, ROTATE_SPEED), ROTATE_TIME_OUT.get());
-		addSequential(new MoveBasicSubsystem(Robot.lift, SubsystemConstants.Lift.UP_SPEED));
+		addSequential(objective.raiseLiftCommand);
 		addSequential(new PlaceCube());
 		addSequential(new MoveBasicSubsystem(Robot.lift, SubsystemConstants.Lift.DOWN_SPEED));
+	}
+
+	public static enum AutoObjective {
+		SWITCH(DISTANCE_FROM_SWITCH, new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH)), SCALE(
+				DISTANCE_FROM_SCALE, new MoveLift(SubsystemConstants.Lift.UP_SPEED));
+		
+		private Supplier<Double> setPoint;
+		private Command raiseLiftCommand;
+		
+		AutoObjective(Supplier<Double> setPoint, Command raiseLiftCommand){
+			this.setPoint = setPoint;
+			this.raiseLiftCommand = raiseLiftCommand;
+		}
+		
+		public Supplier<Double> getSetPoint(){
+			return setPoint;
+		}
+		
+		public Command getRaiseLiftCommand(){
+			return raiseLiftCommand;
+		}
 	}
 }
