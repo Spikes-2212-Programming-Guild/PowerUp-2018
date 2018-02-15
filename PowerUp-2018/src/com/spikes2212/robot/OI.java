@@ -54,14 +54,6 @@ public class OI /* GEVALD */ {
 		pickUpCube.toggleWhenPressed(new PickUpCube());
 	}
 	
-	public double getLiftUp() {
-		return navigator.getRTAxis();
-	}
-	
-	public double getLiftDown() {
-		return navigator.getLTAxis();
-	}
-	
 	public double getForward() {
 		return driverRight.getY();
 	}
