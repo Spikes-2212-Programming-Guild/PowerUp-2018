@@ -68,18 +68,22 @@ public class Robot extends TimedRobot {
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(
 				SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get, SubsystemComponents.LiftLocker.LIMIT_LOCKED::get));
 		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set, (Double speed) -> {
-			if (speed == 0)
+			if (speed == 0) // The lift can always move with 0.
 				return true;
+			// Returns false if the lift tries to move up when its in its upper
+			// limit.
 			if (SubsystemComponents.Lift.LIMIT_UP.get() && speed > SubsystemConstants.Lift.STAYING_SPEED.get())
 				return false;
+			// Returns false if the lift tries to move down when its in its
+			// lower limit.
 			if (SubsystemComponents.Lift.LIMIT_DOWN.get() && speed < SubsystemConstants.Lift.STAYING_SPEED.get())
 				return false;
 			return true;
 		});
 		oi = new OI();
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
-		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get() ? 0.0
-				: SubsystemConstants.Lift.STAYING_SPEED.get()));
+		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
+				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
 
 		camerasHandler.setExposure(47);
 		// chooser.addObject("My Auto", new MyAutoCommand());
