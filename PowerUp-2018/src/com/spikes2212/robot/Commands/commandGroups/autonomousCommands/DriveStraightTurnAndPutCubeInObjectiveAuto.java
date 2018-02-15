@@ -43,12 +43,14 @@ public class DriveStraightTurnAndPutCubeInObjectiveAuto extends CommandGroup {
 			.addConstantDouble("ScoreScaleFromSide - Distance From Scale", 0.4);
 
 	public DriveStraightTurnAndPutCubeInObjectiveAuto(AutoObjective objective) {
-		
-		
+
 		addSequential(new DriveArcadeWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
 				objective.setPoint, FORWARD_SPEED,
 				new PIDSettings(KP.get(), KI.get(), KD.get(), TOLERANCE.get(), MOVING_WAIT_TIME.get()), 2.0));
-		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0, ROTATE_SPEED), ROTATE_TIME_OUT.get());
+		addSequential(
+				new DriveArcade(Robot.drivetrain, () -> 0.0,
+						() -> Robot.gameData.charAt(0) == 'L' ? ROTATE_SPEED.get() : ROTATE_SPEED.get() * -1),
+				ROTATE_TIME_OUT.get());
 		addSequential(objective.raiseLiftCommand);
 		addSequential(new PlaceCube());
 		addSequential(new MoveBasicSubsystem(Robot.lift, SubsystemConstants.Lift.DOWN_SPEED));
@@ -57,20 +59,20 @@ public class DriveStraightTurnAndPutCubeInObjectiveAuto extends CommandGroup {
 	public static enum AutoObjective {
 		SWITCH(DISTANCE_FROM_SWITCH, new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH)), SCALE(
 				DISTANCE_FROM_SCALE, new MoveLift(SubsystemConstants.Lift.UP_SPEED));
-		
+
 		private Supplier<Double> setPoint;
 		private Command raiseLiftCommand;
-		
-		AutoObjective(Supplier<Double> setPoint, Command raiseLiftCommand){
+
+		AutoObjective(Supplier<Double> setPoint, Command raiseLiftCommand) {
 			this.setPoint = setPoint;
 			this.raiseLiftCommand = raiseLiftCommand;
 		}
-		
-		public Supplier<Double> getSetPoint(){
+
+		public Supplier<Double> getSetPoint() {
 			return setPoint;
 		}
-		
-		public Command getRaiseLiftCommand(){
+
+		public Command getRaiseLiftCommand() {
 			return raiseLiftCommand;
 		}
 	}
