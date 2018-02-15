@@ -16,8 +16,8 @@ public class PlaceCube extends CommandGroup {
 	public PlaceCube() {
 		// TODO check if we need to also roll the cube out
 		addSequential(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED));
-		/*addSequential(new MoveBasicSubsystemToTarget(Robot.roller, SubsystemConstants.Roller.ROLL_OUT_SPEED,
-				() -> SubsystemComponents.Roller.LIGHT_SENSOR.get()));*/
+		addSequential(new MoveBasicSubsystemToTarget(Robot.roller, SubsystemConstants.Roller.ROLL_OUT_SPEED,
+				() -> SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()/SubsystemComponents.Roller.LASER_SENSOR.getVoltage()>SubsystemConstants.Roller.CUBE_DISTANCE.get()));
 		addSequential(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED));
 
 	}
