@@ -23,11 +23,11 @@ public class PutCubeInScale extends CommandGroup {
 			.addConstantDouble("ScoreScaleFromSide - Forward Speed", 0.4);
 	public static final Supplier<Double> ROTATE_SPEED = ConstantHandler
 			.addConstantDouble("ScoreScaleFromSide - Rotate Speed", 0.4);
-	public static final Supplier<Double> MOVING_KP = ConstantHandler.addConstantDouble("ScoreScaleFromSide - Moving kp",
+	public static final Supplier<Double> KP = ConstantHandler.addConstantDouble("ScoreScaleFromSide - kp",
 			0.7);
-	public static final Supplier<Double> MOVING_KI = ConstantHandler.addConstantDouble("ScoreScaleFromSide - Moving ki",
+	public static final Supplier<Double> KI = ConstantHandler.addConstantDouble("ScoreScaleFromSide - ki",
 			0.04);
-	public static final Supplier<Double> MOVING_KD = ConstantHandler.addConstantDouble("ScoreScaleFromSide - Moving kd",
+	public static final Supplier<Double> KD = ConstantHandler.addConstantDouble("ScoreScaleFromSide - kd",
 			0.1);
 	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("ScoreScaleFromSide - Tolerance",
 			0.5);
@@ -41,7 +41,7 @@ public class PutCubeInScale extends CommandGroup {
 
 	public PutCubeInScale() {
 		addSequential(new DriveArcadeWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
-				DISTANCE_FROM_SCALE, FORWARD_SPEED, new PIDSettings(MOVING_KP.get(), MOVING_KI.get(), MOVING_KD.get(),
+				DISTANCE_FROM_SCALE, FORWARD_SPEED, new PIDSettings(KP.get(), KI.get(), KD.get(),
 						TOLERANCE.get(), MOVING_WAIT_TIME.get()),
 				2.0));
 		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0, ROTATE_SPEED), ROTATE_TIME_OUT.get());
