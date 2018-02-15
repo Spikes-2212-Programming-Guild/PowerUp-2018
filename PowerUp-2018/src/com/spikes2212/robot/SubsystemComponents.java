@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.spikes2212.utils.DoubleSpeedcontroller;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -42,7 +43,7 @@ public class SubsystemComponents {
 	public static class Roller {
 		public static final VictorSP MOTOR_RIGHT = new VictorSP(RobotMap.PWM.ROLLER_RIGHT);
 		public static final VictorSP MOTOR_LEFT = new VictorSP(RobotMap.PWM.ROLLER_LEFT);
-		public static final DigitalInput LIGHT_SENSOR = new DigitalInput(RobotMap.DIO.ROLLER_LIGHT_SENSOR);
+		public static final AnalogInput LASER_SENSOR = new AnalogInput(RobotMap.ANALOG_IN.ROLLER_LASER_SENSOR);
 	}
 
 	public static class LiftLocker {
