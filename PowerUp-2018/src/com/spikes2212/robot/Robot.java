@@ -9,6 +9,7 @@ package com.spikes2212.robot;
 
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
+import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
@@ -77,6 +78,8 @@ public class Robot extends TimedRobot {
 		});
 		oi = new OI();
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
+		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_DOWN.get() ? 0.0
+				: SubsystemConstants.Lift.STAYING_SPEED.get()));
 
 		camerasHandler.setExposure(47);
 		// chooser.addObject("My Auto", new MyAutoCommand());
