@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class PutCubeInScaleAuto extends CommandGroup {
+public class DriveStraightTurnAndPutCubeInObjectiveAuto extends CommandGroup {
 
 	public static final Supplier<Double> FORWARD_SPEED = ConstantHandler
 			.addConstantDouble("ScoreScaleFromSide - Forward Speed", 0.4);
@@ -42,7 +42,7 @@ public class PutCubeInScaleAuto extends CommandGroup {
 	public static final Supplier<Double> DISTANCE_FROM_SWITCH = ConstantHandler
 			.addConstantDouble("ScoreScaleFromSide - Distance From Scale", 0.4);
 
-	public PutCubeInScaleAuto(AutoObjective objective) {
+	public DriveStraightTurnAndPutCubeInObjectiveAuto(AutoObjective objective) {
 		
 		
 		addSequential(new DriveArcadeWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
