@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
 				SubsystemComponents.Claw.LIMIT::get,
 				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() <= SubsystemComponents.Claw.MOTOR.getOutputCurrent()));
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(
-				SubsystemComponents.LiftLocker.LIMIT_UP::get, SubsystemComponents.LiftLocker.LIMIT_DOWN::get));
+				SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get, SubsystemComponents.LiftLocker.LIMIT_LOCKED::get));
 		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set, (Double speed) -> {
 			if (speed == 0)
 				return true;
@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
 		});
 		oi = new OI();
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
-		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_DOWN.get() ? 0.0
+		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get() ? 0.0
 				: SubsystemConstants.Lift.STAYING_SPEED.get()));
 
 		camerasHandler.setExposure(47);
