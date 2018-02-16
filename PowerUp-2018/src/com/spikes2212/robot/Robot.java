@@ -13,11 +13,13 @@ import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -89,13 +91,55 @@ public class Robot extends TimedRobot {
 		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		camerasHandler.setExposure(47);
 
+		initDBC();
+		initDashboard();
+	}
+
+	public static void initDBC() {
 		dbc = new DashBoardController();
-		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
+
+		// locker data
+		dbc.addBoolean("locker - is locked", SubsystemComponents.LiftLocker.LIMIT_LOCKED::get);
+		dbc.addBoolean("locker - is unlocked", SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get);
+
+		// lift data
 		dbc.addBoolean("Lift - up", SubsystemComponents.Lift.LIMIT_UP::get);
 		dbc.addBoolean("Lift - mid scale", SubsystemComponents.Lift.HallEffects.MID_SCALE.getHallEffect()::get);
 		dbc.addBoolean("Lift - low scale", SubsystemComponents.Lift.HallEffects.LOW_SCALE.getHallEffect()::get);
 		dbc.addBoolean("lift - switch", SubsystemComponents.Lift.HallEffects.SWITCH.getHallEffect()::get);
 		dbc.addBoolean("Lift - down", SubsystemComponents.Lift.LIMIT_DOWN::get);
+
+		// folder data
+		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
+		dbc.addBoolean("Folder - down", SubsystemComponents.Folder.MIN_LIMIT::get);
+
+		// roller data
+		dbc.addBoolean("roller - has cube", SubsystemComponents.Roller::hasCube);
+
+		// general information
+		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
+				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
+	}
+
+	public static void initDashboard() {
+		// locker commands
+		SmartDashboard.putData("unlock",
+				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
+		SmartDashboard.putData("lock", new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
+
+		// lift commands
+		SmartDashboard.putData("move lift up", new MoveLift(SubsystemConstants.Lift.UP_SPEED));
+		SmartDashboard.putData("move lift down", new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
+
+		// folder commands
+		SmartDashboard.putData("move folder up", new MoveBasicSubsystem(folder, SubsystemConstants.Folder.UP_SPEED));
+		SmartDashboard.putData("move folder down",
+				new MoveBasicSubsystem(folder, SubsystemConstants.Folder.DOWN_SPEED));
+
+		// roller commands
+		SmartDashboard.putData("roll in", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_IN_SPEED));
+		SmartDashboard.putData("roll out", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_OUT_SPEED));
+
 	}
 
 	/**
