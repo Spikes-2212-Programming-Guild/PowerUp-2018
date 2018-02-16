@@ -15,12 +15,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class MoveLift extends CommandGroup {
 
 	public MoveLift(Supplier<Double> speed) {
-		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
-		/*
-		 * addParallel(new MoveBasicSubsystem(Robot.liftLocker, () ->
-		 * SubsystemComponents.Lift.LIMIT_UP.get() ?
-		 * SubsystemConstants.LiftLocker.LOCK_SPEED.get() : 0.0));
-		 */
-		addSequential(new MoveBasicSubsystem(Robot.lift, speed));
+		addParallel(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
+		addSequential(new MoveBasicSubsystem(Robot.lift, () -> {
+			if (SubsystemComponents.LiftLocker.LIMIT_LOCKED.get())
+				return 0.0;
+			if (SubsystemComponents.LiftLocker.LIMIT_UNLOCKED.get())
+				return speed.get();
+			return SubsystemConstants.Lift.STAYING_SPEED.get();
+		}));
 	}
 }
