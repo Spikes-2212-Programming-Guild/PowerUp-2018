@@ -90,13 +90,14 @@ public class Robot extends TimedRobot {
 
 		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		camerasHandler.setExposure(47);
-
+		
+		dbc = new DashBoardController();
+		
 		initDBC();
 		initDashboard();
 	}
 
 	public static void initDBC() {
-		dbc = new DashBoardController();
 
 		// locker data
 		dbc.addBoolean("locker - is locked", SubsystemComponents.LiftLocker.LIMIT_LOCKED::get);
@@ -140,6 +141,9 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("roll in", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_IN_SPEED));
 		SmartDashboard.putData("roll out", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_OUT_SPEED));
 
+		// Climb
+		SmartDashboard.putData("climb up" , new MoveBasicSubsystem(climber, SubsystemConstants.Climber.UP_SPEED));
+		SmartDashboard.putData("climb down" , new MoveBasicSubsystem(climber, SubsystemConstants.Climber.DOWN_SPEED));
 	}
 
 	/**
