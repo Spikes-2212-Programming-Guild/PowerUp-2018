@@ -27,11 +27,7 @@ public class DriveStraightTurnAndPutCubeInObjectiveAuto extends CommandGroup {
 			.addConstantDouble("ScoreScaleFromSide - Forward Speed", 0.4);
 	public static final Supplier<Double> ROTATE_SPEED = ConstantHandler
 			.addConstantDouble("ScoreScaleFromSide - Rotate Speed", 0.4);
-	public static final Supplier<Double> KP = ConstantHandler.addConstantDouble("ScoreScaleFromSide - kp", 0.7);
-	public static final Supplier<Double> KI = ConstantHandler.addConstantDouble("ScoreScaleFromSide - ki", 0.04);
-	public static final Supplier<Double> KD = ConstantHandler.addConstantDouble("ScoreScaleFromSide - kd", 0.1);
-	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("ScoreScaleFromSide - Tolerance",
-			0.5);
+
 	public static final Supplier<Double> MOVING_WAIT_TIME = ConstantHandler
 			.addConstantDouble("ScoreScaleFromSide - Wait Time", 0.5);
 	public static final Supplier<Double> DISTANCE_FROM_SCALE = ConstantHandler
@@ -44,21 +40,27 @@ public class DriveStraightTurnAndPutCubeInObjectiveAuto extends CommandGroup {
 			.addConstantDouble("ScoreScaleFromSide - Distance From Scale", 0.4);
 
 	public DriveStraightTurnAndPutCubeInObjectiveAuto(AutoObjective objective, char startSide) {
-		if(Robot.gameData.charAt(0) == startSide) {
-			addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER, SubsystemComponents.Drivetrain.RIGHT_ENCODER,
-					objective.setPoint, 
-					new PIDSettings(KP.get(), KI.get(), KD.get(), TOLERANCE.get(), MOVING_WAIT_TIME.get())));
+		if (Robot.gameData.charAt(0) == startSide) {
+			addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
+					SubsystemComponents.Drivetrain.RIGHT_ENCODER, objective.setPoint,
+					new PIDSettings(SubsystemConstants.Drivetrain.DRIVING_KP.get(),
+							SubsystemConstants.Drivetrain.DRIVING_KI.get(),
+							SubsystemConstants.Drivetrain.DRIVING_KD.get(),
+							SubsystemConstants.Drivetrain.DRIVING_TOLERANCE.get(), MOVING_WAIT_TIME.get())));
 			addSequential(
 					new DriveArcade(Robot.drivetrain, () -> 0.0,
-						() -> Robot.gameData.charAt(0) == 'L' ? ROTATE_SPEED.get() : ROTATE_SPEED.get() * -1),
+							() -> Robot.gameData.charAt(0) == 'L' ? ROTATE_SPEED.get() : ROTATE_SPEED.get() * -1),
 					ROTATE_TIME_OUT.get());
 			addSequential(objective.raiseLiftCommand);
 			addSequential(new PlaceCube());
 			addSequential(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
-		}else
-			addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER, SubsystemComponents.Drivetrain.RIGHT_ENCODER,
-					objective.setPoint, 
-					new PIDSettings(KP.get(), KI.get(), KD.get(), TOLERANCE.get(), MOVING_WAIT_TIME.get())));
+		} else
+			addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
+					SubsystemComponents.Drivetrain.RIGHT_ENCODER, objective.setPoint,
+					new PIDSettings(SubsystemConstants.Drivetrain.DRIVING_KP.get(),
+							SubsystemConstants.Drivetrain.DRIVING_KI.get(),
+							SubsystemConstants.Drivetrain.DRIVING_KD.get(),
+							SubsystemConstants.Drivetrain.DRIVING_TOLERANCE.get(), MOVING_WAIT_TIME.get())));
 	}
 
 	public static enum AutoObjective {
