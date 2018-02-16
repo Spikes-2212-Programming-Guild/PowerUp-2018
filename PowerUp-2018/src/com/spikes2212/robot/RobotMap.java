@@ -42,9 +42,9 @@ public class RobotMap {
 		public static final int DRIVE_LEFT_ENCODER_B = 13;
 		public static final int LIFT_LOCKER_UNLOCKED_LIMIT = 8;
 		public static final int LIFT_LOCKER_LOCKED_LIMIT = 2;
-		public static final int LIFT_HALL_EFFECTS_SWITCH = 18;
-		public static final int LIFT_HALL_EFFECTS_MID_SCALE = 6;
-		public static final int LIFT_HALL_EFFECTS_LOW_SCALE = 7;
+		public static final int LIFT_HALL_EFFECTS_SWITCH = 21;
+		public static final int LIFT_HALL_EFFECTS_LOW_SCALE = 22;
+		public static final int LIFT_HALL_EFFECTS_MID_SCALE = 23;
 		public static final int LIFT_LIMIT_UP = 0;
 		public static final int LIFT_LIMIT_DOWN = 1;
 	}
