@@ -6,6 +6,7 @@ import com.spikes2212.dashboard.ConstantHandler;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcadeWithPID;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
 import com.spikes2212.robot.Robot;
 import com.spikes2212.robot.SubsystemComponents;
 import com.spikes2212.robot.SubsystemConstants;
@@ -44,9 +45,9 @@ public class DriveStraightTurnAndPutCubeInObjectiveAuto extends CommandGroup {
 
 	public DriveStraightTurnAndPutCubeInObjectiveAuto(AutoObjective objective) {
 
-		addSequential(new DriveArcadeWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
-				objective.setPoint, FORWARD_SPEED,
-				new PIDSettings(KP.get(), KI.get(), KD.get(), TOLERANCE.get(), MOVING_WAIT_TIME.get()), 2.0));
+		addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER, SubsystemComponents.Drivetrain.RIGHT_ENCODER,
+				objective.setPoint, 
+				new PIDSettings(KP.get(), KI.get(), KD.get(), TOLERANCE.get(), MOVING_WAIT_TIME.get())));
 		addSequential(
 				new DriveArcade(Robot.drivetrain, () -> 0.0,
 						() -> Robot.gameData.charAt(0) == 'L' ? ROTATE_SPEED.get() : ROTATE_SPEED.get() * -1),
