@@ -16,11 +16,12 @@ package com.spikes2212.robot;
 public class RobotMap {
 	public static interface CAN {
 		public static final int CLIMBER = 0;
-		public static final int CLAW = 1;
 		public static final int DRIVE_RIGHT1 = 2;
 		public static final int DRIVE_RIGHT2 = 3;
 		public static final int DRIVE_LEFT1 = 4;
 		public static final int DRIVE_LEFT2 = 5;
+		public static final int LIFT_MOTOR_A = 7;
+		public static final int LIFT_MOTOR_B = 6;
 	}
 
 	public static interface PWM {
@@ -30,14 +31,11 @@ public class RobotMap {
 		public static final int ROLLER_RIGHT = 2;
 		public static final int ROLLER_LEFT = 3;
 		public static final int LIFT_LOCKER = 4;
-		public static final int LIFT_MOTOR_A = 5;
-		public static final int LIFT_MOTOR_B = 6;
 	}
 
 	public static interface DIO {
 		public static final int FOLDER_MAX_LIMIT = 4;
 		public static final int FOLDER_MIN_LIMIT = 5;
-		public static final int CLAW_LIMIT = 3;
 		public static final int DRIVE_RIGHT_ENCODER_A = 9;
 		public static final int DRIVE_RIGHT_ENCODER_B = 12;
 		public static final int DRIVE_LEFT_ENCODER_A = 10;

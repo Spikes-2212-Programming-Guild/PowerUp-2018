@@ -30,7 +30,6 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	public static BasicSubsystem climber;
 	public static BasicSubsystem folder;
-	public static BasicSubsystem claw;
 	public static BasicSubsystem roller;
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
@@ -52,9 +51,8 @@ public class Robot extends TimedRobot {
 		roller = new BasicSubsystem((Double speed) -> {
 			SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
 			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
-		}, new TwoLimits(() -> false, () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
-				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage() <= SubsystemConstants.Roller.CUBE_DISTANCE
-						.get())));
+		}, new TwoLimits(() -> false, () -> SubsystemComponents.Roller.hasCube()));
+
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
@@ -62,9 +60,6 @@ public class Robot extends TimedRobot {
 						.getOutputCurrent());
 		folder = new BasicSubsystem(SubsystemComponents.Folder.MOTOR::set,
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
-		claw = new BasicSubsystem(SubsystemComponents.Claw.MOTOR::set, new TwoLimits(
-				SubsystemComponents.Claw.LIMIT::get,
-				() -> SubsystemConstants.Claw.MAX_VOLTAGE.get() <= SubsystemComponents.Claw.MOTOR.getOutputCurrent()));
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(
 				SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get, SubsystemComponents.LiftLocker.LIMIT_LOCKED::get));
 		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set, (Double speed) -> {
