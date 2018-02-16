@@ -36,15 +36,19 @@ public class RobotMap {
 	public static interface DIO {
 		public static final int FOLDER_MAX_LIMIT = 5;
 		public static final int FOLDER_MIN_LIMIT = 4;
+		
 		public static final int DRIVE_RIGHT_ENCODER_A = 10;
 		public static final int DRIVE_RIGHT_ENCODER_B = 11;
 		public static final int DRIVE_LEFT_ENCODER_A = 12;
 		public static final int DRIVE_LEFT_ENCODER_B = 13;
-		public static final int LIFT_LOCKER_UNLOCKED_LIMIT = 8;
-		public static final int LIFT_LOCKER_LOCKED_LIMIT = 2;
+		
+		public static final int LIFT_LOCKER_UNLOCKED_LIMIT = 0;
+		public static final int LIFT_LOCKER_LOCKED_LIMIT = 1;
+		
 		public static final int LIFT_HALL_EFFECTS_SWITCH = 21;
 		public static final int LIFT_HALL_EFFECTS_LOW_SCALE = 22;
 		public static final int LIFT_HALL_EFFECTS_MID_SCALE = 23;
+		
 		public static final int LIFT_LIMIT_UP = 0;
 		public static final int LIFT_LIMIT_DOWN = 1;
 	}
