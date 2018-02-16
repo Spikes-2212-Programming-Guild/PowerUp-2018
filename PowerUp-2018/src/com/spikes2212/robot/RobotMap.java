@@ -49,8 +49,8 @@ public class RobotMap {
 		public static final int LIFT_HALL_EFFECTS_LOW_SCALE = 22;
 		public static final int LIFT_HALL_EFFECTS_MID_SCALE = 23;
 		
-		public static final int LIFT_LIMIT_UP = 0;
-		public static final int LIFT_LIMIT_DOWN = 1;
+		public static final int LIFT_LIMIT_UP = 2;
+		public static final int LIFT_LIMIT_DOWN = 3;
 	}
 	
 	public static interface ANALOG_IN{
