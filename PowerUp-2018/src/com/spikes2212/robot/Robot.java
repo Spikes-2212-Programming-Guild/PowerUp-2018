@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		// TODO check which motor is inverted
-		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
+
 		roller = new BasicSubsystem((Double speed) -> {
 			SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
 			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
@@ -55,13 +55,17 @@ public class Robot extends TimedRobot {
 
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
+
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
 				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
 						.getOutputCurrent());
+
 		folder = new BasicSubsystem(SubsystemComponents.Folder.MOTOR::set,
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
+
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(
 				SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get, SubsystemComponents.LiftLocker.LIMIT_LOCKED::get));
+
 		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set, (Double speed) -> {
 			if (speed == 0) // The lift can always move with 0.
 				return true;
@@ -75,13 +79,16 @@ public class Robot extends TimedRobot {
 				return false;
 			return true;
 		});
+
 		oi = new OI();
+
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
 				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
 
+		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		camerasHandler.setExposure(47);
-		// chooser.addObject("My Auto", new MyAutoCommand());
+
 		dbc = new DashBoardController();
 		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
 		dbc.addBoolean("Lift - up", SubsystemComponents.Lift.LIMIT_UP::get);
