@@ -34,8 +34,8 @@ public class RobotMap {
 	}
 
 	public static interface DIO {
-		public static final int FOLDER_MAX_LIMIT = 4;
-		public static final int FOLDER_MIN_LIMIT = 5;
+		public static final int FOLDER_MAX_LIMIT = 5;
+		public static final int FOLDER_MIN_LIMIT = 4;
 		public static final int DRIVE_RIGHT_ENCODER_A = 10;
 		public static final int DRIVE_RIGHT_ENCODER_B = 11;
 		public static final int DRIVE_LEFT_ENCODER_A = 12;
