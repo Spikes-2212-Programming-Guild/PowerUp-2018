@@ -154,6 +154,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		dbc.update();
 	}
 
 	/**
@@ -208,6 +209,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SubsystemComponents.Lift.updateLiftPosition();
+		dbc.update();
 	}
 
 	/**
