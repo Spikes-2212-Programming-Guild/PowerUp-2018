@@ -14,18 +14,20 @@ package com.spikes2212.robot;
  * floating around.
  */
 public class RobotMap {
+
+	// supposed to be true. change it to pretty numbers after test
 	public static interface CAN {
 		public static final int CLIMBER = 0;
 		public static final int DRIVE_RIGHT1 = 2;
 		public static final int DRIVE_RIGHT2 = 3;
 		public static final int DRIVE_LEFT1 = 4;
 		public static final int DRIVE_LEFT2 = 5;
-		public static final int LIFT_MOTOR_A = 7;
-		public static final int LIFT_MOTOR_B = 6;
+		public static final int LIFT_MOTOR_A = 1;
+		public static final int LIFT_MOTOR_B = 9;
 	}
 
+	// TODO - check ports
 	public static interface PWM {
-
 		public static final int FOLDER_1 = 0;
 		public static final int FOLDER_2 = 1;
 		public static final int ROLLER_RIGHT = 2;
@@ -33,41 +35,33 @@ public class RobotMap {
 		public static final int LIFT_LOCKER = 4;
 	}
 
+	// supposed to be done
 	public static interface DIO {
 		public static final int FOLDER_MAX_LIMIT = 5;
 		public static final int FOLDER_MIN_LIMIT = 4;
-		
+
 		public static final int DRIVE_RIGHT_ENCODER_A = 10;
 		public static final int DRIVE_RIGHT_ENCODER_B = 11;
 		public static final int DRIVE_LEFT_ENCODER_A = 12;
 		public static final int DRIVE_LEFT_ENCODER_B = 13;
-		
+
 		public static final int LIFT_LOCKER_UNLOCKED_LIMIT = 0;
 		public static final int LIFT_LOCKER_LOCKED_LIMIT = 1;
-		
+
 		public static final int LIFT_HALL_EFFECTS_SWITCH = 21;
 		public static final int LIFT_HALL_EFFECTS_LOW_SCALE = 22;
 		public static final int LIFT_HALL_EFFECTS_MID_SCALE = 23;
-		
+
 		public static final int LIFT_LIMIT_UP = 2;
 		public static final int LIFT_LIMIT_DOWN = 3;
 	}
-	
-	public static interface ANALOG_IN{
+
+	public static interface ANALOG_IN {
 		public static final int ROLLER_LASER_SENSOR = 0;
-  }
-	
+	}
+
 	public static interface USB {
 		public static final int REAR_CAMERA = 0;
 		public static final int FRONT_CAMERA = 1;
 	}
-	// For example to map the left and right motors, you could define the
-	// following variables to use with your drivetrain subsystem.
-	// public static int leftMotor = 1;
-	// public static int rightMotor = 2;
-
-	// If you are using multiple modules, make sure to define both the port
-	// number and the module. For example you with a rangefinder:
-	// public static int rangefinderPort = 1;
-	// public static int rangefinderModule = 1;
 }
