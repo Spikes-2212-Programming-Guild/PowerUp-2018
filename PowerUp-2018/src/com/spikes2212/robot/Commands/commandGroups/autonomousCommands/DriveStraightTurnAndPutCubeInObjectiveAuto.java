@@ -43,18 +43,22 @@ public class DriveStraightTurnAndPutCubeInObjectiveAuto extends CommandGroup {
 	public static final Supplier<Double> DISTANCE_FROM_SWITCH = ConstantHandler
 			.addConstantDouble("ScoreScaleFromSide - Distance From Scale", 0.4);
 
-	public DriveStraightTurnAndPutCubeInObjectiveAuto(AutoObjective objective) {
-
-		addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER, SubsystemComponents.Drivetrain.RIGHT_ENCODER,
-				objective.setPoint, 
-				new PIDSettings(KP.get(), KI.get(), KD.get(), TOLERANCE.get(), MOVING_WAIT_TIME.get())));
-		addSequential(
-				new DriveArcade(Robot.drivetrain, () -> 0.0,
+	public DriveStraightTurnAndPutCubeInObjectiveAuto(AutoObjective objective, char startSide) {
+		if(Robot.gameData.charAt(0) == startSide) {
+			addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER, SubsystemComponents.Drivetrain.RIGHT_ENCODER,
+					objective.setPoint, 
+					new PIDSettings(KP.get(), KI.get(), KD.get(), TOLERANCE.get(), MOVING_WAIT_TIME.get())));
+			addSequential(
+					new DriveArcade(Robot.drivetrain, () -> 0.0,
 						() -> Robot.gameData.charAt(0) == 'L' ? ROTATE_SPEED.get() : ROTATE_SPEED.get() * -1),
-				ROTATE_TIME_OUT.get());
-		addSequential(objective.raiseLiftCommand);
-		addSequential(new PlaceCube());
-		addSequential(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
+					ROTATE_TIME_OUT.get());
+			addSequential(objective.raiseLiftCommand);
+			addSequential(new PlaceCube());
+			addSequential(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
+		}else
+			addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER, SubsystemComponents.Drivetrain.RIGHT_ENCODER,
+					objective.setPoint, 
+					new PIDSettings(KP.get(), KI.get(), KD.get(), TOLERANCE.get(), MOVING_WAIT_TIME.get())));
 	}
 
 	public static enum AutoObjective {
