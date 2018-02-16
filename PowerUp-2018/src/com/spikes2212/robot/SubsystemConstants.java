@@ -26,9 +26,11 @@ public class SubsystemConstants {
 
 	public static interface Roller {
 		public static final Supplier<Double> ROLL_IN_SPEED = ConstantHandler.addConstantDouble("Roller In Speed", -0.6);
-		public static final Supplier<Double> ROLL_OUT_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed", 0.7);
-		public static final Supplier<Integer> LASER_SENSOR_CONSTANT = ConstantHandler.addConstantInt("laser sensor", 27);
-		//TODO find out the real distance of the cube from the sensor 
+		public static final Supplier<Double> ROLL_OUT_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed",
+				0.7);
+		public static final Supplier<Integer> LASER_SENSOR_CONSTANT = ConstantHandler.addConstantInt("laser sensor",
+				27);
+		// TODO find out the real distance of the cube from the sensor
 		public static final Supplier<Double> CUBE_DISTANCE = ConstantHandler.addConstantDouble("Cube Distance", 20);
 	}
 
@@ -42,5 +44,18 @@ public class SubsystemConstants {
 	public static interface Lift {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Lift Up Speed", 0.7);
 		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Lift Down Speed", -0.6);
+	}
+
+	public static interface Drivetrain {
+
+		public static final Supplier<Double> DRIVING_KP = ConstantHandler.addConstantDouble("ScoreScaleFromSide - kp",
+				0.7);
+		public static final Supplier<Double> DRIVING_KI = ConstantHandler.addConstantDouble("ScoreScaleFromSide - ki",
+				0.04);
+		public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("ScoreScaleFromSide - kd",
+				0.1);
+		public static final Supplier<Double> DRIVING_TOLERANCE = ConstantHandler
+				.addConstantDouble("ScoreScaleFromSide - Tolerance", 0.5);
+
 	}
 }
