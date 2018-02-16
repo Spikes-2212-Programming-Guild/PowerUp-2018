@@ -54,7 +54,7 @@ public class DriveStraightTurnAndPutCubeInObjectiveAuto extends CommandGroup {
 				ROTATE_TIME_OUT.get());
 		addSequential(objective.raiseLiftCommand);
 		addSequential(new PlaceCube());
-		addSequential(new MoveBasicSubsystem(Robot.lift, SubsystemConstants.Lift.DOWN_SPEED));
+		addSequential(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
 	}
 
 	public static enum AutoObjective {
