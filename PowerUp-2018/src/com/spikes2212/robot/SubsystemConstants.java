@@ -21,10 +21,8 @@ public class SubsystemConstants {
 	}
 
 	public static interface Folder {
-		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.75);
-		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Folder Down Speed", -0.4);
-		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("folder staying speed",
-				0.5);
+		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.3);
+		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Folder Down Speed", -0.6);
 	}
 
 	public static interface Roller {
@@ -34,7 +32,7 @@ public class SubsystemConstants {
 		public static final Supplier<Integer> LASER_SENSOR_CONSTANT = ConstantHandler.addConstantInt("laser sensor",
 				27);
 		// TODO find out the real distance of the cube from the sensor
-		public static final Supplier<Double> CUBE_DISTANCE = ConstantHandler.addConstantDouble("Cube Distance", 20);
+		public static final Supplier<Double> CUBE_DISTANCE = ConstantHandler.addConstantDouble("Cube Distance", 17);
 	}
 
 	public static interface LiftLocker {
@@ -47,7 +45,7 @@ public class SubsystemConstants {
 	public static interface Lift {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Lift Up Speed", 0.6);
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Lift Staying Speed",
-				0.1);
-		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Lift Down Speed", 0.044);
+				0.2);
+		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Lift Down Speed", 0.05);
 	}
 }
