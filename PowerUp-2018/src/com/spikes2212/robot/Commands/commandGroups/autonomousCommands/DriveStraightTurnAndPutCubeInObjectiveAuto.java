@@ -3,9 +3,7 @@ package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
 import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
-import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
-import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcadeWithPID;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
 import com.spikes2212.robot.Robot;
 import com.spikes2212.robot.SubsystemComponents;
@@ -18,52 +16,9 @@ import com.spikes2212.utils.PIDSettings;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- */
 public class DriveStraightTurnAndPutCubeInObjectiveAuto extends CommandGroup {
 
-	public static final Supplier<Double> FORWARD_SPEED = ConstantHandler
-			.addConstantDouble("ScoreScaleFromSide - Forward Speed", 0.4);
-	public static final Supplier<Double> ROTATE_SPEED = ConstantHandler
-			.addConstantDouble("ScoreScaleFromSide - Rotate Speed", 0.4);
-
-	public static final Supplier<Double> MOVING_WAIT_TIME = ConstantHandler
-			.addConstantDouble("ScoreScaleFromSide - Wait Time", 0.5);
-	public static final Supplier<Double> DISTANCE_FROM_SCALE = ConstantHandler
-			.addConstantDouble("ScoreScaleFromSide - Distance From Scale", 20);
-
-	public static final Supplier<Double> ROTATE_TIME_OUT = ConstantHandler
-			.addConstantDouble("ScoreScaleFromSide - time out", 1);
-
-	public static final Supplier<Double> DISTANCE_FROM_SWITCH = ConstantHandler
-			.addConstantDouble("ScoreScaleFromSide - Distance From Scale", 0.4);
-
-	public DriveStraightTurnAndPutCubeInObjectiveAuto(AutoObjective objective, char startSide) {
-		if (Robot.gameData.charAt(0) == startSide) {
-			addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
-					SubsystemComponents.Drivetrain.RIGHT_ENCODER, objective.setPoint,
-					new PIDSettings(SubsystemConstants.Drivetrain.DRIVING_KP.get(),
-							SubsystemConstants.Drivetrain.DRIVING_KI.get(),
-							SubsystemConstants.Drivetrain.DRIVING_KD.get(),
-							SubsystemConstants.Drivetrain.DRIVING_TOLERANCE.get(), MOVING_WAIT_TIME.get())));
-			addSequential(
-					new DriveArcade(Robot.drivetrain, () -> 0.0,
-							() -> Robot.gameData.charAt(0) == 'L' ? ROTATE_SPEED.get() : ROTATE_SPEED.get() * -1),
-					ROTATE_TIME_OUT.get());
-			addSequential(objective.raiseLiftCommand);
-			addSequential(new PlaceCube());
-			addSequential(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
-		} else
-			addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
-					SubsystemComponents.Drivetrain.RIGHT_ENCODER, objective.setPoint,
-					new PIDSettings(SubsystemConstants.Drivetrain.DRIVING_KP.get(),
-							SubsystemConstants.Drivetrain.DRIVING_KI.get(),
-							SubsystemConstants.Drivetrain.DRIVING_KD.get(),
-							SubsystemConstants.Drivetrain.DRIVING_TOLERANCE.get(), MOVING_WAIT_TIME.get())));
-	}
-
-	public static enum AutoObjective {
+	public enum AutoObjective {
 		SWITCH(DISTANCE_FROM_SWITCH, new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH)), SCALE(
 				DISTANCE_FROM_SCALE, new MoveLift(SubsystemConstants.Lift.UP_SPEED));
 
@@ -81,6 +36,45 @@ public class DriveStraightTurnAndPutCubeInObjectiveAuto extends CommandGroup {
 
 		public Command getRaiseLiftCommand() {
 			return raiseLiftCommand;
+		}
+	}
+
+	public static final Supplier<Double> FORWARD_SPEED = ConstantHandler
+			.addConstantDouble("ScoreScaleFromSide - Forward Speed", 0.4);
+	public static final Supplier<Double> ROTATE_SPEED = ConstantHandler
+			.addConstantDouble("ScoreScaleFromSide - Rotate Speed", 0.4);
+
+	public static final Supplier<Double> MOVING_PID_WAIT_TIME = ConstantHandler
+			.addConstantDouble("ScoreScaleFromSide - Wait Time", 0.5);
+
+	public static final Supplier<Double> ROTATE_TIME = ConstantHandler
+			.addConstantDouble("ScoreScaleFromSide - time out", 1);
+
+	public static final Supplier<Double> DISTANCE_FROM_SWITCH = ConstantHandler
+			.addConstantDouble("ScoreScaleFromSide - Distance From Scale", 0.4);
+	public static final Supplier<Double> DISTANCE_FROM_SCALE = ConstantHandler
+			.addConstantDouble("ScoreScaleFromSide - Distance From Scale", 20);
+
+	public DriveStraightTurnAndPutCubeInObjectiveAuto(AutoObjective objective, char startSide) {
+		// drive to target
+		addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
+				SubsystemComponents.Drivetrain.RIGHT_ENCODER, objective.setPoint,
+				new PIDSettings(SubsystemConstants.Drivetrain.DRIVING_KP.get(),
+						SubsystemConstants.Drivetrain.DRIVING_KI.get(), SubsystemConstants.Drivetrain.DRIVING_KD.get(),
+						SubsystemConstants.Drivetrain.DRIVING_TOLERANCE.get(), MOVING_PID_WAIT_TIME.get())));
+		// the correct side
+		if (Robot.gameData.charAt(0) == startSide) {
+			// rotate to target
+			addSequential(
+					new DriveArcade(Robot.drivetrain, () -> 0.0,
+							() -> Robot.gameData.charAt(0) == 'L' ? ROTATE_SPEED.get() : ROTATE_SPEED.get() * -1),
+					ROTATE_TIME.get());
+			// raise lift
+			addSequential(objective.raiseLiftCommand);
+			// place cube
+			addSequential(new PlaceCube());
+			// move lift down
+			addSequential(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
 		}
 	}
 }
