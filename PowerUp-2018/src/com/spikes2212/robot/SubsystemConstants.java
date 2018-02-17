@@ -55,7 +55,10 @@ public class SubsystemConstants {
 		public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("ScoreScaleFromSide - kd",
 				0.1);
 		public static final Supplier<Double> DRIVING_TOLERANCE = ConstantHandler
-				.addConstantDouble("ScoreScaleFromSide - Tolerance", 0.5);
+				.addConstantDouble("Tolerance", 0.5);
+
+		public static final Supplier<Double> DISTANCE_PER_PULSE = ConstantHandler
+				.addConstantDouble("Driving encoders - distance per pulse", 0.0711);
 
 	}
 }
