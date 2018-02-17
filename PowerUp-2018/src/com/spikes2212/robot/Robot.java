@@ -18,7 +18,6 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
-import com.spikes2212.robot.Commands.commandGroups.PrepareToPickUp;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MoveToSwitchFromMiddle;
 import com.spikes2212.utils.CamerasHandler;
 
@@ -73,7 +72,7 @@ public class Robot extends TimedRobot {
 		// .getOutputCurrent());
 
 		folder = new BasicSubsystem(new InvertedConsumer(SubsystemComponents.Folder.MOTORS::set),
-				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
+				(Double speed) -> new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get).apply(speed)||speed==SubsystemConstants.Folder.STAYING_SPEED.get());
 
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(
 				SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get, SubsystemComponents.LiftLocker.LIMIT_LOCKED::get));
@@ -175,7 +174,6 @@ public class Robot extends TimedRobot {
 		// command groups
 		SmartDashboard.putData("pickup cube", new PickUpCube());
 		SmartDashboard.putData("place cube", new PlaceCube());
-		SmartDashboard.putData("prepare to pick cube", new PrepareToPickUp());
 	}
 
 	/**

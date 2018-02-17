@@ -7,10 +7,12 @@
 
 package com.spikes2212.robot;
 
+import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
+import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
-import com.spikes2212.robot.Commands.commandGroups.PrepareToPickUp;
+import com.spikes2212.robot.Commands.commandGroups.StopEverything;
 import com.spikes2212.utils.XboXUID;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -31,31 +33,41 @@ public class OI /* GEVALD */ {
 	private Button liftLowScale;
 	private Button liftMidScale;
 	private Button placeCube;
-	private Button prepareToPickCube;
 	private Button pickUpCube;
+	private Button stop;
+	private Button folderUp;
+	private Button liftUp;
+	private Button liftDown;
 	
 	public OI() {
 		initNavigator();
 	}
 	
 	private void initNavigator() {
-		liftSwitch = navigator.getDownButton();
-		liftLowScale = navigator.getLeftButton();	
-		liftMidScale = navigator.getUpButton();
-		placeCube = navigator.getYellowButton();
-		prepareToPickCube = navigator.getGreenButton();
-		pickUpCube = navigator.getRedButton();
+		liftSwitch = navigator.getGreenButton();
+		liftLowScale = navigator.getRedButton();	
+		liftMidScale = navigator.getYellowButton();
+		placeCube = navigator.getUpButton();
+		pickUpCube = navigator.getLeftButton();
+		stop = navigator.getStartButton();
+		folderUp = navigator.getLBButton();
+		liftUp = navigator.getRBButton();
+		liftDown = navigator.getRightStickButton();
+		
 		
 		liftSwitch.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		liftLowScale.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.LOW_SCALE));
 		liftMidScale.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
 		placeCube.toggleWhenPressed(new PlaceCube());
-		prepareToPickCube.toggleWhenPressed(new PrepareToPickUp());
 		pickUpCube.toggleWhenPressed(new PickUpCube());
+		stop.whenPressed(new StopEverything());
+		folderUp.whenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED));
+		liftUp.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.UP_SPEED));
+		liftDown.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
 	}
 	
 	public double getForward() {
-		return -driverRight.getY();
+		return driverRight.getY();
 	}
 
 	public double getRotation() {
