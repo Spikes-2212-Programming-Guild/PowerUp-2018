@@ -7,6 +7,7 @@
 
 package com.spikes2212.robot;
 
+import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
@@ -35,6 +36,7 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem lift;
 	public static TankDrivetrain drivetrain;
 
+	public static DashBoardController dbc;
 	public static CamerasHandler camerasHandler;
 	public static String gameData;
 
@@ -86,6 +88,14 @@ public class Robot extends TimedRobot {
 
 		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		camerasHandler.setExposure(47);
+
+		dbc = new DashBoardController();
+		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
+		dbc.addBoolean("Lift - up", SubsystemComponents.Lift.LIMIT_UP::get);
+		dbc.addBoolean("Lift - mid scale", SubsystemComponents.Lift.HallEffects.MID_SCALE.getHallEffect()::get);
+		dbc.addBoolean("Lift - low scale", SubsystemComponents.Lift.HallEffects.LOW_SCALE.getHallEffect()::get);
+		dbc.addBoolean("lift - switch", SubsystemComponents.Lift.HallEffects.SWITCH.getHallEffect()::get);
+		dbc.addBoolean("Lift - down", SubsystemComponents.Lift.LIMIT_DOWN::get);
 
 	}
 
