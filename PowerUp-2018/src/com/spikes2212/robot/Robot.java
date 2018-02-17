@@ -12,9 +12,10 @@ import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
+import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
-import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.utils.CamerasHandler;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -36,7 +37,6 @@ public class Robot extends TimedRobot {
 	public static TankDrivetrain drivetrain;
 
 	public static DashBoardController dbc;
-
 	public static CamerasHandler camerasHandler;
 	public static String gameData;
 
@@ -46,22 +46,25 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// TODO check which motor is inverted
-		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		roller = new BasicSubsystem((Double speed) -> {
 			SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
 			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
 		}, new TwoLimits(() -> false, () -> SubsystemComponents.Roller.hasCube()));
 
+		// TODO - check which side is really inverted
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
-				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
+				new InvertedConsumer(SubsystemComponents.Drivetrain.RIGHT_MOTOR::set));
+
 		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
 				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
 						.getOutputCurrent());
-		folder = new BasicSubsystem(SubsystemComponents.Folder.MOTOR::set,
+
+		folder = new BasicSubsystem(new InvertedConsumer(SubsystemComponents.Folder.MOTORS::set),
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
+
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(
 				SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get, SubsystemComponents.LiftLocker.LIMIT_LOCKED::get));
+
 		lift = new BasicSubsystem(SubsystemComponents.Lift.MOTORS::set, (Double speed) -> {
 			if (speed == 0) // The lift can always move with 0.
 				return true;
@@ -75,13 +78,17 @@ public class Robot extends TimedRobot {
 				return false;
 			return true;
 		});
+
 		oi = new OI();
+
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
 				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
+		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
+		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		camerasHandler.setExposure(47);
-		// chooser.addObject("My Auto", new MyAutoCommand());
+
 		dbc = new DashBoardController();
 		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
 		dbc.addBoolean("Lift - up", SubsystemComponents.Lift.LIMIT_UP::get);
@@ -89,6 +96,7 @@ public class Robot extends TimedRobot {
 		dbc.addBoolean("Lift - low scale", SubsystemComponents.Lift.HallEffects.LOW_SCALE.getHallEffect()::get);
 		dbc.addBoolean("lift - switch", SubsystemComponents.Lift.HallEffects.SWITCH.getHallEffect()::get);
 		dbc.addBoolean("Lift - down", SubsystemComponents.Lift.LIMIT_DOWN::get);
+
 	}
 
 	/**
@@ -103,6 +111,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		dbc.update();
 	}
 
 	/**
@@ -119,17 +128,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
 	}
 
 	/**
@@ -144,10 +143,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
 	}
 
 	/**
@@ -157,6 +152,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SubsystemComponents.Lift.updateLiftPosition();
+		dbc.update();
 	}
 
 	/**
