@@ -7,27 +7,17 @@
 
 package com.spikes2212.robot;
 
-import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
-import com.spikes2212.robot.Commands.commandGroups.MoveLift;
-import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
-import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
-import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
-import com.spikes2212.robot.Commands.commandGroups.PrepareToPickUp;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MoveToSwitchFromMiddle;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -45,12 +35,8 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem lift;
 	public static TankDrivetrain drivetrain;
 
-	public static DashBoardController dbc;
-
 	public static CamerasHandler camerasHandler;
 	public static String gameData;
-
-	public static SendableChooser<Command> auto = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -115,7 +101,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		dbc.update();
 	}
 
 	/**
@@ -132,18 +117,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
-
-		auto.getSelected().start();
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
 	}
 
 	/**
@@ -153,16 +127,10 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		SubsystemComponents.Lift.updateLiftPosition();
-		dbc.update();
 	}
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		auto.getSelected().cancel();
 	}
 
 	/**
@@ -172,7 +140,6 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SubsystemComponents.Lift.updateLiftPosition();
-		dbc.update();
 	}
 
 	/**
