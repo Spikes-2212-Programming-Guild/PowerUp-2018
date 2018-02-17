@@ -8,6 +8,7 @@
 package com.spikes2212.robot;
 
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
+import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
@@ -37,20 +38,24 @@ public class OI /* GEVALD */ {
 	private Button pickUpCube;
 	private Button stop;
 	private Button folderUp;
+	private Button liftUp;
+	private Button liftDown;
 	
 	public OI() {
 		initNavigator();
 	}
 	
 	private void initNavigator() {
-		liftSwitch = navigator.getDownButton();
-		liftLowScale = navigator.getLeftButton();	
-		liftMidScale = navigator.getUpButton();
-		placeCube = navigator.getYellowButton();
-		prepareToPickCube = navigator.getGreenButton();
-		pickUpCube = navigator.getRedButton();
+		liftSwitch = navigator.getGreenButton();
+		liftLowScale = navigator.getRedButton();	
+		liftMidScale = navigator.getYellowButton();
+		placeCube = navigator.getUpButton();
+		prepareToPickCube = navigator.getDownButton();
+		pickUpCube = navigator.getLeftButton();
 		stop = navigator.getStartButton();
-		folderUp = navigator.getRbButton();
+		folderUp = navigator.getLbButton();
+		liftUp = navigator.getRbButton();
+		liftDown = navigator.getRightStickButton();
 		
 		
 		liftSwitch.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
@@ -60,7 +65,9 @@ public class OI /* GEVALD */ {
 		prepareToPickCube.toggleWhenPressed(new PrepareToPickUp());
 		pickUpCube.toggleWhenPressed(new PickUpCube());
 		stop.whenPressed(new StopEverything());
-		folderUp.toggleWhenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED));
+		folderUp.WhenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED),0.1);
+		liftUp.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.UP_SPEED));
+		liftDown.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
 	}
 	
 	public double getForward() {
