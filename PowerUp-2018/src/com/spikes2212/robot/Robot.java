@@ -10,7 +10,6 @@ package com.spikes2212.robot;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
-import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystemWithTimeSinceReachingLimit;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
@@ -53,8 +52,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// TODO check which motor is inverted
-
 		roller = new BasicSubsystem((Double speed) -> {
 			SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
 			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
