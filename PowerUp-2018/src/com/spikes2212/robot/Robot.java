@@ -10,20 +10,23 @@ package com.spikes2212.robot;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
-import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystemWithTimeSinceReachingLimit;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
+import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.PrepareToPickUp;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MoveToSwitchFromMiddle;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -47,6 +50,8 @@ public class Robot extends TimedRobot {
 	public static CamerasHandler camerasHandler;
 	public static String gameData;
 
+	public static SendableChooser<Command> auto = new SendableChooser<>();
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -61,8 +66,8 @@ public class Robot extends TimedRobot {
 		}, new TwoLimits(() -> false, () -> SubsystemComponents.Roller.hasCube()));
 
 		// TODO - check which side is really inverted
-		drivetrain = new TankDrivetrain(new InvertedConsumer(SubsystemComponents.Drivetrain.LEFT_MOTOR::set),
-				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
+		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
+				new InvertedConsumer(SubsystemComponents.Drivetrain.RIGHT_MOTOR::set));
 
 		// climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
 		// (Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >=
@@ -96,10 +101,11 @@ public class Robot extends TimedRobot {
 				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
-		folder.setDefaultCommand(new MoveBasicSubsystem(folder,
-				() -> (SubsystemComponents.Folder.MAX_LIMIT.get() || SubsystemComponents.Folder.MIN_LIMIT.get()) ? 0.0
-						: 0.5));
-		
+		// folder.setDefaultCommand(new MoveBasicSubsystem(folder,
+		// () -> (SubsystemComponents.Folder.MAX_LIMIT.get() ||
+		// SubsystemComponents.Folder.MIN_LIMIT.get()) ? 0.0
+		// : 0.5));
+
 		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		camerasHandler.setExposure(47);
 
@@ -107,6 +113,8 @@ public class Robot extends TimedRobot {
 
 		initDBC();
 		initDashboard();
+
+		auto.addDefault("center", new MoveToSwitchFromMiddle());
 	}
 
 	public static void initDBC() {
@@ -126,7 +134,7 @@ public class Robot extends TimedRobot {
 		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
 		dbc.addBoolean("Folder - down", SubsystemComponents.Folder.MIN_LIMIT::get);
 
-		// // roller data
+		// roller data
 		dbc.addBoolean("roller - has cube", SubsystemComponents.Roller::hasCube);
 
 		// general information
@@ -143,7 +151,12 @@ public class Robot extends TimedRobot {
 		// lift commands
 		SmartDashboard.putData("move lift up", new MoveLift(SubsystemConstants.Lift.UP_SPEED));
 		SmartDashboard.putData("move lift down", new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
-
+		SmartDashboard.putData("move lift to switch",
+				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
+		SmartDashboard.putData("move lift to low scale",
+				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.LOW_SCALE));
+		SmartDashboard.putData("move lift to mid scale",
+				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
 		// folder commands
 		SmartDashboard.putData("move folder up", new MoveBasicSubsystem(folder, SubsystemConstants.Folder.UP_SPEED));
 		SmartDashboard.putData("move folder down",
@@ -196,6 +209,7 @@ public class Robot extends TimedRobot {
 
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 
+		auto.getSelected().start();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -222,6 +236,7 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		auto.getSelected().cancel();
 	}
 
 	/**

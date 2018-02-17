@@ -25,7 +25,7 @@ public class ImageProcessingConstants {
 
 	public static final Supplier<Boolean> IS_UPDATED_0 = () -> NETWORK_TABLE.getEntry("isUpdated0").getBoolean(false);
 	public static final Supplier<Boolean> IS_UPDATED_1 = () -> NETWORK_TABLE.getEntry("isUpdated1").getBoolean(false);
-
+	
 	public static final PIDSource CENTER = new PIDSource() {
 
 		@Override
