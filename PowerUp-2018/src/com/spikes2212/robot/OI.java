@@ -55,7 +55,7 @@ public class OI /* GEVALD */ {
 	}
 	
 	public double getForward() {
-		return driverRight.getY();
+		return -driverRight.getY();
 	}
 
 	public double getRotation() {
