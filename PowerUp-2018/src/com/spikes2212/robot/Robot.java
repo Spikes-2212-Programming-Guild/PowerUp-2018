@@ -140,9 +140,9 @@ public class Robot extends TimedRobot {
 		// general information
 		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
-		
-		dbc.addDouble("encoder left", ()->((double)SubsystemComponents.Drivetrain.LEFT_ENCODER.get()));
-		dbc.addDouble("encoder right", ()->((double)SubsystemComponents.Drivetrain.RIGHT_ENCODER.get()));
+
+		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.get()));
+		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.get()));
 	}
 
 	public static void initDashboard() {
