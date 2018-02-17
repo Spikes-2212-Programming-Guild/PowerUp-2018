@@ -8,7 +8,6 @@ package com.spikes2212.robot;
  */
 public class RobotMap {
 
-	// supposed to be true. change it to pretty numbers after test
 	public static interface CAN {
 		public static final int CLIMBER = 0;
 		public static final int DRIVE_RIGHT1 = 2;
@@ -19,7 +18,6 @@ public class RobotMap {
 		public static final int LIFT_MOTOR_B = 9;
 	}
 
-	// TODO - check ports
 	public static interface PWM {
 		public static final int FOLDER_1 = 0;
 		public static final int FOLDER_2 = 1;
@@ -29,7 +27,6 @@ public class RobotMap {
 
 	}
 
-	// supposed to be done
 	public static interface DIO {
 		public static final int FOLDER_MAX_LIMIT = 5;
 		public static final int FOLDER_MIN_LIMIT = 4;

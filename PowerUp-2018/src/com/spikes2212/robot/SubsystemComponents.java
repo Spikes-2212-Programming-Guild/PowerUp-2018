@@ -17,10 +17,8 @@ public class SubsystemComponents {
 	}
 
 	public static class Folder {
-		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(new VictorSP(RobotMap.PWM.FOLDER_1),
-				new VictorSP(RobotMap.PWM.FOLDER_2));
-		// public static final WPI_TalonSRX MOTOR = new
-		// WPI_TalonSRX(RobotMap.CAN.CLIMBER);
+		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(
+				new VictorSP(RobotMap.PWM.FOLDER_1), new VictorSP(RobotMap.PWM.FOLDER_2));
 		public static final DigitalInput MAX_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MAX_LIMIT);
 		public static final DigitalInput MIN_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MIN_LIMIT);
 	}
@@ -30,6 +28,7 @@ public class SubsystemComponents {
 				new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT1), new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT2));
 		public static final DoubleSpeedcontroller LEFT_MOTOR = new DoubleSpeedcontroller(
 				new WPI_TalonSRX(RobotMap.CAN.DRIVE_LEFT1), new WPI_TalonSRX(RobotMap.CAN.DRIVE_LEFT2));
+
 		public static final Encoder RIGHT_ENCODER = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A,
 				RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
 		public static final Encoder LEFT_ENCODER = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A,
@@ -38,7 +37,6 @@ public class SubsystemComponents {
 	}
 
 	public static class Roller {
-
 		public static boolean hasCube() {
 			return SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 					/ LASER_SENSOR.getVoltage() <= SubsystemConstants.Roller.CUBE_DISTANCE.get();
