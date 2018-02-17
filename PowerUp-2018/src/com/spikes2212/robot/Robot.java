@@ -67,10 +67,9 @@ public class Robot extends TimedRobot {
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				new InvertedConsumer(SubsystemComponents.Drivetrain.RIGHT_MOTOR::set));
 
-		// climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
-		// (Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >=
-		// SubsystemComponents.Climber.MOTOR
-		// .getOutputCurrent());
+		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
+				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
+						.getOutputCurrent());
 
 		folder = new BasicSubsystem(new InvertedConsumer(SubsystemComponents.Folder.MOTORS::set),
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
@@ -98,11 +97,6 @@ public class Robot extends TimedRobot {
 		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
 				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
-
-		// folder.setDefaultCommand(new MoveBasicSubsystem(folder,
-		// () -> (SubsystemComponents.Folder.MAX_LIMIT.get() ||
-		// SubsystemComponents.Folder.MIN_LIMIT.get()) ? 0.0
-		// : 0.5));
 
 		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		camerasHandler.setExposure(47);
