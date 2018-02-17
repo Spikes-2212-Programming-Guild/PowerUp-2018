@@ -48,14 +48,14 @@ public class SubsystemConstants {
 
 	public static interface Drivetrain {
 
-		public static final Supplier<Double> DRIVING_KP = ConstantHandler.addConstantDouble("ScoreScaleFromSide - kp",
+		public static final Supplier<Double> DRIVING_KP = ConstantHandler.addConstantDouble("Driving - kp",
 				0.7);
-		public static final Supplier<Double> DRIVING_KI = ConstantHandler.addConstantDouble("ScoreScaleFromSide - ki",
+		public static final Supplier<Double> DRIVING_KI = ConstantHandler.addConstantDouble("Driving - ki",
 				0.04);
-		public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("ScoreScaleFromSide - kd",
+		public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("Driving - kd",
 				0.1);
 		public static final Supplier<Double> DRIVING_TOLERANCE = ConstantHandler
-				.addConstantDouble("Tolerance", 0.5);
+				.addConstantDouble("Driving tolerance", 0.5);
 
 		public static final Supplier<Double> DISTANCE_PER_PULSE = ConstantHandler
 				.addConstantDouble("Driving encoders - distance per pulse", 0.0711);
