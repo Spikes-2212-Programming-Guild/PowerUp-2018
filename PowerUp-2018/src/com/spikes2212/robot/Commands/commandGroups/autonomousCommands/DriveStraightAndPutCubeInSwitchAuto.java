@@ -3,14 +3,13 @@ package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
 import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
-import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.robot.Robot;
 import com.spikes2212.robot.SubsystemComponents;
 import com.spikes2212.robot.SubsystemConstants;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
-import com.spikes2212.utils.PIDSettings;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -23,27 +22,19 @@ public class DriveStraightAndPutCubeInSwitchAuto extends CommandGroup {
 			.addConstantDouble("ScoreScaleFromSide - Forward Speed", 0.4);
 	public static final Supplier<Double> MOVING_WAIT_TIME = ConstantHandler
 			.addConstantDouble("DriveStraightAndPutCubeInSwitch - Wait Time", 0.5);
-	public static final Supplier<Double> DISTANCE_FROM_SWITCH = ConstantHandler
-			.addConstantDouble("DriveStraightAndPutCubeInSwitch - Distance From Switch", 0.4);
 
 	public DriveStraightAndPutCubeInSwitchAuto(char startSide) {
+		// drive to switch by time
+		addSequential(new DriveArcade(Robot.drivetrain, FORWARD_SPEED, () -> 0.0), MOVING_WAIT_TIME.get());
+		// the starting side is the correct side
 		if (Robot.gameData.charAt(0) == startSide) {
-			addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
-					SubsystemComponents.Drivetrain.RIGHT_ENCODER, DISTANCE_FROM_SWITCH,
-					new PIDSettings(SubsystemConstants.Drivetrain.DRIVING_KP.get(),
-							SubsystemConstants.Drivetrain.DRIVING_KI.get(),
-							SubsystemConstants.Drivetrain.DRIVING_KD.get(),
-							SubsystemConstants.Drivetrain.DRIVING_TOLERANCE.get(), MOVING_WAIT_TIME.get())));
+			// prepare lift
 			addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
+			// put cube
 			addSequential(new PlaceCube());
+			// move lift down
 			addSequential(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
-		} else
-			addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
-					SubsystemComponents.Drivetrain.RIGHT_ENCODER, DISTANCE_FROM_SWITCH,
-					new PIDSettings(SubsystemConstants.Drivetrain.DRIVING_KP.get(),
-							SubsystemConstants.Drivetrain.DRIVING_KI.get(),
-							SubsystemConstants.Drivetrain.DRIVING_KD.get(),
-							SubsystemConstants.Drivetrain.DRIVING_TOLERANCE.get(), MOVING_WAIT_TIME.get())));
+		}
 
 	}
 }
