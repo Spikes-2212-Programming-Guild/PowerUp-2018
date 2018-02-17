@@ -23,6 +23,8 @@ public class SubsystemConstants {
 	public static interface Folder {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.75);
 		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Folder Down Speed", -0.4);
+		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("folder staying speed",
+				0.5);
 	}
 
 	public static interface Roller {

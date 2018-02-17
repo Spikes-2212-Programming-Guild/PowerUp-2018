@@ -10,10 +10,15 @@ package com.spikes2212.robot;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystemWithTimeSinceReachingLimit;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
+import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
+import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
+import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
+import com.spikes2212.robot.Commands.commandGroups.PrepareToPickUp;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -55,14 +60,16 @@ public class Robot extends TimedRobot {
 			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
 		}, new TwoLimits(() -> false, () -> SubsystemComponents.Roller.hasCube()));
 
-		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
+		// TODO - check which side is really inverted
+		drivetrain = new TankDrivetrain(new InvertedConsumer(SubsystemComponents.Drivetrain.LEFT_MOTOR::set),
 				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
 
-		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
-				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
-						.getOutputCurrent());
+		// climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
+		// (Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >=
+		// SubsystemComponents.Climber.MOTOR
+		// .getOutputCurrent());
 
-		folder = new BasicSubsystem(SubsystemComponents.Folder.MOTOR::set,
+		folder = new BasicSubsystem(new InvertedConsumer(SubsystemComponents.Folder.MOTORS::set),
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
 
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(
@@ -87,12 +94,17 @@ public class Robot extends TimedRobot {
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
 				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
+		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
+		folder.setDefaultCommand(new MoveBasicSubsystem(folder,
+				() -> (SubsystemComponents.Folder.MAX_LIMIT.get() || SubsystemComponents.Folder.MIN_LIMIT.get()) ? 0.0
+						: 0.5));
+		
 		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		camerasHandler.setExposure(47);
-		
+
 		dbc = new DashBoardController();
-		
+
 		initDBC();
 		initDashboard();
 	}
@@ -105,16 +117,16 @@ public class Robot extends TimedRobot {
 
 		// lift data
 		dbc.addBoolean("Lift - up", SubsystemComponents.Lift.LIMIT_UP::get);
-		dbc.addBoolean("Lift - mid scale", SubsystemComponents.Lift.HallEffects.MID_SCALE.getHallEffect()::get);
-		dbc.addBoolean("Lift - low scale", SubsystemComponents.Lift.HallEffects.LOW_SCALE.getHallEffect()::get);
-		dbc.addBoolean("lift - switch", SubsystemComponents.Lift.HallEffects.SWITCH.getHallEffect()::get);
+		dbc.addBoolean("Lift - mid scale", () -> !SubsystemComponents.Lift.HallEffects.MID_SCALE.getHallEffect().get());
+		dbc.addBoolean("Lift - low scale", () -> !SubsystemComponents.Lift.HallEffects.LOW_SCALE.getHallEffect().get());
+		dbc.addBoolean("lift - switch", () -> !SubsystemComponents.Lift.HallEffects.SWITCH.getHallEffect().get());
 		dbc.addBoolean("Lift - down", SubsystemComponents.Lift.LIMIT_DOWN::get);
 
 		// folder data
 		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
 		dbc.addBoolean("Folder - down", SubsystemComponents.Folder.MIN_LIMIT::get);
 
-		// roller data
+		// // roller data
 		dbc.addBoolean("roller - has cube", SubsystemComponents.Roller::hasCube);
 
 		// general information
@@ -136,14 +148,20 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("move folder up", new MoveBasicSubsystem(folder, SubsystemConstants.Folder.UP_SPEED));
 		SmartDashboard.putData("move folder down",
 				new MoveBasicSubsystem(folder, SubsystemConstants.Folder.DOWN_SPEED));
-
 		// roller commands
 		SmartDashboard.putData("roll in", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_IN_SPEED));
 		SmartDashboard.putData("roll out", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_OUT_SPEED));
 
 		// Climb
-		SmartDashboard.putData("climb up" , new MoveBasicSubsystem(climber, SubsystemConstants.Climber.UP_SPEED));
-		SmartDashboard.putData("climb down" , new MoveBasicSubsystem(climber, SubsystemConstants.Climber.DOWN_SPEED));
+		// SmartDashboard.putData("climb up", new MoveBasicSubsystem(climber,
+		// SubsystemConstants.Climber.UP_SPEED));
+		// SmartDashboard.putData("climb down", new MoveBasicSubsystem(climber,
+		// SubsystemConstants.Climber.DOWN_SPEED));
+
+		// command groups
+		SmartDashboard.putData("pickup cube", new PickUpCube());
+		SmartDashboard.putData("place cube", new PlaceCube());
+		SmartDashboard.putData("prepare to pick cube", new PrepareToPickUp());
 	}
 
 	/**
