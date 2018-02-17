@@ -5,12 +5,11 @@ import java.util.function.Supplier;
 import com.spikes2212.dashboard.ConstantHandler;
 
 public class SubsystemConstants {
-	// TODO real numbers
+
 	public static interface Climber {
 		public static final Supplier<Double> MAX_VOLTAGE = ConstantHandler.addConstantDouble("Climber Max Voltage", 25);
 
-		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Climber Speed", 0.2);
-		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Climber Speed", -0.1);
+		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Climber Speed", 0.9);
 	}
 
 	public static interface Claw {
