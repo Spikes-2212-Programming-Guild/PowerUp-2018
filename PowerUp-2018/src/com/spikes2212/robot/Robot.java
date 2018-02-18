@@ -37,7 +37,6 @@ public class Robot extends TimedRobot {
 	public static TankDrivetrain drivetrain;
 
 	public static DashBoardController dbc;
-
 	public static CamerasHandler camerasHandler;
 	public static String gameData;
 
@@ -56,10 +55,9 @@ public class Robot extends TimedRobot {
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				new InvertedConsumer(SubsystemComponents.Drivetrain.RIGHT_MOTOR::set));
 
-		// climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
-		// (Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >=
-		// SubsystemComponents.Climber.MOTOR
-		// .getOutputCurrent());
+		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
+				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
+						.getOutputCurrent());
 
 		folder = new BasicSubsystem(new InvertedConsumer(SubsystemComponents.Folder.MOTORS::set),
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
@@ -92,6 +90,14 @@ public class Robot extends TimedRobot {
 		camerasHandler.setExposure(47);
 
 		dbc = new DashBoardController();
+
+		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
+		dbc.addBoolean("Lift - up", SubsystemComponents.Lift.LIMIT_UP::get);
+		dbc.addBoolean("Lift - mid scale", SubsystemComponents.Lift.HallEffects.MID_SCALE.getHallEffect()::get);
+		dbc.addBoolean("Lift - low scale", SubsystemComponents.Lift.HallEffects.LOW_SCALE.getHallEffect()::get);
+		dbc.addBoolean("lift - switch", SubsystemComponents.Lift.HallEffects.SWITCH.getHallEffect()::get);
+		dbc.addBoolean("Lift - down", SubsystemComponents.Lift.LIMIT_DOWN::get);
+
 	}
 
 	/**

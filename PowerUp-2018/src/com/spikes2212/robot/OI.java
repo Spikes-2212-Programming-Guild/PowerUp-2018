@@ -12,6 +12,9 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
+import com.spikes2212.robot.Commands.commandGroups.PrepareToPickUp;
+import com.spikes2212.robot.Commands.commandGroups.StopEverything;
+
 import com.spikes2212.utils.XboXUID;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -33,10 +36,11 @@ public class OI /* GEVALD */ {
 	private Button liftMidScale;
 	private Button placeCube;
 	private Button pickUpCube;
+	private Button stop;
 	private Button folderUp;
 	private Button liftUp;
 	private Button liftDown;
-
+	
 	public OI() {
 		initNavigator();
 	}
@@ -50,13 +54,17 @@ public class OI /* GEVALD */ {
 		folderUp = navigator.getLBButton();
 		liftUp = navigator.getRBButton();
 		liftDown = navigator.getRightStickButton();
+    stop = navigator.getStartButton();
+		
+		
 
 		liftSwitch.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		liftLowScale.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.LOW_SCALE));
 		liftMidScale.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
 		placeCube.toggleWhenPressed(new PlaceCube());
 		pickUpCube.toggleWhenPressed(new PickUpCube());
-		folderUp.whenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED));
+		stop.whenPressed(new StopEverything());
+		folderUp.WhenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED),0.1);
 		liftUp.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.UP_SPEED));
 		liftDown.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
 	}
