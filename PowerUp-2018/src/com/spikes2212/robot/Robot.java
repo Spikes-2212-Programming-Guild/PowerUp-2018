@@ -14,19 +14,11 @@ import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
-import com.spikes2212.robot.Commands.commandGroups.MoveLift;
-import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
-import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
-import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MoveToSwitchFromMiddle;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -48,8 +40,6 @@ public class Robot extends TimedRobot {
 
 	public static CamerasHandler camerasHandler;
 	public static String gameData;
-
-	public static SendableChooser<Command> auto = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -102,73 +92,6 @@ public class Robot extends TimedRobot {
 		camerasHandler.setExposure(47);
 
 		dbc = new DashBoardController();
-
-		initDBC();
-		initDashboard();
-
-		auto.addDefault("center", new MoveToSwitchFromMiddle());
-	}
-
-	public static void initDBC() {
-
-		// locker data
-		dbc.addBoolean("locker - is locked", SubsystemComponents.LiftLocker.LIMIT_LOCKED::get);
-		dbc.addBoolean("locker - is unlocked", SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get);
-
-		// lift data
-		dbc.addBoolean("Lift - up", SubsystemComponents.Lift.LIMIT_UP::get);
-		dbc.addBoolean("Lift - mid scale", () -> !SubsystemComponents.Lift.HallEffects.MID_SCALE.getHallEffect().get());
-		dbc.addBoolean("Lift - low scale", () -> !SubsystemComponents.Lift.HallEffects.LOW_SCALE.getHallEffect().get());
-		dbc.addBoolean("lift - switch", () -> !SubsystemComponents.Lift.HallEffects.SWITCH.getHallEffect().get());
-		dbc.addBoolean("Lift - down", SubsystemComponents.Lift.LIMIT_DOWN::get);
-
-		// folder data
-		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
-		dbc.addBoolean("Folder - down", SubsystemComponents.Folder.MIN_LIMIT::get);
-
-		// roller data
-		dbc.addBoolean("roller - has cube", SubsystemComponents.Roller::hasCube);
-
-		// general information
-		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
-				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
-
-		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.get()));
-		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.get()));
-	}
-
-	public static void initDashboard() {
-		// locker commands
-		SmartDashboard.putData("unlock",
-				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
-		SmartDashboard.putData("lock", new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
-
-		// lift commands
-		SmartDashboard.putData("move lift up", new MoveLift(SubsystemConstants.Lift.UP_SPEED));
-		SmartDashboard.putData("move lift down", new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
-		SmartDashboard.putData("move lift to switch",
-				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
-		SmartDashboard.putData("move lift to low scale",
-				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.LOW_SCALE));
-		SmartDashboard.putData("move lift to mid scale",
-				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
-		// folder commands
-		SmartDashboard.putData("move folder up", new MoveBasicSubsystem(folder, SubsystemConstants.Folder.UP_SPEED));
-		SmartDashboard.putData("move folder down",
-				new MoveBasicSubsystem(folder, SubsystemConstants.Folder.DOWN_SPEED));
-		// roller commands
-		SmartDashboard.putData("roll in", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_IN_SPEED));
-		SmartDashboard.putData("roll out", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_OUT_SPEED));
-
-		// Climb
-		// SmartDashboard.putData("climb up", new MoveBasicSubsystem(climber,
-		// SubsystemConstants.Climber.UP_SPEED));
-		// SmartDashboard.putData("climb down", new MoveBasicSubsystem(climber,
-		// SubsystemConstants.Climber.DOWN_SPEED));
-
-		// command groups
-		SmartDashboard.putData("pickup cube", new PickUpCube());
-		SmartDashboard.putData("place cube", new PlaceCube());
 	}
 
 	/**
@@ -200,18 +123,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
-
-		auto.getSelected().start();
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
 	}
 
 	/**
@@ -226,11 +138,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		auto.getSelected().cancel();
 	}
 
 	/**
