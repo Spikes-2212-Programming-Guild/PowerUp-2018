@@ -147,7 +147,8 @@ public class Robot extends TimedRobot {
 		// folder commands
 		SmartDashboard.putData("move folder up", new MoveBasicSubsystem(folder, SubsystemConstants.Folder.UP_SPEED));
 		SmartDashboard.putData("move folder down",
-				new MoveBasicSubsystem(folder, SubsystemConstants.Folder.DOWN_SPEED));
+				new MoveBasicSubsystem(folder, () -> SubsystemComponents.Folder.MIN_LIMIT.get()
+						? SubsystemConstants.Folder.STAYING_SPEED.get() : SubsystemConstants.Folder.DOWN_SPEED.get()));
 		// roller commands
 		SmartDashboard.putData("roll in", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_IN_SPEED));
 		SmartDashboard.putData("roll out", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_OUT_SPEED));
