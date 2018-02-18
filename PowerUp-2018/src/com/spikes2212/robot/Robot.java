@@ -98,11 +98,6 @@ public class Robot extends TimedRobot {
 				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
-		// folder.setDefaultCommand(new MoveBasicSubsystem(folder,
-		// () -> (SubsystemComponents.Folder.MAX_LIMIT.get() ||
-		// SubsystemComponents.Folder.MIN_LIMIT.get()) ? 0.0
-		// : 0.5));
-
 		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		camerasHandler.setExposure(47);
 
