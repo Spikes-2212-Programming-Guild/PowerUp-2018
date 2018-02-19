@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 public class ImageProcessingConstants {
 	public static final int CAMERA_WIDTH = 640;
 	public static final int CAMERA_HEIGHT = 360;
+	
+	// the range of the outputs. between -0.5 and 0.5
+	public static final int RANGE = 1;
 
 	public static final NetworkTable NETWORK_TABLE = NetworkTableInstance.getDefault().getTable("ImageProcessing");
 
@@ -25,7 +28,7 @@ public class ImageProcessingConstants {
 
 	public static final Supplier<Boolean> IS_UPDATED_0 = () -> NETWORK_TABLE.getEntry("isUpdated0").getBoolean(false);
 	public static final Supplier<Boolean> IS_UPDATED_1 = () -> NETWORK_TABLE.getEntry("isUpdated1").getBoolean(false);
-	
+
 	public static final PIDSource CENTER = new PIDSource() {
 
 		@Override

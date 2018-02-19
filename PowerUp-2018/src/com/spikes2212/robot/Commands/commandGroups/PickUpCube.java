@@ -16,8 +16,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class PickUpCube extends CommandGroup {
 
 	public PickUpCube() {
-		addParallel(new MoveBasicSubsystem(Robot.folder, () -> SubsystemComponents.Folder.MIN_LIMIT.get()
-				? SubsystemConstants.Folder.STAYING_SPEED.get() : SubsystemConstants.Folder.DOWN_SPEED.get()));
+		addParallel(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
 		// vacuums the cube
 		addSequential(new MoveBasicSubsystem(Robot.roller, SubsystemConstants.Roller.ROLL_IN_SPEED));
 		// moving the folder up so we can lift the cube safely with out the
