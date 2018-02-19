@@ -10,6 +10,7 @@ package com.spikes2212.robot;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystemWithTimeSinceReachingLimit;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
@@ -161,7 +162,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("move lift to mid scale",
 				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
 		// folder commands
-		SmartDashboard.putData("move folder up", new MoveBasicSubsystem(folder, SubsystemConstants.Folder.UP_SPEED));
+		SmartDashboard.putData("move folder up", new MoveBasicSubsystemWithTimeSinceReachingLimit(folder, SubsystemConstants.Folder.UP_SPEED,2));
 		SmartDashboard.putData("move folder down",
 				new MoveBasicSubsystem(folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
 		// roller commands
