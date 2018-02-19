@@ -14,8 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class PlaceCube extends CommandGroup {
 
 	public PlaceCube() {
-		addParallel(new MoveBasicSubsystem(Robot.folder, () -> SubsystemComponents.Folder.MIN_LIMIT.get()
-				? SubsystemConstants.Folder.STAYING_SPEED.get() : SubsystemConstants.Folder.DOWN_SPEED.get()));
+		addParallel(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
 		addSequential(new MoveBasicSubsystemToTarget(Robot.roller, SubsystemConstants.Roller.ROLL_OUT_SPEED,
 				() -> SubsystemComponents.Roller.hasCube()));
 
