@@ -52,11 +52,10 @@ public class MoveToSwitchFromMiddle extends CommandGroup {
 				ROTATION_TIME.get());
 
 		// drive while orienting
-		addSequential(
-				new DriveArcadeWithPID(Robot.drivetrain, ImageProcessingConstants.CENTER, () -> 0.0,
-						ORIENTATION_FORWARDS_SPEED,
-						new PIDSettings(ORIENTATION_KP.get(), ORIENTATION_KI.get(), ORIENTATION_KD.get(), 0, 1), 1),
-				ORIENTATION_TIME_OUT.get());
+		addSequential(new DriveArcadeWithPID(Robot.drivetrain, ImageProcessingConstants.CENTER, () -> 0.0,
+				ORIENTATION_FORWARDS_SPEED,
+				new PIDSettings(ORIENTATION_KP.get(), ORIENTATION_KI.get(), ORIENTATION_KD.get(), 0, 1),
+				ImageProcessingConstants.RANGE), ORIENTATION_TIME_OUT.get());
 		// place cube
 		addSequential(new PlaceCube());
 	}
