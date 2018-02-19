@@ -23,9 +23,12 @@ public class SubsystemConstants {
 
 	public static interface Folder {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.5);
-		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Folder Down Speed", -0.6);
+		public static final Supplier<Double> PULSE_DOWN_SPEED = ConstantHandler
+				.addConstantDouble("Folder pulse Down Speed", -0.6);
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Folder Staying speed",
 				-0.2);
+		public static final Supplier<Double> DOWN_SPEED_SUPPLIER = () -> SubsystemComponents.Folder.MIN_LIMIT.get()
+				? STAYING_SPEED.get() : PULSE_DOWN_SPEED.get();
 	}
 
 	public static interface Roller {

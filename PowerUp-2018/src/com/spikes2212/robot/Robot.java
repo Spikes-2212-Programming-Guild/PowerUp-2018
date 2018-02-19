@@ -89,14 +89,13 @@ public class Robot extends TimedRobot {
 			return true;
 		});
 
-
 		oi = new OI();
 
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 
 		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
 				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
-		
+
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
 		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
@@ -164,8 +163,7 @@ public class Robot extends TimedRobot {
 		// folder commands
 		SmartDashboard.putData("move folder up", new MoveBasicSubsystem(folder, SubsystemConstants.Folder.UP_SPEED));
 		SmartDashboard.putData("move folder down",
-				new MoveBasicSubsystem(folder, () -> SubsystemComponents.Folder.MIN_LIMIT.get()
-						? SubsystemConstants.Folder.STAYING_SPEED.get() : SubsystemConstants.Folder.DOWN_SPEED.get()));
+				new MoveBasicSubsystem(folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
 		// roller commands
 		SmartDashboard.putData("roll in", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_IN_SPEED));
 		SmartDashboard.putData("roll out", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_OUT_SPEED));
