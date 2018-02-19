@@ -8,6 +8,7 @@
 package com.spikes2212.robot;
 
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystemWithTimeSinceReachingLimit;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
@@ -60,8 +61,8 @@ public class OI /* GEVALD */ {
 		placeCube.toggleWhenPressed(new PlaceCube());
 		pickUpCube.toggleWhenPressed(new PickUpCube());
 		stop.whenPressed(new StopEverything());
-		folderUp.whenPressed(new MoveBasicSubsystem(Robot.folder,
-				() -> SubsystemComponents.Folder.MIN_LIMIT.get() ? SubsystemConstants.Folder.UP_SPEED.get() : 0.0));
+		folderUp.whenPressed(new MoveBasicSubsystemWithTimeSinceReachingLimit(Robot.folder,
+				SubsystemConstants.Folder.UP_SPEED, SubsystemConstants.Folder.UP_WAIT_TIME.get()));
 		liftUp.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.UP_SPEED));
 		liftDown.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED_SUPPLIER));
 	}
