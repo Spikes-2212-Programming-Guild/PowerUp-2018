@@ -89,11 +89,14 @@ public class Robot extends TimedRobot {
 			return true;
 		});
 
+
 		oi = new OI();
 
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
+
 		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
 				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
+		
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
 		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
@@ -149,7 +152,7 @@ public class Robot extends TimedRobot {
 		// lift commands
 		SmartDashboard.putData("move lift up", new MoveLift(SubsystemConstants.Lift.UP_SPEED));
 		SmartDashboard.putData("move lift down", new MoveLift(
-				() -> SubsystemComponents.Lift.getPosition() > SubsystemComponents.Lift.HallEffects.SWITCH.getIndex()
+				() -> SubsystemComponents.Lift.getPosition() > SubsystemComponents.Lift.HallEffects.LOW_SCALE.getIndex()
 						? SubsystemConstants.Lift.FIRST_DOWN_SPEED.get()
 						: SubsystemConstants.Lift.SECOND_DOWN_SPEED.get()));
 		SmartDashboard.putData("move lift to switch",

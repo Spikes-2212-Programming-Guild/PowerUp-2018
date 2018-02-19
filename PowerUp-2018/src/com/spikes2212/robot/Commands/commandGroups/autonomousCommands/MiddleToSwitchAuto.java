@@ -30,6 +30,10 @@ public class MiddleToSwitchAuto extends CommandGroup {
 	public static final Supplier<Double> ROTATION_TIME = ConstantHandler
 			.addConstantDouble("middle to switch auto  - rotation time", 0.8);
 
+	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("middle to switch auto orient",
+			0);
+	public static final Supplier<Double> PID_WAIT_TIME = ConstantHandler
+			.addConstantDouble("middle to switch auto PID waitTime", 1);
 	public static final Supplier<Double> ORIENTATION_FORWARDS_SPEED = ConstantHandler
 			.addConstantDouble("middle to switch auto - orientation forwards speed", 0.5);
 
@@ -51,7 +55,7 @@ public class MiddleToSwitchAuto extends CommandGroup {
 				ORIENTATION_FORWARDS_SPEED,
 				new PIDSettings(SubsystemConstants.Drivetrain.ORIENTATION_KP.get(),
 						SubsystemConstants.Drivetrain.ORIENTATION_KI.get(),
-						SubsystemConstants.Drivetrain.ORIENTATION_KD.get(), 0, 1),
+						SubsystemConstants.Drivetrain.ORIENTATION_KD.get(), TOLERANCE.get(), PID_WAIT_TIME.get()),
 				ImageProcessingConstants.RANGE), ORIENTATION_TIME_OUT.get());
 		// place cube
 		addSequential(new PlaceCube());
