@@ -19,11 +19,14 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MoveToSwitchFromMiddle;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -45,6 +48,7 @@ public class Robot extends TimedRobot {
 	public static DashBoardController dbc;
 	public static CamerasHandler camerasHandler;
 	public static String gameData;
+	public static SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -66,7 +70,7 @@ public class Robot extends TimedRobot {
 						.getOutputCurrent());
 
 		folder = new BasicSubsystem(new InvertedConsumer(SubsystemComponents.Folder.MOTORS::set),
-				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, SubsystemComponents.Folder.MIN_LIMIT::get));
+				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, () -> false));
 
 		liftLocker = new BasicSubsystem(SubsystemComponents.LiftLocker.MOTOR::set, new TwoLimits(
 				SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get, SubsystemComponents.LiftLocker.LIMIT_LOCKED::get));
@@ -97,6 +101,7 @@ public class Robot extends TimedRobot {
 
 		dbc = new DashBoardController();
 
+		chooser.addDefault("center", new MoveToSwitchFromMiddle());
 		initDBC();
 		initDashboard();
 	}
@@ -111,7 +116,7 @@ public class Robot extends TimedRobot {
 		dbc.addBoolean("Lift - up", SubsystemComponents.Lift.LIMIT_UP::get);
 		dbc.addBoolean("Lift - mid scale", () -> !SubsystemComponents.Lift.HallEffects.MID_SCALE.getHallEffect().get());
 		dbc.addBoolean("Lift - low scale", () -> !SubsystemComponents.Lift.HallEffects.LOW_SCALE.getHallEffect().get());
-		dbc.addBoolean("lift - switch", () -> !SubsystemComponents.Lift.HallEffects.SWITCH.getHallEffect().get());
+		dbc.addBoolean("Lift - switch", () -> !SubsystemComponents.Lift.HallEffects.SWITCH.getHallEffect().get());
 		dbc.addBoolean("Lift - down", SubsystemComponents.Lift.LIMIT_DOWN::get);
 
 		// folder data
@@ -121,15 +126,21 @@ public class Robot extends TimedRobot {
 		// roller data
 		dbc.addBoolean("roller - has cube", SubsystemComponents.Roller::hasCube);
 
-		// general information
+		// general information - robot
 		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
 
 		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.get()));
 		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.get()));
+
+		// general information - image processing
+		dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
+
 	}
 
 	public static void initDashboard() {
+		// auto
+		SmartDashboard.putData("auto chooser", chooser);
 		// locker commands
 		SmartDashboard.putData("unlock",
 				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
@@ -137,7 +148,10 @@ public class Robot extends TimedRobot {
 
 		// lift commands
 		SmartDashboard.putData("move lift up", new MoveLift(SubsystemConstants.Lift.UP_SPEED));
-		SmartDashboard.putData("move lift down", new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
+		SmartDashboard.putData("move lift down", new MoveLift(
+				() -> SubsystemComponents.Lift.getPosition() > SubsystemComponents.Lift.HallEffects.SWITCH.getIndex()
+						? SubsystemConstants.Lift.FIRST_DOWN_SPEED.get()
+						: SubsystemConstants.Lift.SECOND_DOWN_SPEED.get()));
 		SmartDashboard.putData("move lift to switch",
 				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		SmartDashboard.putData("move lift to low scale",
@@ -172,6 +186,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED).start();
 	}
 
 	@Override
@@ -195,6 +210,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		chooser.getSelected().start();
 	}
 
 	/**
@@ -209,6 +225,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		chooser.getSelected().cancel();
 	}
 
 	/**

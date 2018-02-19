@@ -63,15 +63,15 @@ public class OI /* GEVALD */ {
 		folderUp.whenPressed(new MoveBasicSubsystem(Robot.folder,
 				() -> SubsystemComponents.Folder.MIN_LIMIT.get() ? SubsystemConstants.Folder.UP_SPEED.get() : 0.0));
 		liftUp.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.UP_SPEED));
-		liftDown.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
+		liftDown.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.FIRST_DOWN_SPEED));
 	}
 
 	public double getForward() {
-		return driverRight.getY();
+		return -driverRight.getY();
 	}
 
 	public double getRotation() {
-		return driverLeft.getX();
+		return -driverLeft.getX();
 	}
 
 }

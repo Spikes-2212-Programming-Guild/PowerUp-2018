@@ -22,7 +22,7 @@ public class SubsystemConstants {
 	public static interface Folder {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.3);
 		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Folder Down Speed", -0.6);
-		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Staying speed", 0.01);
+		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Folder Staying speed", -0.25);
 	}
 
 	public static interface Roller {
@@ -46,6 +46,7 @@ public class SubsystemConstants {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Lift Up Speed", 0.6);
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Lift Staying Speed",
 				0.2);
-		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Lift Down Speed", 0.05);
+		public static final Supplier<Double> FIRST_DOWN_SPEED = ConstantHandler.addConstantDouble("Lift First Down Speed", 0.05);
+		public static final Supplier<Double> SECOND_DOWN_SPEED = ConstantHandler.addConstantDouble("Lift Second Down Speed", -0.2);
 	}
 }
