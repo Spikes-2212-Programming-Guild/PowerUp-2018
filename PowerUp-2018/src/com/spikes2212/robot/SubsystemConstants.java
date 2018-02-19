@@ -56,11 +56,10 @@ public class SubsystemConstants {
 				.addConstantDouble("Lift First Down Speed", 0.05);
 		public static final Supplier<Double> SECOND_DOWN_SPEED = ConstantHandler
 				.addConstantDouble("Lift Second Down Speed", -0.2);
-		
-		public static final Supplier<Double> DOWN_SPEED_SUPPLIER = () -> SubsystemComponents.Lift.getPosition() > SubsystemComponents.Lift.HallEffects.LOW_SCALE.getIndex()
-				? SubsystemConstants.Lift.FIRST_DOWN_SPEED.get()
-				: SubsystemConstants.Lift.SECOND_DOWN_SPEED.get()));
+		public static final Supplier<Double> DOWN_SPEED_SUPPLIER = () -> SubsystemComponents.Lift
+				.getPosition() > SubsystemComponents.Lift.HallEffects.LOW_SCALE.getIndex()
+						? SubsystemConstants.Lift.FIRST_DOWN_SPEED.get()
+						: SubsystemConstants.Lift.SECOND_DOWN_SPEED.get()));
 	}
-	
-	
+
 }
