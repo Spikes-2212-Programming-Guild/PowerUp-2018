@@ -19,7 +19,7 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MoveToSwitchFromMiddle;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
 
 		dbc = new DashBoardController();
 
-		chooser.addDefault("center", new MoveToSwitchFromMiddle());
+		chooser.addDefault("center", new MiddleToSwitchAuto());
 		initDBC();
 		initDashboard();
 	}

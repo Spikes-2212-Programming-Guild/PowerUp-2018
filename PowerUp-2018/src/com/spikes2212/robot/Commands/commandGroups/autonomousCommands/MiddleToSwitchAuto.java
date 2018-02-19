@@ -8,6 +8,7 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcadeWithPID;
 import com.spikes2212.robot.ImageProcessingConstants;
 import com.spikes2212.robot.Robot;
 import com.spikes2212.robot.SubsystemComponents;
+import com.spikes2212.robot.SubsystemConstants;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.utils.PIDSettings;
@@ -20,41 +21,37 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * switch. First it moves forwards and turns to your side of the switch until it
  * sees a light sensor and move to it.
  */
-public class MoveToSwitchFromMiddle extends CommandGroup {
+public class MiddleToSwitchAuto extends CommandGroup {
 
 	public static final Supplier<Double> FORWARDS_SPEED = ConstantHandler
-			.addConstantDouble("ScoreSwitchFromTheMiddle - forwards speed", 0.5);
+			.addConstantDouble("middle to switch auto - forwards speed", 0.5);
 	public static final Supplier<Double> ROTATION_SPEED = ConstantHandler
-			.addConstantDouble("ScoreSwitchFromTheMiddle - rotation speed", 0.6);
+			.addConstantDouble("middle to switch auto - rotation speed", 0.6);
 	public static final Supplier<Double> ROTATION_TIME = ConstantHandler
-			.addConstantDouble("ScoreSwitchFromTheMiddle - rotation time", 0.8);
+			.addConstantDouble("middle to switch auto  - rotation time", 0.8);
 
 	public static final Supplier<Double> ORIENTATION_FORWARDS_SPEED = ConstantHandler
-			.addConstantDouble("ScoreSwitchFromTheMiddle - orientation forwards speed", 0.5);
+			.addConstantDouble("middle to switch auto - orientation forwards speed", 0.5);
 
-	public static final Supplier<Double> ORIENTATION_KP = ConstantHandler
-			.addConstantDouble("ScoreSwitchFromTheMiddle - oriantation kp", 0.7);
-	public static final Supplier<Double> ORIENTATION_KI = ConstantHandler
-			.addConstantDouble("ScoreSwitchFromTheMiddle - oriantation ki", 0.01);
-	public static final Supplier<Double> ORIENTATION_KD = ConstantHandler
-			.addConstantDouble("ScoreSwitchFromTheMiddle - oriantation kd", 0.1);
 	public static final Supplier<Double> ORIENTATION_TIME_OUT = ConstantHandler
-			.addConstantDouble("ScoreSwitchFromTheMiddle - oriantation timeout", 2.3);
+			.addConstantDouble("middle to switch auto - oriantation timeout", 2.3);
 
-	public MoveToSwitchFromMiddle() {
+	public MiddleToSwitchAuto() {
 		// move lift
 		addParallel(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 
 		// turn to the correct direction
 		addSequential(
 				new DriveArcade(Robot.drivetrain, FORWARDS_SPEED,
-						() -> Robot.gameData.charAt(0) == 'L' ? ROTATION_SPEED.get() : ROTATION_SPEED.get() * -1),
+						() -> Robot.gameData.charAt(0) == 'L' ? ROTATION_SPEED.get() : -ROTATION_SPEED.get()),
 				ROTATION_TIME.get());
 
 		// drive while orienting
 		addSequential(new DriveArcadeWithPID(Robot.drivetrain, ImageProcessingConstants.CENTER, () -> 0.0,
 				ORIENTATION_FORWARDS_SPEED,
-				new PIDSettings(ORIENTATION_KP.get(), ORIENTATION_KI.get(), ORIENTATION_KD.get(), 0, 1),
+				new PIDSettings(SubsystemConstants.Drivetrain.ORIENTATION_KP.get(),
+						SubsystemConstants.Drivetrain.ORIENTATION_KI.get(),
+						SubsystemConstants.Drivetrain.ORIENTATION_KD.get(), 0, 1),
 				ImageProcessingConstants.RANGE), ORIENTATION_TIME_OUT.get());
 		// place cube
 		addSequential(new PlaceCube());

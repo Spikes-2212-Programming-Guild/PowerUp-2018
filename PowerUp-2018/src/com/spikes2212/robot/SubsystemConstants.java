@@ -6,6 +6,15 @@ import com.spikes2212.dashboard.ConstantHandler;
 
 public class SubsystemConstants {
 
+	public static interface Drivetrain {
+		public static final Supplier<Double> ORIENTATION_KP = ConstantHandler
+				.addConstantDouble("drivetrain - oriantation kp", 0.7);
+		public static final Supplier<Double> ORIENTATION_KI = ConstantHandler
+				.addConstantDouble("drivetrain - oriantation ki", 0.01);
+		public static final Supplier<Double> ORIENTATION_KD = ConstantHandler
+				.addConstantDouble("drivetrain - oriantation kd", 0.1);
+	}
+
 	public static interface Climber {
 		public static final Supplier<Double> MAX_VOLTAGE = ConstantHandler.addConstantDouble("Climber Max Voltage", 25);
 
@@ -22,7 +31,8 @@ public class SubsystemConstants {
 	public static interface Folder {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.5);
 		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("Folder Down Speed", -0.6);
-		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Folder Staying speed", -0.2);
+		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Folder Staying speed",
+				-0.2);
 	}
 
 	public static interface Roller {
@@ -46,7 +56,9 @@ public class SubsystemConstants {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Lift Up Speed", 0.6);
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Lift Staying Speed",
 				0.2);
-		public static final Supplier<Double> FIRST_DOWN_SPEED = ConstantHandler.addConstantDouble("Lift First Down Speed", 0.05);
-		public static final Supplier<Double> SECOND_DOWN_SPEED = ConstantHandler.addConstantDouble("Lift Second Down Speed", -0.2);
+		public static final Supplier<Double> FIRST_DOWN_SPEED = ConstantHandler
+				.addConstantDouble("Lift First Down Speed", 0.05);
+		public static final Supplier<Double> SECOND_DOWN_SPEED = ConstantHandler
+				.addConstantDouble("Lift Second Down Speed", -0.2);
 	}
 }
