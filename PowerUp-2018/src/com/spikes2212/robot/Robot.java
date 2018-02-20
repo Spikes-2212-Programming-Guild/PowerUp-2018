@@ -183,12 +183,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("roll in", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_IN_SPEED));
 		SmartDashboard.putData("roll out", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_OUT_SPEED));
 
-		// Climb
-		// SmartDashboard.putData("climb up", new MoveBasicSubsystem(climber,
-		// SubsystemConstants.Climber.UP_SPEED));
-		// SmartDashboard.putData("climb down", new MoveBasicSubsystem(climber,
-		// SubsystemConstants.Climber.DOWN_SPEED));
-
 		// command groups
 		SmartDashboard.putData("pickup cube", new PickUpCube());
 		SmartDashboard.putData("place cube", new PlaceCube());
