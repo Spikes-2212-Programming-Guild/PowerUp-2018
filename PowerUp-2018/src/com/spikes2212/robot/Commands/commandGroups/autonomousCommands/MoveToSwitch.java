@@ -1,0 +1,41 @@
+package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
+
+import java.util.function.Supplier;
+
+import com.spikes2212.dashboard.ConstantHandler;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
+import com.spikes2212.robot.Robot;
+import com.spikes2212.robot.SubsystemComponents;
+import com.spikes2212.utils.PIDSettings;
+
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
+/**
+ *
+ */
+public class MoveToSwitch extends CommandGroup {
+
+	// defining PID set point of the switch
+	public static final Supplier<Double> SET_POINT = ConstantHandler
+			.addConstantDouble("move to switch - switch set point", 168);
+
+	// defining PID constants
+	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("move to switch - tolerance",
+			168);
+	public static final Supplier<Double> PID_WAIT_TIME = ConstantHandler
+			.addConstantDouble("move to switch - pid wait time", 168);
+
+	public static final Supplier<Double> DRIVING_KP = ConstantHandler.addConstantDouble("move to switch - driving kp",
+			0.7);
+	public static final Supplier<Double> DRIVING_KI = ConstantHandler.addConstantDouble("move to switch - driving ki",
+			0.01);
+	public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("move to switch - driving kd",
+			0.1);
+
+	public MoveToSwitch() {
+		PIDSettings settings = new PIDSettings(DRIVING_KP.get(), DRIVING_KI.get(), DRIVING_KD.get(), TOLERANCE.get(),
+				PID_WAIT_TIME.get());
+		addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
+				SubsystemComponents.Drivetrain.RIGHT_ENCODER, SET_POINT, settings));
+	}
+}

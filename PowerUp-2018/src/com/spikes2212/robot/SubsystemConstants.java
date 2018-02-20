@@ -13,14 +13,6 @@ public class SubsystemConstants {
 				.addConstantDouble("drivetrain - oriantation ki", 0.01);
 		public static final Supplier<Double> ORIENTATION_KD = ConstantHandler
 				.addConstantDouble("drivetrain - oriantation kd", 0.1);
-
-		public static final Supplier<Double> DRIVING_KP = ConstantHandler.addConstantDouble("drivetrain - driving kp",
-				0.7);
-		public static final Supplier<Double> DRIVING_KI = ConstantHandler.addConstantDouble("drivetrain - driving ki",
-				0.01);
-		public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("drivetrain - driving kd",
-				0.1);
-
 	}
 
 	public static interface Folder {
