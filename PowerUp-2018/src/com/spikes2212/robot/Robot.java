@@ -20,6 +20,7 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
+import com.spikes2212.robot.Commands.commandGroups.UnlockLiftLocker;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.utils.CamerasHandler;
 
@@ -52,8 +53,8 @@ public class Robot extends TimedRobot {
 	public static SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
+	 * This function is run when the robot is first started up and should be used
+	 * for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
@@ -94,8 +95,9 @@ public class Robot extends TimedRobot {
 
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 
-		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
-				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
+		lift.setDefaultCommand(
+				new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get() ? 0.0
+						: SubsystemConstants.Lift.STAYING_SPEED.get()));
 
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
@@ -105,12 +107,93 @@ public class Robot extends TimedRobot {
 		dbc = new DashBoardController();
 
 		chooser.addDefault("center", new MiddleToSwitchAuto());
+		initDBC();
+		initDashboard();
+	}
+
+	public static void initDBC() {
+
+		// locker data
+		dbc.addBoolean("locker - is locked", SubsystemComponents.LiftLocker.LIMIT_LOCKED::get);
+		dbc.addBoolean("locker - is unlocked", SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get);
+
+		// lift data
+		dbc.addBoolean("Lift - up", SubsystemComponents.Lift.LIMIT_UP::get);
+		dbc.addBoolean("Lift - mid scale", () -> !SubsystemComponents.Lift.HallEffects.MID_SCALE.getHallEffect().get());
+		dbc.addBoolean("Lift - low scale", () -> !SubsystemComponents.Lift.HallEffects.LOW_SCALE.getHallEffect().get());
+		dbc.addBoolean("Lift - switch", () -> !SubsystemComponents.Lift.HallEffects.SWITCH.getHallEffect().get());
+		dbc.addBoolean("Lift - down", SubsystemComponents.Lift.LIMIT_DOWN::get);
+		dbc.addDouble("lift - current speed", Robot.lift::getSpeed);
+		dbc.addDouble("lift - current position", SubsystemComponents.Lift::getPosition);
+
+		// folder data
+		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
+		dbc.addBoolean("Folder - down", SubsystemComponents.Folder.MIN_LIMIT::get);
+
+		// roller data
+		dbc.addBoolean("roller - has cube", SubsystemComponents.Roller::hasCube);
+
+		// general information - robot
+		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
+				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
+
+		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.get()));
+		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.get()));
+
+		// general information - image processing
+		dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
+
+		// game state
+		dbc.addBoolean("close switch left", () -> (gameData != null) ? (gameData.charAt(0) == 'L') : false);
+		dbc.addBoolean("close switch right", () -> (gameData != null) ? (gameData.charAt(0) == 'R') : false);
+		dbc.addBoolean("scale left", () -> (gameData != null) ? (gameData.charAt(1) == 'L') : false);
+		dbc.addBoolean("scale right", () -> (gameData != null) ? (gameData.charAt(1) == 'R') : false);
+		dbc.addBoolean("far switch left", () -> (gameData != null) ? (gameData.charAt(2) == 'L') : false);
+		dbc.addBoolean("far switch right", () -> (gameData != null) ? (gameData.charAt(2) == 'R') : false);
+	}
+
+	public static void initDashboard() {
+		// auto
+		SmartDashboard.putData("auto chooser", chooser);
+		// locker commands
+		SmartDashboard.putData("unlock",
+				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
+		SmartDashboard.putData("lock", new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
+
+		// lift commands
+		SmartDashboard.putData("move lift up", new MoveLift(
+				() -> SubsystemComponents.Lift.getPosition() < SubsystemComponents.Lift.HallEffects.SWITCH.getIndex()
+						? SubsystemConstants.Lift.FIRST_UP_SPEED.get()
+						: SubsystemConstants.Lift.SECOND_UP_SPEED.get()));
+		SmartDashboard.putData("move lift down", new MoveLift(
+				() -> SubsystemComponents.Lift.getPosition() > SubsystemComponents.Lift.HallEffects.LOW_SCALE.getIndex()
+						? SubsystemConstants.Lift.FIRST_DOWN_SPEED.get()
+						: SubsystemConstants.Lift.SECOND_DOWN_SPEED.get()));
+		SmartDashboard.putData("move lift to switch",
+				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
+		SmartDashboard.putData("move lift to low scale",
+				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.LOW_SCALE));
+		SmartDashboard.putData("move lift to mid scale",
+				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
+		// folder commands
+		SmartDashboard.putData("move folder up", new MoveBasicSubsystem(folder, SubsystemConstants.Folder.UP_SPEED));
+		SmartDashboard.putData("move folder down",
+				new MoveBasicSubsystem(folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
+		// roller commands
+		SmartDashboard.putData("roll in", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_IN_SPEED));
+		SmartDashboard.putData("roll out", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_OUT_SPEED));
+
+		// command groups
+		SmartDashboard.putData("pickup cube", new PickUpCube());
+		SmartDashboard.putData("place cube", new PlaceCube());
+		SmartDashboard.putData("stop everything", new StopEverything());
+		SmartDashboard.putData("Unlock locker", new UnlockLiftLocker());
 	}
 
 	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
+	 * This function is called once each time the robot enters Disabled mode. You
+	 * can use it to reset any subsystem information you want to clear when the
+	 * robot is disabled.
 	 */
 	@Override
 	public void disabledInit() {
@@ -125,15 +208,15 @@ public class Robot extends TimedRobot {
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
+	 * between different autonomous modes using the dashboard. The sendable chooser
+	 * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
+	 * remove all of the chooser code and uncomment the getString code to get the
+	 * auto name from the text box below the Gyro
 	 *
 	 * <p>
 	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
+	 * chooser code above (like the commented example) or additional comparisons to
+	 * the switch structure below with additional strings & commands.
 	 */
 	@Override
 	public void autonomousInit() {
