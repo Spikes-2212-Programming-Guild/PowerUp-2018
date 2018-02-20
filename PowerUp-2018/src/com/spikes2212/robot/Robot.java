@@ -10,7 +10,6 @@ package com.spikes2212.robot;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
-import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystemWithTimeSinceReachingLimit;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
@@ -20,7 +19,6 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
-import com.spikes2212.robot.Commands.commandGroups.UnlockLiftLocker;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.utils.CamerasHandler;
 
@@ -187,7 +185,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("pickup cube", new PickUpCube());
 		SmartDashboard.putData("place cube", new PlaceCube());
 		SmartDashboard.putData("stop everything", new StopEverything());
-		SmartDashboard.putData("Unlock locker", new UnlockLiftLocker());
 	}
 
 	/**
