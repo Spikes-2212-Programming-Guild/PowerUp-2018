@@ -26,11 +26,11 @@ public class MiddleToSwitchAuto extends CommandGroup {
 
 	// initial turning constants
 	public static final Supplier<Double> FORWARD_SPEED = ConstantHandler
-			.addConstantDouble("switch from middle auto - forward speed", 0.5);
+			.addConstantDouble("switch from middle auto - forward speed", 0.4);
 	public static final Supplier<Double> ROTATION_SPEED = ConstantHandler
 			.addConstantDouble("switch from middle auto - rotation speed", 0.6);
 	public static final Supplier<Double> ROTATION_TIME = ConstantHandler
-			.addConstantDouble("switch from middle auto  - rotation time", 0.8);
+			.addConstantDouble("switch from middle auto  - rotation time", 2.0);
 
 	// orienting constants
 	public static final Supplier<Double> TOLERANCE = ConstantHandler
@@ -38,13 +38,13 @@ public class MiddleToSwitchAuto extends CommandGroup {
 	public static final Supplier<Double> PID_WAIT_TIME = ConstantHandler
 			.addConstantDouble("switch from middle auto PID waitTime", 1);
 	public static final Supplier<Double> ORIENTATION_FORWARD_SPEED = ConstantHandler
-			.addConstantDouble("switch from middle auto - orientation forward speed", 0.5);
+			.addConstantDouble("switch from middle auto - orientation forward speed", 0.45);
 	public static final Supplier<Double> ORIENTATION_TIME_OUT = ConstantHandler
-			.addConstantDouble("switch from middle auto - oriantation timeout", 2.3);
+			.addConstantDouble("switch from middle auto - oriantation timeout", 3.8);
 
 	public MiddleToSwitchAuto(String gameData) {
 		// move lift
-		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
+		addParallel(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 		// turn to the correct direction
 		addSequential(
