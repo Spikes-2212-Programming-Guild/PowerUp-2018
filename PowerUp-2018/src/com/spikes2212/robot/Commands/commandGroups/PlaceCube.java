@@ -15,8 +15,7 @@ public class PlaceCube extends CommandGroup {
 
 	public PlaceCube() {
 		addParallel(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
-		addSequential(new MoveBasicSubsystemToTarget(Robot.roller, SubsystemConstants.Roller.ROLL_OUT_SPEED,
-				() -> SubsystemComponents.Roller.hasCube()));
+		addSequential(new MoveBasicSubsystem(Robot.roller, SubsystemConstants.Roller.ROLL_OUT_SPEED), SubsystemConstants.Roller.ROLL_OUT_TIME.get());
 
 	}
 }

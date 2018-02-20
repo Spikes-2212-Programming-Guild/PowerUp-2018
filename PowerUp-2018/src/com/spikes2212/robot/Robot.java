@@ -20,6 +20,7 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
+import com.spikes2212.robot.Commands.commandGroups.UnlockLiftLocker;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.utils.CamerasHandler;
 
@@ -122,6 +123,8 @@ public class Robot extends TimedRobot {
 		dbc.addBoolean("Lift - low scale", () -> !SubsystemComponents.Lift.HallEffects.LOW_SCALE.getHallEffect().get());
 		dbc.addBoolean("Lift - switch", () -> !SubsystemComponents.Lift.HallEffects.SWITCH.getHallEffect().get());
 		dbc.addBoolean("Lift - down", SubsystemComponents.Lift.LIMIT_DOWN::get);
+		dbc.addDouble("lift - current speed", Robot.lift::getSpeed);
+		dbc.addDouble("lift - current position", SubsystemComponents.Lift::getPosition);
 
 		// folder data
 		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
@@ -190,6 +193,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("pickup cube", new PickUpCube());
 		SmartDashboard.putData("place cube", new PlaceCube());
 		SmartDashboard.putData("stop everything", new StopEverything());
+		SmartDashboard.putData("Unlock locker", new UnlockLiftLocker());
 	}
 
 	/**
