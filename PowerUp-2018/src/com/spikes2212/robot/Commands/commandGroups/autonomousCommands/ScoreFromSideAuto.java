@@ -8,6 +8,7 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
 import com.spikes2212.robot.Robot;
 import com.spikes2212.robot.SubsystemComponents;
 import com.spikes2212.robot.SubsystemConstants;
+import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.utils.PIDSettings;
@@ -18,19 +19,25 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ScoreFromSideAuto extends CommandGroup {
 
 	public static enum AutonomousTarget {
-		SWITCH(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH), SWITCH_SET_POINT), SCALE(
-				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE), SCALE_SET_POINT);
+		SWITCH(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH), SWITCH_SET_POINT,
+				0), SCALE(new MoveLift(SubsystemConstants.Lift.FIRST_UP_SPEED), SCALE_SET_POINT, 1);
 
-		private Command moveLiftToTarget;
+		private Command liftCommand;
 		private Supplier<Double> setPoint;
+		private int gameDataIndex;
 
-		AutonomousTarget(Command moveLiftToTarget, Supplier<Double> setPoint) {
-			this.moveLiftToTarget = moveLiftToTarget;
+		AutonomousTarget(Command liftCommand, Supplier<Double> setPoint, int gameDataIndex) {
+			this.liftCommand = liftCommand;
 			this.setPoint = setPoint;
+			this.gameDataIndex = gameDataIndex;
+		}
+
+		public int getGameDataIndex() {
+			return gameDataIndex;
 		}
 
 		public Command getLiftCommand() {
-			return moveLiftToTarget;
+			return liftCommand;
 		}
 
 		public Supplier<Double> getSetPoint() {
@@ -67,8 +74,6 @@ public class ScoreFromSideAuto extends CommandGroup {
 
 		addSequential(target.getLiftCommand());
 
-		if (gameData.charAt(0) == startSide)
-			addSequential(new PlaceCube());
-
+		addSequential(new PlaceCube());
 	}
 }

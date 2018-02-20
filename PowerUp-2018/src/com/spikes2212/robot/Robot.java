@@ -27,40 +27,42 @@ import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreFromS
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.properties file in the
- * project.
- */
 public class Robot extends TimedRobot {
-	public static OI oi;
+
+	public static double ENCODERS_DISTANCE_PER_PULSE = Math.PI * 6 / 1440;
+
+	// defining subsystems
+
 	public static BasicSubsystem folder;
 	public static BasicSubsystem roller;
+
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
+
 	public static TankDrivetrain drivetrain;
 
+	// defining general variables
+	public static OI oi;
 	public static DashBoardController dbc;
 	public static CamerasHandler camerasHandler;
 
+	// defining autonomous variables
+
 	public static String gameData;
+
 	public static SendableChooser<String> autoChooser = new SendableChooser<>();
 	public static SendableChooser<Character> startSideChooser = new SendableChooser<>();
+
 	public static Command autoCommand;
 	public static boolean waitForData = true;
 
-	/**
-	 * This function is run when the robot is first started up and should be used
-	 * for any initialization code.
-	 */
 	@Override
 	public void robotInit() {
 		roller = new BasicSubsystem((Double speed) -> {
@@ -106,6 +108,12 @@ public class Robot extends TimedRobot {
 		camerasHandler.setExposure(47);
 
 		dbc = new DashBoardController();
+
+		SubsystemComponents.Drivetrain.LEFT_ENCODER.setDistancePerPulse(ENCODERS_DISTANCE_PER_PULSE);
+		SubsystemComponents.Drivetrain.RIGHT_ENCODER.setDistancePerPulse(ENCODERS_DISTANCE_PER_PULSE);
+
+		SubsystemComponents.Drivetrain.LEFT_ENCODER.setPIDSourceType(PIDSourceType.kDisplacement);
+		SubsystemComponents.Drivetrain.RIGHT_ENCODER.setPIDSourceType(PIDSourceType.kDisplacement);
 
 		autoChooser.addDefault("pass auto line", "pass auto line");
 		autoChooser.addObject("switch from middle", "switch from middle");
@@ -228,17 +236,17 @@ public class Robot extends TimedRobot {
 				autoCommand = new MiddleToSwitchAuto(gameData);
 				break;
 			case "switch from side":
-				if (side != 'n') {
+				if (side == gameData.charAt(0)) {
 					autoCommand = new ScoreFromSideAuto(AutonomousTarget.SWITCH, gameData, side);
 					break;
 				}
 			case "scale from side":
-				if (side != 'n') {
+				if (side == gameData.charAt(1)) {
 					autoCommand = new ScoreFromSideAuto(AutonomousTarget.SCALE, gameData, side);
 					break;
 				}
 			case "straight to switch":
-				if (side != 'n') {
+				if (side == gameData.charAt(0)) {
 					autoCommand = new DriveAndScoreSwitchAuto(gameData, side);
 					break;
 				}
@@ -257,9 +265,6 @@ public class Robot extends TimedRobot {
 			autoCommand.start();
 	}
 
-	/**
-	 * This function is called periodically during autonomous.
-	 */
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
@@ -273,9 +278,6 @@ public class Robot extends TimedRobot {
 			autoCommand.cancel();
 	}
 
-	/**
-	 * This function is called periodically during operator control.
-	 */
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
@@ -283,9 +285,6 @@ public class Robot extends TimedRobot {
 		dbc.update();
 	}
 
-	/**
-	 * This function is called periodically during test mode.
-	 */
 	@Override
 	public void testPeriodic() {
 	}
