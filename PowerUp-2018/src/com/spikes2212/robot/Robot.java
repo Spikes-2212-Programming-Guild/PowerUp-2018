@@ -138,7 +138,14 @@ public class Robot extends TimedRobot {
 
 		// general information - image processing
 		dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
-
+		
+		// game state
+		dbc.addBoolean("close switch left", () -> (gameData != null)? (gameData.charAt(0)=='L'): false);
+		dbc.addBoolean("close switch right", () -> (gameData != null)? (gameData.charAt(0)=='R'): false);
+		dbc.addBoolean("scale left", () -> (gameData != null)? (gameData.charAt(1)=='L'): false);
+		dbc.addBoolean("scale right", () -> (gameData != null)? (gameData.charAt(1)=='R'): false);
+		dbc.addBoolean("far switch left", () -> (gameData != null)? (gameData.charAt(2)=='L'): false);
+		dbc.addBoolean("far switch right", () -> (gameData != null)? (gameData.charAt(2)=='R'): false);
 	}
 
 	public static void initDashboard() {
@@ -162,7 +169,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("move lift to mid scale",
 				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
 		// folder commands
-		SmartDashboard.putData("move folder up", new MoveBasicSubsystemWithTimeSinceReachingLimit(folder, SubsystemConstants.Folder.UP_SPEED,2));
+		SmartDashboard.putData("move folder up", new MoveBasicSubsystem(folder, SubsystemConstants.Folder.UP_SPEED));
 		SmartDashboard.putData("move folder down",
 				new MoveBasicSubsystem(folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
 		// roller commands
