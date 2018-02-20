@@ -43,7 +43,7 @@ public class MiddleToSwitchAuto extends CommandGroup {
 
 	public MiddleToSwitchAuto(String gameData) {
 		// move lift
-		addParallel(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
+		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 
 		// turn to the correct direction
 		addSequential(
