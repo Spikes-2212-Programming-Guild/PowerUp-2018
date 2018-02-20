@@ -1,5 +1,7 @@
 package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
 
-public class PassAutoLine {
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
+public class PassAutoLine extends CommandGroup{
 
 }

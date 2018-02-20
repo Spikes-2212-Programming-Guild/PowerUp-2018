@@ -1,5 +1,7 @@
 package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
 
-public class DriveAndScoreSwitchAuto {
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
+public class DriveAndScoreSwitchAuto extends CommandGroup {
 
 }

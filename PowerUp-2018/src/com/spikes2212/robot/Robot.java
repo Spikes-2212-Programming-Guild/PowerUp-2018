@@ -19,7 +19,10 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.DriveAndScoreSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreFromSideAuto;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -46,12 +49,16 @@ public class Robot extends TimedRobot {
 
 	public static DashBoardController dbc;
 	public static CamerasHandler camerasHandler;
+
 	public static String gameData;
-	public static SendableChooser<Command> chooser = new SendableChooser<>();
+	public static SendableChooser<String> autoChooser = new SendableChooser<>();
+	public static SendableChooser<Character> startSideChooser = new SendableChooser<>();
+	public static Command autoCommand;
+	public static boolean waitForData = true;
 
 	/**
-	 * This function is run when the robot is first started up and should be used
-	 * for any initialization code.
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
@@ -88,9 +95,8 @@ public class Robot extends TimedRobot {
 
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 
-		lift.setDefaultCommand(
-				new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get() ? 0.0
-						: SubsystemConstants.Lift.STAYING_SPEED.get()));
+		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
+				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
 
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
@@ -99,7 +105,16 @@ public class Robot extends TimedRobot {
 
 		dbc = new DashBoardController();
 
-		chooser.addDefault("center", new MiddleToSwitchAuto());
+		autoChooser.addDefault("pass auto line", "pass auto line");
+		autoChooser.addObject("switch from middle", "switch from middle");
+		autoChooser.addObject("switch from side", "switch from side");
+		autoChooser.addObject("scale from side", "scale from side");
+		autoChooser.addObject("straight to switch", "straight to switch");
+
+		startSideChooser.addDefault("none", 'N');
+		startSideChooser.addDefault("right", 'R');
+		startSideChooser.addDefault("left", 'L');
+
 		initDBC();
 		initDashboard();
 	}
@@ -147,7 +162,7 @@ public class Robot extends TimedRobot {
 
 	public static void initDashboard() {
 		// auto
-		SmartDashboard.putData("auto chooser", chooser);
+		SmartDashboard.putData("auto chooser", autoChooser);
 		// locker commands
 		SmartDashboard.putData("unlock",
 				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
@@ -183,9 +198,9 @@ public class Robot extends TimedRobot {
 	}
 
 	/**
-	 * This function is called once each time the robot enters Disabled mode. You
-	 * can use it to reset any subsystem information you want to clear when the
-	 * robot is disabled.
+	 * This function is called once each time the robot enters Disabled mode.
+	 * You can use it to reset any subsystem information you want to clear when
+	 * the robot is disabled.
 	 */
 	@Override
 	public void disabledInit() {
@@ -196,24 +211,60 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		dbc.update();
+
+		// try to receive data if not already received
+		if (waitForData)
+			gameData = DriverStation.getInstance().getGameSpecificMessage();
+
+		// got the data
+		if (gameData.length() != 0) {
+			waitForData = false;
+			char side = startSideChooser.getSelected();
+
+			switch (autoChooser.getSelected()) {
+			case "switch from middle":
+				autoCommand = new MiddleToSwitchAuto();
+				break;
+			case "switch from side":
+				if (side != 'n') {
+					autoCommand = new ScoreFromSideAuto();
+					break;
+				}
+			case "scale from side":
+				if (side != 'n') {
+					autoCommand = new ScoreFromSideAuto();
+					break;
+				}
+			case "straight to switch":
+				if (side != 'n') {
+					autoCommand = new DriveAndScoreSwitchAuto();
+					break;
+				}
+			default:
+				autoCommand = new PassAutoLine();
+				break;
+			}
+		}
 	}
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable chooser
-	 * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
-	 * remove all of the chooser code and uncomment the getString code to get the
-	 * auto name from the text box below the Gyro
+	 * between different autonomous modes using the dashboard. The sendable
+	 * chooser code works with the Java SmartDashboard. If you prefer the
+	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+	 * getString code to get the auto name from the text box below the Gyro
 	 *
 	 * <p>
 	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons to
-	 * the switch structure below with additional strings & commands.
+	 * chooser code above (like the commented example) or additional comparisons
+	 * to the switch structure below with additional strings & commands.
 	 */
 	@Override
 	public void autonomousInit() {
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		chooser.getSelected().start();
+		System.out.println(
+				"auto command - " + autoChooser.getSelected() + " , starting side - " + startSideChooser.getSelected());
+		if (autoCommand != null)
+			autoCommand.start();
 	}
 
 	/**
@@ -228,7 +279,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		chooser.getSelected().cancel();
+		if (autoCommand != null)
+			autoCommand.cancel();
 	}
 
 	/**
