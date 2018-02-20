@@ -45,35 +45,39 @@ public class ScoreFromSideAuto extends CommandGroup {
 		}
 	}
 
+	// defining PID set points of the switch and the scale
 	public static final Supplier<Double> SWITCH_SET_POINT = ConstantHandler
 			.addConstantDouble("score from side auto - switch set point", 168);
 	public static final Supplier<Double> SCALE_SET_POINT = ConstantHandler
 			.addConstantDouble("score from side auto - scale set point", 168);
 
+	// defining PID constants
 	public static final Supplier<Double> TOLERANCE = ConstantHandler
 			.addConstantDouble("score from side auto - tolerance", 168);
 	public static final Supplier<Double> PID_WAIT_TIME = ConstantHandler
 			.addConstantDouble("score from side auto - pid wait time", 168);
 
+	// defining turning constants
 	public static final Supplier<Double> TURNING_SPEED = ConstantHandler
 			.addConstantDouble("score from side auto - turning speed", 168);
 	public static final Supplier<Double> TURNING_TIME_OUT = ConstantHandler
 			.addConstantDouble("score from side auto - turning timeout", 168);
 
 	public ScoreFromSideAuto(AutonomousTarget target, String gameData, char startSide) {
-		addSequential(target.getLiftCommand());
+
+		// driving to the correct set point according to target's properties
 
 		PIDSettings settings = new PIDSettings(SubsystemConstants.Drivetrain.DRIVING_KP.get(),
 				SubsystemConstants.Drivetrain.DRIVING_KI.get(), SubsystemConstants.Drivetrain.DRIVING_KD.get(),
 				TOLERANCE.get(), PID_WAIT_TIME.get());
-
 		addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
 				SubsystemComponents.Drivetrain.RIGHT_ENCODER, target.getSetPoint(), settings));
 
+		// turning towards the target(switch/scale)
 		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0, TURNING_SPEED), TURNING_TIME_OUT.get());
 
+		// moving the lift to the right height and placing the cube
 		addSequential(target.getLiftCommand());
-
 		addSequential(new PlaceCube());
 	}
 }
