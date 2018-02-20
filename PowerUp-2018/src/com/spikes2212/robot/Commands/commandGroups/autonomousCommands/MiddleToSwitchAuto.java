@@ -3,6 +3,7 @@ package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
 import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
+import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcadeWithPID;
 import com.spikes2212.robot.ImageProcessingConstants;
@@ -44,7 +45,7 @@ public class MiddleToSwitchAuto extends CommandGroup {
 	public MiddleToSwitchAuto(String gameData) {
 		// move lift
 		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
-
+		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 		// turn to the correct direction
 		addSequential(
 				new DriveArcade(Robot.drivetrain, FORWARD_SPEED,
