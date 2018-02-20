@@ -238,7 +238,7 @@ public class Robot extends TimedRobot {
 				}
 			case "straight to switch":
 				if (side != 'n') {
-					autoCommand = new DriveAndScoreSwitchAuto();
+					autoCommand = new DriveAndScoreSwitchAuto(gameData, side);
 					break;
 				}
 			default:
