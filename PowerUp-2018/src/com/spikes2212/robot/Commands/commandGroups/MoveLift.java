@@ -18,4 +18,10 @@ public class MoveLift extends CommandGroup {
 		addParallel(new MoveBasicSubsystem(Robot.lift, speed));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
 	}
+
+	@Override
+	protected void end() {
+		super.end();
+		new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED);
+	}
 }

@@ -29,4 +29,10 @@ public class MoveLiftToTarget extends CommandGroup {
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
 
 	}
+
+	@Override
+	protected void end() {
+		super.end();
+		new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED);
+	}
 }
