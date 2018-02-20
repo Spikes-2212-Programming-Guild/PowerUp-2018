@@ -9,7 +9,6 @@ package com.spikes2212.robot;
 public class RobotMap {
 
 	public static interface CAN {
-		public static final int CLIMBER = 3/*0*/;
 		public static final int DRIVE_RIGHT1 = 2;
 		public static final int DRIVE_RIGHT2 = 0/*3*/;
 		public static final int DRIVE_LEFT1 = 4;

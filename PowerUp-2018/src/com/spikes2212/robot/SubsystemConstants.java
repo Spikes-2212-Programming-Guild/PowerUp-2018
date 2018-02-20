@@ -15,12 +15,6 @@ public class SubsystemConstants {
 				.addConstantDouble("drivetrain - oriantation kd", 0.1);
 	}
 
-	public static interface Climber {
-		public static final Supplier<Double> MAX_VOLTAGE = ConstantHandler.addConstantDouble("Climber Max Voltage", 25);
-
-		public static final Supplier<Double> SPEED = ConstantHandler.addConstantDouble("Climber Speed", 0.9);
-	}
-
 	public static interface Folder {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.5);
 		public static final Supplier<Double> PULSE_DOWN_SPEED = ConstantHandler

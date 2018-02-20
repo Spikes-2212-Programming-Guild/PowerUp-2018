@@ -38,7 +38,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 	public static OI oi;
-	public static BasicSubsystem climber;
 	public static BasicSubsystem folder;
 	public static BasicSubsystem roller;
 	public static BasicSubsystem liftLocker;
@@ -64,10 +63,6 @@ public class Robot extends TimedRobot {
 		// TODO - check which side is really inverted
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				new InvertedConsumer(SubsystemComponents.Drivetrain.RIGHT_MOTOR::set));
-
-		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
-				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
-						.getOutputCurrent());
 
 		folder = new BasicSubsystem(new InvertedConsumer(SubsystemComponents.Folder.MOTORS::set),
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, () -> false));
