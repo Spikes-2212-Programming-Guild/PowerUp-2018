@@ -22,8 +22,8 @@ import com.spikes2212.robot.Commands.commandGroups.StopEverything;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.DriveAndScoreSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreFromSideAuto;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreFromSideAuto.AutonomousTarget;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreScaleFromSideAuto;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -237,12 +237,12 @@ public class Robot extends TimedRobot {
 				break;
 			case "switch from side":
 				if (side == gameData.charAt(0)) {
-					autoCommand = new ScoreFromSideAuto(AutonomousTarget.SWITCH, gameData, side);
+					autoCommand = new ScoreSwitchFromSideAuto(gameData, side);
 					break;
 				}
 			case "scale from side":
 				if (side == gameData.charAt(1)) {
-					autoCommand = new ScoreFromSideAuto(AutonomousTarget.SCALE, gameData, side);
+					autoCommand = new ScoreScaleFromSideAuto(gameData, side);
 					break;
 				}
 			case "straight to switch":
