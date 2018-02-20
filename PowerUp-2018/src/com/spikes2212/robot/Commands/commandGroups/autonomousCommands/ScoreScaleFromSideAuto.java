@@ -38,7 +38,7 @@ public class ScoreScaleFromSideAuto extends CommandGroup {
 	public static final Supplier<Double> TURNING_TIME_OUT = ConstantHandler
 			.addConstantDouble("score switch from side auto - turning timeout", 168);
 
-	public ScoreScaleFromSideAuto(String gameData, char startSide) {
+	public ScoreScaleFromSideAuto(char startSide) {
 		// moving to the switch
 		addSequential(new MoveToSwitch());
 

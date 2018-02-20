@@ -25,7 +25,7 @@ public class DriveAndScoreSwitchAuto extends CommandGroup {
 	public static final Supplier<Double> ORIENTATION_TIME_OUT = ConstantHandler
 			.addConstantDouble("switch from middle auto - oriantation timeout", 2.3);
 
-	public DriveAndScoreSwitchAuto(String gameData, char startSide) {
+	public DriveAndScoreSwitchAuto(char startSide) {
 		// move lift
 		addParallel(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 
@@ -37,7 +37,6 @@ public class DriveAndScoreSwitchAuto extends CommandGroup {
 						SubsystemConstants.Drivetrain.ORIENTATION_KD.get(), TOLERANCE.get(), PID_WAIT_TIME.get()),
 				ImageProcessingConstants.RANGE), ORIENTATION_TIME_OUT.get());
 		// place cube
-		if (gameData.charAt(0) == startSide)
-			addSequential(new PlaceCube());
+		addSequential(new PlaceCube());
 	}
 }

@@ -19,13 +19,14 @@ public class ScoreSwitchFromSideAuto extends CommandGroup {
 	public static final Supplier<Double> TURNING_TIME_OUT = ConstantHandler
 			.addConstantDouble("score switch from side auto - turning timeout", 168);
 
-	public ScoreSwitchFromSideAuto(String gameData, char startSide) {
+	public ScoreSwitchFromSideAuto(char startSide) {
 
 		// driving to the correct set point according to target's properties
 		addSequential(new MoveToSwitch());
 
 		// turning towards the target(switch/scale)
-		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0, TURNING_SPEED), TURNING_TIME_OUT.get());
+		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0,
+				() -> startSide == 'L' ? TURNING_SPEED.get() : -TURNING_SPEED.get()), TURNING_TIME_OUT.get());
 
 		// moving the lift to the right height and placing the cube
 		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));

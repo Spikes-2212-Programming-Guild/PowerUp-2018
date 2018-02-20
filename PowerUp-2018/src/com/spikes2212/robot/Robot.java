@@ -237,17 +237,17 @@ public class Robot extends TimedRobot {
 				break;
 			case "switch from side":
 				if (side == gameData.charAt(0)) {
-					autoCommand = new ScoreSwitchFromSideAuto(gameData, side);
+					autoCommand = new ScoreSwitchFromSideAuto(side);
 					break;
 				}
 			case "scale from side":
 				if (side == gameData.charAt(1)) {
-					autoCommand = new ScoreScaleFromSideAuto(gameData, side);
+					autoCommand = new ScoreScaleFromSideAuto(side);
 					break;
 				}
 			case "straight to switch":
 				if (side == gameData.charAt(0)) {
-					autoCommand = new DriveAndScoreSwitchAuto(gameData, side);
+					autoCommand = new DriveAndScoreSwitchAuto(side);
 					break;
 				}
 			default:
