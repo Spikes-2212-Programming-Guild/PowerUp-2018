@@ -23,6 +23,7 @@ import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.DriveAndSc
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreFromSideAuto;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreFromSideAuto.AutonomousTarget;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -228,12 +229,12 @@ public class Robot extends TimedRobot {
 				break;
 			case "switch from side":
 				if (side != 'n') {
-					autoCommand = new ScoreFromSideAuto();
+					autoCommand = new ScoreFromSideAuto(AutonomousTarget.SWITCH, gameData, side);
 					break;
 				}
 			case "scale from side":
 				if (side != 'n') {
-					autoCommand = new ScoreFromSideAuto();
+					autoCommand = new ScoreFromSideAuto(AutonomousTarget.SCALE, gameData, side);
 					break;
 				}
 			case "straight to switch":
@@ -248,18 +249,6 @@ public class Robot extends TimedRobot {
 		}
 	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable chooser
-	 * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
-	 * remove all of the chooser code and uncomment the getString code to get the
-	 * auto name from the text box below the Gyro
-	 *
-	 * <p>
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons to
-	 * the switch structure below with additional strings & commands.
-	 */
 	@Override
 	public void autonomousInit() {
 		System.out.println(
