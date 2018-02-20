@@ -51,8 +51,7 @@ public class SubsystemConstants {
 	}
 
 	public static interface Lift {
-		public static final Supplier<Double> FIRST_UP_SPEED = ConstantHandler.addConstantDouble("Lift First Up Speed", 0.8);
-		public static final Supplier<Double> SECOND_UP_SPEED = ConstantHandler.addConstantDouble("Lift Second Up Speed", 0.8);
+		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Lift Second Up Speed", 0.8);
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Lift Staying Speed",
 				0.2);
 		public static final Supplier<Double> FIRST_DOWN_SPEED = ConstantHandler

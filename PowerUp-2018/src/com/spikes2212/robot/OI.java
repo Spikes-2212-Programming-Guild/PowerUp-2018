@@ -63,9 +63,7 @@ public class OI /* GEVALD */ {
 		stop.whenPressed(new StopEverything());
 		folderUp.whenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED.get()));
 		liftUp.toggleWhenPressed(new MoveLift(
-				() -> SubsystemComponents.Lift.getPosition() < SubsystemComponents.Lift.HallEffects.SWITCH.getIndex()
-						? SubsystemConstants.Lift.FIRST_UP_SPEED.get()
-						: SubsystemConstants.Lift.SECOND_UP_SPEED.get()));
+				SubsystemConstants.Lift.UP_SPEED));
 		liftDown.toggleWhenPressed(new MoveLift(
 				() -> SubsystemComponents.Lift.getPosition() < SubsystemComponents.Lift.HallEffects.SWITCH.getIndex()
 						? SubsystemConstants.Lift.SECOND_DOWN_SPEED.get()

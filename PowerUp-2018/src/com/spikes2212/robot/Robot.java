@@ -10,7 +10,6 @@ package com.spikes2212.robot;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
-import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystemWithTimeSinceReachingLimit;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
@@ -20,7 +19,6 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
-import com.spikes2212.robot.Commands.commandGroups.UnlockLiftLocker;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.utils.CamerasHandler;
 
@@ -53,8 +51,8 @@ public class Robot extends TimedRobot {
 	public static SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
-	 * This function is run when the robot is first started up and should be used
-	 * for any initialization code.
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
@@ -95,9 +93,8 @@ public class Robot extends TimedRobot {
 
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 
-		lift.setDefaultCommand(
-				new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get() ? 0.0
-						: SubsystemConstants.Lift.STAYING_SPEED.get()));
+		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
+				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
 
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
@@ -162,9 +159,7 @@ public class Robot extends TimedRobot {
 
 		// lift commands
 		SmartDashboard.putData("move lift up", new MoveLift(
-				() -> SubsystemComponents.Lift.getPosition() < SubsystemComponents.Lift.HallEffects.SWITCH.getIndex()
-						? SubsystemConstants.Lift.FIRST_UP_SPEED.get()
-						: SubsystemConstants.Lift.SECOND_UP_SPEED.get()));
+				SubsystemConstants.Lift.UP_SPEED));
 		SmartDashboard.putData("move lift down", new MoveLift(
 				() -> SubsystemComponents.Lift.getPosition() > SubsystemComponents.Lift.HallEffects.LOW_SCALE.getIndex()
 						? SubsystemConstants.Lift.FIRST_DOWN_SPEED.get()
@@ -187,13 +182,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("pickup cube", new PickUpCube());
 		SmartDashboard.putData("place cube", new PlaceCube());
 		SmartDashboard.putData("stop everything", new StopEverything());
-		SmartDashboard.putData("Unlock locker", new UnlockLiftLocker());
 	}
 
 	/**
-	 * This function is called once each time the robot enters Disabled mode. You
-	 * can use it to reset any subsystem information you want to clear when the
-	 * robot is disabled.
+	 * This function is called once each time the robot enters Disabled mode.
+	 * You can use it to reset any subsystem information you want to clear when
+	 * the robot is disabled.
 	 */
 	@Override
 	public void disabledInit() {
@@ -208,15 +202,15 @@ public class Robot extends TimedRobot {
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable chooser
-	 * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
-	 * remove all of the chooser code and uncomment the getString code to get the
-	 * auto name from the text box below the Gyro
+	 * between different autonomous modes using the dashboard. The sendable
+	 * chooser code works with the Java SmartDashboard. If you prefer the
+	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+	 * getString code to get the auto name from the text box below the Gyro
 	 *
 	 * <p>
 	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons to
-	 * the switch structure below with additional strings & commands.
+	 * chooser code above (like the commented example) or additional comparisons
+	 * to the switch structure below with additional strings & commands.
 	 */
 	@Override
 	public void autonomousInit() {
