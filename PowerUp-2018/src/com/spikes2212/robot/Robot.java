@@ -164,6 +164,7 @@ public class Robot extends TimedRobot {
 	public static void initDashboard() {
 		// auto
 		SmartDashboard.putData("auto chooser", autoChooser);
+		SmartDashboard.putData("starting side", startSideChooser);
 		// locker commands
 		SmartDashboard.putData("unlock",
 				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
