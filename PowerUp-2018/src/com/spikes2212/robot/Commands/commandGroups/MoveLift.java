@@ -22,6 +22,6 @@ public class MoveLift extends CommandGroup {
 	@Override
 	protected void end() {
 		super.end();
-		new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED);
+		new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED).start();
 	}
 }
