@@ -22,7 +22,6 @@ import com.spikes2212.robot.Commands.commandGroups.StopEverything;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.DriveAndScoreSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreScaleFromSideAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.utils.CamerasHandler;
 
@@ -36,7 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 
-	public static double ENCODERS_DISTANCE_PER_PULSE = Math.PI * 6 / 1440;
+	public static double ENCODERS_DISTANCE_PER_PULSE = Math.PI * 6 / 360;
 
 	// defining subsystems
 
@@ -98,9 +97,8 @@ public class Robot extends TimedRobot {
 
 		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
 
-		lift.setDefaultCommand(
-				new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get() ? 0.0
-						: SubsystemConstants.Lift.STAYING_SPEED.get()));
+		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
+				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
 
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
@@ -115,10 +113,12 @@ public class Robot extends TimedRobot {
 		SubsystemComponents.Drivetrain.LEFT_ENCODER.setPIDSourceType(PIDSourceType.kDisplacement);
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.setPIDSourceType(PIDSourceType.kDisplacement);
 
+		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
+		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
+
 		autoChooser.addDefault("pass auto line", "pass auto line");
 		autoChooser.addObject("switch from middle", "switch from middle");
 		autoChooser.addObject("switch from side", "switch from side");
-		autoChooser.addObject("scale from side", "scale from side");
 		autoChooser.addObject("straight to switch", "straight to switch");
 
 		startSideChooser.addDefault("none", 'N');
@@ -155,8 +155,8 @@ public class Robot extends TimedRobot {
 		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
 
-		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.get()));
-		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.get()));
+		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.getDistance()));
+		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.getDistance()));
 
 		// general information - image processing
 		dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
@@ -173,6 +173,7 @@ public class Robot extends TimedRobot {
 	public static void initDashboard() {
 		// auto
 		SmartDashboard.putData("auto chooser", autoChooser);
+		SmartDashboard.putData("start side chooser",startSideChooser);
 		// locker commands
 		SmartDashboard.putData("unlock",
 				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
@@ -208,9 +209,9 @@ public class Robot extends TimedRobot {
 	}
 
 	/**
-	 * This function is called once each time the robot enters Disabled mode. You
-	 * can use it to reset any subsystem information you want to clear when the
-	 * robot is disabled.
+	 * This function is called once each time the robot enters Disabled mode.
+	 * You can use it to reset any subsystem information you want to clear when
+	 * the robot is disabled.
 	 */
 	@Override
 	public void disabledInit() {
@@ -240,11 +241,6 @@ public class Robot extends TimedRobot {
 					autoCommand = new ScoreSwitchFromSideAuto(side);
 					break;
 				}
-			case "scale from side":
-				if (side == gameData.charAt(1)) {
-					autoCommand = new ScoreScaleFromSideAuto(side);
-					break;
-				}
 			case "straight to switch":
 				if (side == gameData.charAt(0)) {
 					autoCommand = new DriveAndScoreSwitchAuto(side);
@@ -259,10 +255,13 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
+		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
+		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		System.out.println(
 				"auto command - " + autoChooser.getSelected() + " , starting side - " + startSideChooser.getSelected());
 		if (autoCommand != null)
 			autoCommand.start();
+
 	}
 
 	@Override
@@ -274,6 +273,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
+		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		if (autoCommand != null)
 			autoCommand.cancel();
 	}

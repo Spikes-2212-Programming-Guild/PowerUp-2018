@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class PassAutoLine extends CommandGroup {
 	public static final Supplier<Double> FORWARD_SPEED = ConstantHandler
 			.addConstantDouble("pass auto line- forward speed", 0.5);
-	public static final Supplier<Double> TIME_OUT = ConstantHandler.addConstantDouble("pass auto line- time out", 0.5);
+	public static final Supplier<Double> TIME_OUT = ConstantHandler.addConstantDouble("pass auto line- time out", 3.5);
 
 	public PassAutoLine() {
 		addSequential(new DriveArcade(Robot.drivetrain, FORWARD_SPEED, () -> 0.0), TIME_OUT.get());
