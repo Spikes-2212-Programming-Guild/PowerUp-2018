@@ -18,15 +18,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveAndScoreSwitchAuto extends CommandGroup {
 	// orienting constants
 	public static final Supplier<Double> TOLERANCE = ConstantHandler
-			.addConstantDouble("switch from middle auto - orienting tolerance", 0);
+			.addConstantDouble("score switch straight auto - orienting tolerance", 0);
 	public static final Supplier<Double> PID_WAIT_TIME = ConstantHandler
-			.addConstantDouble("switch from middle auto PID waitTime", 1);
+			.addConstantDouble("score switch straight  auto PID waitTime", 1);
 	public static final Supplier<Double> ORIENTATION_FORWARD_SPEED = ConstantHandler
-			.addConstantDouble("switch from middle auto - orientation forward speed", 0.5);
+			.addConstantDouble("score switch straight - orientation forward speed", 0.5);
 	public static final Supplier<Double> ORIENTATION_TIME_OUT = ConstantHandler
-			.addConstantDouble("switch from middle auto - oriantation timeout", 2.3);
+			.addConstantDouble("score switch straight - oriantation timeout", 2.3);
 
-	public DriveAndScoreSwitchAuto(String gameData, char startSide) {
+	public DriveAndScoreSwitchAuto(char startSide) {
 		// move lift
 		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
@@ -39,7 +39,6 @@ public class DriveAndScoreSwitchAuto extends CommandGroup {
 						SubsystemConstants.Drivetrain.ORIENTATION_KD.get(), TOLERANCE.get(), PID_WAIT_TIME.get()),
 				ImageProcessingConstants.RANGE), ORIENTATION_TIME_OUT.get());
 		// place cube
-		if (gameData.charAt(0) == startSide)
-			addSequential(new PlaceCube());
+		addSequential(new PlaceCube());
 	}
 }

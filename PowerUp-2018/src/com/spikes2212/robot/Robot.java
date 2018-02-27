@@ -22,44 +22,46 @@ import com.spikes2212.robot.Commands.commandGroups.StopEverything;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.DriveAndScoreSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreFromSideAuto;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.properties file in the
- * project.
- */
 public class Robot extends TimedRobot {
-	public static OI oi;
+
+	public static double ENCODERS_DISTANCE_PER_PULSE = Math.PI * 6 / 360;
+
+	// defining subsystems
+
 	public static BasicSubsystem folder;
 	public static BasicSubsystem roller;
+
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
+
 	public static TankDrivetrain drivetrain;
 
+	// defining general variables
+	public static OI oi;
 	public static DashBoardController dbc;
 	public static CamerasHandler camerasHandler;
 
+	// defining autonomous variables
+
 	public static String gameData;
+
 	public static SendableChooser<String> autoChooser = new SendableChooser<>();
 	public static SendableChooser<Character> startSideChooser = new SendableChooser<>();
+
 	public static Command autoCommand;
 	public static boolean waitForData = true;
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
 	@Override
 	public void robotInit() {
 		roller = new BasicSubsystem((Double speed) -> {
@@ -105,15 +107,23 @@ public class Robot extends TimedRobot {
 
 		dbc = new DashBoardController();
 
+		SubsystemComponents.Drivetrain.LEFT_ENCODER.setDistancePerPulse(ENCODERS_DISTANCE_PER_PULSE);
+		SubsystemComponents.Drivetrain.RIGHT_ENCODER.setDistancePerPulse(ENCODERS_DISTANCE_PER_PULSE);
+
+		SubsystemComponents.Drivetrain.LEFT_ENCODER.setPIDSourceType(PIDSourceType.kDisplacement);
+		SubsystemComponents.Drivetrain.RIGHT_ENCODER.setPIDSourceType(PIDSourceType.kDisplacement);
+
+		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
+		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
+
 		autoChooser.addDefault("pass auto line", "pass auto line");
 		autoChooser.addObject("switch from middle", "switch from middle");
 		autoChooser.addObject("switch from side", "switch from side");
-		autoChooser.addObject("scale from side", "scale from side");
 		autoChooser.addObject("straight to switch", "straight to switch");
 
 		startSideChooser.addDefault("none", 'N');
-		startSideChooser.addDefault("right", 'R');
-		startSideChooser.addDefault("left", 'L');
+		startSideChooser.addObject("right", 'R');
+		startSideChooser.addObject("left", 'L');
 
 		initDBC();
 		initDashboard();
@@ -145,8 +155,8 @@ public class Robot extends TimedRobot {
 		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
 
-		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.get()));
-		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.get()));
+		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.getDistance()));
+		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.getDistance()));
 
 		// general information - image processing
 		dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
@@ -163,15 +173,14 @@ public class Robot extends TimedRobot {
 	public static void initDashboard() {
 		// auto
 		SmartDashboard.putData("auto chooser", autoChooser);
-		SmartDashboard.putData("starting side", startSideChooser);
+		SmartDashboard.putData("start side chooser", startSideChooser);
 		// locker commands
 		SmartDashboard.putData("unlock",
 				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
 		SmartDashboard.putData("lock", new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
 		// lift commands
-		SmartDashboard.putData("move lift up", new MoveLift(
-				SubsystemConstants.Lift.UP_SPEED));
+		SmartDashboard.putData("move lift up", new MoveLift(SubsystemConstants.Lift.UP_SPEED));
 		SmartDashboard.putData("move lift down", new MoveLift(
 				() -> SubsystemComponents.Lift.getPosition() > SubsystemComponents.Lift.HallEffects.LOW_SCALE.getIndex()
 						? SubsystemConstants.Lift.FIRST_DOWN_SPEED.get()
@@ -225,18 +234,13 @@ public class Robot extends TimedRobot {
 				autoCommand = new MiddleToSwitchAuto(gameData);
 				break;
 			case "switch from side":
-				if (side != 'n') {
-					autoCommand = new ScoreFromSideAuto();
-					break;
-				}
-			case "scale from side":
-				if (side != 'n') {
-					autoCommand = new ScoreFromSideAuto();
+				if (side == gameData.charAt(0)) {
+					autoCommand = new ScoreSwitchFromSideAuto(side);
 					break;
 				}
 			case "straight to switch":
-				if (side != 'n') {
-					autoCommand = new DriveAndScoreSwitchAuto(gameData, side);
+				if (side == gameData.charAt(0)) {
+					autoCommand = new DriveAndScoreSwitchAuto(side);
 					break;
 				}
 			default:
@@ -246,29 +250,17 @@ public class Robot extends TimedRobot {
 		}
 	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * <p>
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
 	@Override
 	public void autonomousInit() {
-		System.out.println("auto command - " + autoChooser.getSelected() + " , starting side - "
-				+ startSideChooser.getSelected() + ", game data - " + gameData);
-		if (autoCommand != null)
+		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
+		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
+		System.out.println(
+				"auto command - " + autoChooser.getSelected() + " , starting side - " + startSideChooser.getSelected());
+  if (autoCommand != null)
 			autoCommand.start();
+
 	}
 
-	/**
-	 * This function is called periodically during autonomous.
-	 */
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
@@ -278,13 +270,12 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
+		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		if (autoCommand != null)
 			autoCommand.cancel();
 	}
 
-	/**
-	 * This function is called periodically during operator control.
-	 */
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
@@ -292,9 +283,6 @@ public class Robot extends TimedRobot {
 		dbc.update();
 	}
 
-	/**
-	 * This function is called periodically during test mode.
-	 */
 	@Override
 	public void testPeriodic() {
 	}
