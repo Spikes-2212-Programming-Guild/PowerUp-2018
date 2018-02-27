@@ -26,7 +26,7 @@ public class DriveAndScoreSwitchAuto extends CommandGroup {
 	public static final Supplier<Double> ORIENTATION_TIME_OUT = ConstantHandler
 			.addConstantDouble("score switch straight - oriantation timeout", 2.3);
 
-	public DriveAndScoreSwitchAuto(char startSide) {
+	public DriveAndScoreSwitchAuto() {
 		// move lift
 		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
