@@ -22,8 +22,7 @@ public class SubsystemConstants {
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Folder Staying speed",
 				-0.2);
 		public static final Supplier<Double> DOWN_SPEED_SUPPLIER = () -> SubsystemComponents.Folder.MIN_LIMIT.get()
-				? STAYING_SPEED.get()
-				: PULSE_DOWN_SPEED.get();
+				? STAYING_SPEED.get() : PULSE_DOWN_SPEED.get();
 		public static final Supplier<Double> UP_WAIT_TIME = ConstantHandler.addConstantDouble("folder up waitTime", 1);
 	}
 
@@ -45,10 +44,7 @@ public class SubsystemConstants {
 	}
 
 	public static interface Lift {
-		public static final Supplier<Double> FIRST_UP_SPEED = ConstantHandler.addConstantDouble("Lift First Up Speed",
-				0.6);
-		public static final Supplier<Double> SECOND_UP_SPEED = ConstantHandler.addConstantDouble("Lift Second Up Speed",
-				0.8);
+		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Lift Second Up Speed", 0.8);
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Lift Staying Speed",
 				0.2);
 		public static final Supplier<Double> FIRST_DOWN_SPEED = ConstantHandler
