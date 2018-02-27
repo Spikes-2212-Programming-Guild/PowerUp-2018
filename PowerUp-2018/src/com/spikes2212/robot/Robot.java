@@ -122,8 +122,8 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("straight to switch", "straight to switch");
 
 		startSideChooser.addDefault("none", 'N');
-		startSideChooser.addDefault("right", 'R');
-		startSideChooser.addDefault("left", 'L');
+		startSideChooser.addObject("right", 'R');
+		startSideChooser.addObject("left", 'L');
 
 		initDBC();
 		initDashboard();
@@ -173,7 +173,7 @@ public class Robot extends TimedRobot {
 	public static void initDashboard() {
 		// auto
 		SmartDashboard.putData("auto chooser", autoChooser);
-		SmartDashboard.putData("start side chooser",startSideChooser);
+		SmartDashboard.putData("start side chooser", startSideChooser);
 		// locker commands
 		SmartDashboard.putData("unlock",
 				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
