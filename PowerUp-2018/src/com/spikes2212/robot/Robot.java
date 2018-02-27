@@ -213,6 +213,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED).start();
+		waitForData = true;
+		gameData = "";
 	}
 
 	@Override
@@ -256,7 +258,7 @@ public class Robot extends TimedRobot {
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		System.out.println(
 				"auto command - " + autoChooser.getSelected() + " , starting side - " + startSideChooser.getSelected());
-  if (autoCommand != null)
+		if (autoCommand != null)
 			autoCommand.start();
 
 	}
