@@ -35,7 +35,6 @@ public class SubsystemConstants {
 				27);
 		// TODO find out the real distance of the cube from the sensor
 		public static final Supplier<Double> CUBE_DISTANCE = ConstantHandler.addConstantDouble("Cube Distance", 17);
-		public static final Supplier<Double> ROLL_OUT_TIME = ConstantHandler.addConstantDouble("Roll Out Time", 1.0);
 	}
 
 	public static interface LiftLocker {
