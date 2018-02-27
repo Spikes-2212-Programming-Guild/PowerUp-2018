@@ -48,9 +48,9 @@ public class SubsystemConstants {
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Lift Staying Speed",
 				0.2);
 		public static final Supplier<Double> FIRST_DOWN_SPEED = ConstantHandler
-				.addConstantDouble("Lift First Down Speed", 0.05);
+				.addConstantDouble("Lift First Down Speed", -0.08);
 		public static final Supplier<Double> SECOND_DOWN_SPEED = ConstantHandler
-				.addConstantDouble("Lift Second Down Speed", 0.0405);
+				.addConstantDouble("Lift Second Down Speed", -0.2);
 
 	}
 
