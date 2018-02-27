@@ -21,10 +21,8 @@ public class MoveLiftToTarget extends CommandGroup {
 					return SubsystemConstants.Lift.SECOND_DOWN_SPEED.get();
 				else
 					return SubsystemConstants.Lift.FIRST_DOWN_SPEED.get();
-			else if (SubsystemComponents.Lift.getPosition() < HallEffects.SWITCH.getIndex())
-				return SubsystemConstants.Lift.FIRST_UP_SPEED.get();
 			else
-				return SubsystemConstants.Lift.SECOND_UP_SPEED.get();
+				return SubsystemConstants.Lift.UP_SPEED.get();
 		}, () -> !hallEffect.getHallEffect().get()));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
 
