@@ -3,7 +3,7 @@ package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
 import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
-import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
+import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcadeWithPID;
 import com.spikes2212.robot.ImageProcessingConstants;
 import com.spikes2212.robot.Robot;
@@ -28,7 +28,8 @@ public class DriveAndScoreSwitchAuto extends CommandGroup {
 
 	public DriveAndScoreSwitchAuto(String gameData, char startSide) {
 		// move lift
-		addParallel(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
+		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
+		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
 		// drive while orienting
 		addSequential(new DriveArcadeWithPID(Robot.drivetrain, ImageProcessingConstants.CENTER, () -> 0.0,
