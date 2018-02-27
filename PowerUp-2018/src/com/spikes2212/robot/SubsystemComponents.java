@@ -12,10 +12,6 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public class SubsystemComponents {
 
-	public static class Climber {
-		public static final WPI_TalonSRX MOTOR = new WPI_TalonSRX(RobotMap.CAN.CLIMBER);
-	}
-
 	public static class Folder {
 		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(
 				new VictorSP(RobotMap.PWM.FOLDER_1), new VictorSP(RobotMap.PWM.FOLDER_2));

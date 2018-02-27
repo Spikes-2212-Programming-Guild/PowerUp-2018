@@ -19,7 +19,10 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.DriveAndScoreSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreFromSideAuto;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -38,7 +41,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 	public static OI oi;
-	public static BasicSubsystem climber;
 	public static BasicSubsystem folder;
 	public static BasicSubsystem roller;
 	public static BasicSubsystem liftLocker;
@@ -47,8 +49,12 @@ public class Robot extends TimedRobot {
 
 	public static DashBoardController dbc;
 	public static CamerasHandler camerasHandler;
+
 	public static String gameData;
-	public static SendableChooser<Command> chooser = new SendableChooser<>();
+	public static SendableChooser<String> autoChooser = new SendableChooser<>();
+	public static SendableChooser<Character> startSideChooser = new SendableChooser<>();
+	public static Command autoCommand;
+	public static boolean waitForData = true;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -64,10 +70,6 @@ public class Robot extends TimedRobot {
 		// TODO - check which side is really inverted
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				new InvertedConsumer(SubsystemComponents.Drivetrain.RIGHT_MOTOR::set));
-
-		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set,
-				(Double speed) -> SubsystemConstants.Climber.MAX_VOLTAGE.get() >= SubsystemComponents.Climber.MOTOR
-						.getOutputCurrent());
 
 		folder = new BasicSubsystem(new InvertedConsumer(SubsystemComponents.Folder.MOTORS::set),
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, () -> false));
@@ -103,7 +105,16 @@ public class Robot extends TimedRobot {
 
 		dbc = new DashBoardController();
 
-		chooser.addDefault("center", new MiddleToSwitchAuto());
+		autoChooser.addDefault("pass auto line", "pass auto line");
+		autoChooser.addObject("switch from middle", "switch from middle");
+		autoChooser.addObject("switch from side", "switch from side");
+		autoChooser.addObject("scale from side", "scale from side");
+		autoChooser.addObject("straight to switch", "straight to switch");
+
+		startSideChooser.addDefault("none", 'N');
+		startSideChooser.addDefault("right", 'R');
+		startSideChooser.addDefault("left", 'L');
+
 		initDBC();
 		initDashboard();
 	}
@@ -151,7 +162,8 @@ public class Robot extends TimedRobot {
 
 	public static void initDashboard() {
 		// auto
-		SmartDashboard.putData("auto chooser", chooser);
+		SmartDashboard.putData("auto chooser", autoChooser);
+		SmartDashboard.putData("starting side", startSideChooser);
 		// locker commands
 		SmartDashboard.putData("unlock",
 				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
@@ -198,6 +210,40 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		dbc.update();
+
+		// try to receive data if not already received
+		if (waitForData)
+			gameData = DriverStation.getInstance().getGameSpecificMessage();
+
+		// got the data
+		if (gameData.length() != 0) {
+			waitForData = false;
+			char side = startSideChooser.getSelected();
+
+			switch (autoChooser.getSelected()) {
+			case "switch from middle":
+				autoCommand = new MiddleToSwitchAuto(gameData);
+				break;
+			case "switch from side":
+				if (side != 'n') {
+					autoCommand = new ScoreFromSideAuto();
+					break;
+				}
+			case "scale from side":
+				if (side != 'n') {
+					autoCommand = new ScoreFromSideAuto();
+					break;
+				}
+			case "straight to switch":
+				if (side != 'n') {
+					autoCommand = new DriveAndScoreSwitchAuto(gameData, side);
+					break;
+				}
+			default:
+				autoCommand = new PassAutoLine();
+				break;
+			}
+		}
 	}
 
 	/**
@@ -214,8 +260,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		chooser.getSelected().start();
+		System.out.println("auto command - " + autoChooser.getSelected() + " , starting side - "
+				+ startSideChooser.getSelected() + ", game data - " + gameData);
+		if (autoCommand != null)
+			autoCommand.start();
 	}
 
 	/**
@@ -230,7 +278,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		chooser.getSelected().cancel();
+		if (autoCommand != null)
+			autoCommand.cancel();
 	}
 
 	/**
