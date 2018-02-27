@@ -30,7 +30,7 @@ public class ScoreSwitchFromSideAuto extends CommandGroup {
 	public ScoreSwitchFromSideAuto(char startSide) {
 
 		// driving to the correct set point according to target's properties
-		addSequential(new MoveToSwitch());
+		addSequential(new MoveToSwitchWithEncoders());
 
 		// turning towards the target(switch/scale)
 		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0,
