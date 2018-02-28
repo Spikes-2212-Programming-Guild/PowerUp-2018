@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
 
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
-		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
+		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA);
 		camerasHandler.setExposure(47);
 
 		dbc = new DashBoardController();
