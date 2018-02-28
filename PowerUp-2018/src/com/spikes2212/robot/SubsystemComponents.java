@@ -89,7 +89,7 @@ public class SubsystemComponents {
 				position = (MOTORS.get() >= SubsystemConstants.Lift.STAYING_SPEED.get()) ? 3.5 : 2.5;
 			else if (!HallEffects.LOW_SCALE.getHallEffect().get())
 				position = (MOTORS.get() >= SubsystemConstants.Lift.STAYING_SPEED.get()) ? 2.5 : 1.5;
-			else if (!HallEffects.SWITCH.getHallEffect().get())
+			else if (HallEffects.SWITCH.getHallEffect().get())
 				position = (MOTORS.get() >= SubsystemConstants.Lift.STAYING_SPEED.get()) ? 1.5 : 0.5;
 			else if (LIMIT_DOWN.get())
 				position = (MOTORS.get() >= SubsystemConstants.Lift.STAYING_SPEED.get()) ? 0.5 : 0;
