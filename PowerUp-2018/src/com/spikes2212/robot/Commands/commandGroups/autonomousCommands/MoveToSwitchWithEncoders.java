@@ -4,10 +4,7 @@ import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
-import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
 import com.spikes2212.robot.Robot;
-import com.spikes2212.robot.SubsystemComponents;
-import com.spikes2212.utils.PIDSettings;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -34,6 +31,6 @@ public class MoveToSwitchWithEncoders extends CommandGroup {
 			0.0);
 
 	public MoveToSwitchWithEncoders() {
-		addSequential(new DriveTank(Robot.drivetrain,()->0.5,()->0.5));
+		addSequential(new DriveTank(Robot.drivetrain, () -> 0.5, () -> 0.5));
 	}
 }

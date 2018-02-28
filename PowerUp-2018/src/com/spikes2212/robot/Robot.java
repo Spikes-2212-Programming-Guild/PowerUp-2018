@@ -26,7 +26,6 @@ import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitc
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -108,14 +107,14 @@ public class Robot extends TimedRobot {
 		dbc = new DashBoardController();
 
 		// second robot does not contain encoders
-//		SubsystemComponents.Drivetrain.LEFT_ENCODER.setDistancePerPulse(ENCODERS_DISTANCE_PER_PULSE);
-//		SubsystemComponents.Drivetrain.RIGHT_ENCODER.setDistancePerPulse(ENCODERS_DISTANCE_PER_PULSE);
-//
-//		SubsystemComponents.Drivetrain.LEFT_ENCODER.setPIDSourceType(PIDSourceType.kDisplacement);
-//		SubsystemComponents.Drivetrain.RIGHT_ENCODER.setPIDSourceType(PIDSourceType.kDisplacement);
-//
-//		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
-//		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
+		// SubsystemComponents.Drivetrain.LEFT_ENCODER.setDistancePerPulse(ENCODERS_DISTANCE_PER_PULSE);
+		// SubsystemComponents.Drivetrain.RIGHT_ENCODER.setDistancePerPulse(ENCODERS_DISTANCE_PER_PULSE);
+		//
+		// SubsystemComponents.Drivetrain.LEFT_ENCODER.setPIDSourceType(PIDSourceType.kDisplacement);
+		// SubsystemComponents.Drivetrain.RIGHT_ENCODER.setPIDSourceType(PIDSourceType.kDisplacement);
+		//
+		// SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
+		// SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 
 		autoChooser.addDefault("pass auto line", "pass auto line");
 		autoChooser.addObject("switch from middle", "switch from middle");
@@ -156,8 +155,10 @@ public class Robot extends TimedRobot {
 		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
 
-//		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.getDistance()));
-//		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.getDistance()));
+		// dbc.addDouble("encoder left", () -> ((double)
+		// SubsystemComponents.Drivetrain.LEFT_ENCODER.getDistance()));
+		// dbc.addDouble("encoder right", () -> ((double)
+		// SubsystemComponents.Drivetrain.RIGHT_ENCODER.getDistance()));
 
 		// general information - image processing
 		dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
@@ -253,11 +254,11 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
-//		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
-//		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
+		// SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
+		// SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		System.out.println(
 				"auto command - " + autoChooser.getSelected() + " , starting side - " + startSideChooser.getSelected());
-  if (autoCommand != null)
+		if (autoCommand != null)
 			autoCommand.start();
 
 	}
@@ -271,8 +272,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-//		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
-//		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
+		// SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
+		// SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		if (autoCommand != null)
 			autoCommand.cancel();
 	}
