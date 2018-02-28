@@ -85,11 +85,11 @@ public class SubsystemComponents {
 				position = (MOTORS.get() >= SubsystemConstants.Lift.STAYING_SPEED.get()) ? 4 : 3.5;
 			// The hall effects are wired to say false when there is magnet near
 			// them so we need to invert them in code
-			else if (!HallEffects.MID_SCALE.getHallEffect().get())
+			else if (HallEffects.MID_SCALE.getHallEffect().get())
 				position = (MOTORS.get() >= SubsystemConstants.Lift.STAYING_SPEED.get()) ? 3.5 : 2.5;
-			else if (!HallEffects.LOW_SCALE.getHallEffect().get())
+			else if (HallEffects.LOW_SCALE.getHallEffect().get())
 				position = (MOTORS.get() >= SubsystemConstants.Lift.STAYING_SPEED.get()) ? 2.5 : 1.5;
-			else if (HallEffects.SWITCH.getHallEffect().get())
+			else if (!HallEffects.SWITCH.getHallEffect().get())
 				position = (MOTORS.get() >= SubsystemConstants.Lift.STAYING_SPEED.get()) ? 1.5 : 0.5;
 			else if (LIMIT_DOWN.get())
 				position = (MOTORS.get() >= SubsystemConstants.Lift.STAYING_SPEED.get()) ? 0.5 : 0;
