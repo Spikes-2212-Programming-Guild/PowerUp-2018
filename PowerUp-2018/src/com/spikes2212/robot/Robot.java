@@ -19,8 +19,6 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.DriveAndScoreSwitchAuto;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.utils.CamerasHandler;
@@ -161,7 +159,7 @@ public class Robot extends TimedRobot {
 		// SubsystemComponents.Drivetrain.RIGHT_ENCODER.getDistance()));
 
 		// general information - image processing
-		dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
+		//dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
 
 		// game state
 		dbc.addBoolean("close switch left", () -> (gameData != null) ? (gameData.charAt(0) == 'L') : false);
@@ -232,17 +230,9 @@ public class Robot extends TimedRobot {
 			char side = startSideChooser.getSelected();
 
 			switch (autoChooser.getSelected()) {
-			case "switch from middle":
-				autoCommand = new MiddleToSwitchAuto(gameData);
-				break;
 			case "switch from side":
 				if (side == gameData.charAt(0)) {
 					autoCommand = new ScoreSwitchFromSideAuto(side);
-					break;
-				}
-			case "straight to switch":
-				if (side == gameData.charAt(0)) {
-					autoCommand = new DriveAndScoreSwitchAuto();
 					break;
 				}
 			default:
