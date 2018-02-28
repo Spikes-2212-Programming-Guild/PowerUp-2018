@@ -3,6 +3,7 @@ package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
 import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
 import com.spikes2212.robot.Robot;
 import com.spikes2212.robot.SubsystemComponents;
@@ -33,9 +34,6 @@ public class MoveToSwitchWithEncoders extends CommandGroup {
 			0.0);
 
 	public MoveToSwitchWithEncoders() {
-		PIDSettings settings = new PIDSettings(DRIVING_KP.get(), DRIVING_KI.get(), DRIVING_KD.get(), TOLERANCE.get(),
-				PID_WAIT_TIME.get());
-		addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
-				SubsystemComponents.Drivetrain.RIGHT_ENCODER, SET_POINT, settings));
+		addSequential(new DriveTank(Robot.drivetrain,()->0.5,()->0.5));
 	}
 }
