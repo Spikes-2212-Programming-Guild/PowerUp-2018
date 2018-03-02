@@ -18,11 +18,11 @@ public class RobotMap {
 	}
 
 	public static interface PWM {
-		public static final int FOLDER_1 = 0;
-		public static final int FOLDER_2 = 1;
+		public static final int FOLDER_1 = 1;
+		public static final int FOLDER_2 = 0;
 		public static final int LIFT_LOCKER = 2;
-		public static final int ROLLER_LEFT = 5;
-		public static final int ROLLER_RIGHT = 4;
+		public static final int ROLLER_LEFT = 4;
+		public static final int ROLLER_RIGHT = 5;
 
 	}
 
@@ -51,7 +51,6 @@ public class RobotMap {
 	}
 
 	public static interface USB {
-		public static final int REAR_CAMERA = 0;
-		public static final int FRONT_CAMERA = 1;
+		public static final int FRONT_CAMERA = 0;
 	}
 }

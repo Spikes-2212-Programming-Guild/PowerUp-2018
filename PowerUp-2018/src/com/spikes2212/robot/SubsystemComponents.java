@@ -19,12 +19,13 @@ public class SubsystemComponents {
 	}
 
 	public static class Drivetrain {
-		public static final DoubleSpeedcontroller RIGHT_MOTOR = new DoubleSpeedcontroller(
-				new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT1), new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT2));
-		public static final DoubleSpeedcontroller LEFT_MOTOR = new DoubleSpeedcontroller(
-				new WPI_TalonSRX(RobotMap.CAN.DRIVE_LEFT1), new WPI_TalonSRX(RobotMap.CAN.DRIVE_LEFT2));
+		public static final WPI_TalonSRX right1 = new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT1);
+		public static final WPI_TalonSRX right2 = new WPI_TalonSRX(RobotMap.CAN.DRIVE_RIGHT2);
+		public static final WPI_TalonSRX left1 = new WPI_TalonSRX(RobotMap.CAN.DRIVE_LEFT1);
+		public static final WPI_TalonSRX left2 = new WPI_TalonSRX(RobotMap.CAN.DRIVE_LEFT2);
+		public static final DoubleSpeedcontroller RIGHT_MOTOR = new DoubleSpeedcontroller(right1, right2);
+		public static final DoubleSpeedcontroller LEFT_MOTOR = new DoubleSpeedcontroller(left1, left2);
 
-		public static final Gyro GYRO = new ADXRS450_Gyro();
 	}
 
 	public static class Roller {
@@ -68,8 +69,10 @@ public class SubsystemComponents {
 			}
 		}
 
-		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(
-				new WPI_TalonSRX(RobotMap.CAN.LIFT_MOTOR_A), new WPI_TalonSRX(RobotMap.CAN.LIFT_MOTOR_B));
+		public static final WPI_TalonSRX LIFT_MOTOR_A = new WPI_TalonSRX(RobotMap.CAN.LIFT_MOTOR_A);
+		public static final WPI_TalonSRX LIFT_MOTOR_B = new WPI_TalonSRX(RobotMap.CAN.LIFT_MOTOR_B);
+
+		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(LIFT_MOTOR_A, LIFT_MOTOR_B);
 		public static final DigitalInput LIMIT_UP = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_UP);
 		public static final DigitalInput LIMIT_DOWN = new DigitalInput(RobotMap.DIO.LIFT_LIMIT_DOWN);
 		// stores the position of the lift to display on shuffleBoard

@@ -16,7 +16,7 @@ public class SubsystemConstants {
 	}
 
 	public static interface Folder {
-		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.5);
+		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.2);
 		public static final Supplier<Double> PULSE_DOWN_SPEED = ConstantHandler
 				.addConstantDouble("Folder pulse Down Speed", -0.7);
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Folder Staying speed",

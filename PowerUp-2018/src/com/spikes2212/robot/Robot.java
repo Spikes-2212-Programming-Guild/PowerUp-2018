@@ -13,7 +13,9 @@ import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
+import com.spikes2212.genericsubsystems.utils.limitationFunctions.Limitless;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.robot.Commands.commandGroups.KeepLockOpen;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
@@ -64,7 +66,7 @@ public class Robot extends TimedRobot {
 		roller = new BasicSubsystem((Double speed) -> {
 			SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
 			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
-		}, new TwoLimits(() -> false, () -> SubsystemComponents.Roller.hasCube()));
+		}, new Limitless());
 
 		// TODO - check which side is really inverted
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
@@ -141,6 +143,8 @@ public class Robot extends TimedRobot {
 		dbc.addBoolean("Lift - down", SubsystemComponents.Lift.LIMIT_DOWN::get);
 		dbc.addDouble("lift - current speed", Robot.lift::getSpeed);
 		dbc.addDouble("lift - current position", SubsystemComponents.Lift::getPosition);
+		dbc.addDouble("Lift - current - A", SubsystemComponents.Lift.LIFT_MOTOR_A::getOutputCurrent);
+		dbc.addDouble("Lift - current - B", SubsystemComponents.Lift.LIFT_MOTOR_B::getOutputCurrent);
 
 		// folder data
 		dbc.addBoolean("Folder - Up", SubsystemComponents.Folder.MAX_LIMIT::get);
@@ -152,6 +156,7 @@ public class Robot extends TimedRobot {
 		// general information - robot
 		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
+		
 
 		// dbc.addDouble("encoder left", () -> ((double)
 		// SubsystemComponents.Drivetrain.LEFT_ENCODER.getDistance()));
@@ -159,11 +164,11 @@ public class Robot extends TimedRobot {
 		// SubsystemComponents.Drivetrain.RIGHT_ENCODER.getDistance()));
 
 		// general information - image processing
-		//dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
+		// dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
 
 		// game state
 		dbc.addBoolean("close switch left", () -> (gameData != null) ? (gameData.charAt(0) == 'L') : false);
-		dbc.addBoolean("close switch right", () -> (gameData != null) ? (gameData.charAt(0) == 'R') : false);
+		dbc.addBoolean("close switch right", () -> (gameData != null && gameData.equals("")) ? (gameData.charAt(0) == 'R') : false);
 		dbc.addBoolean("scale left", () -> (gameData != null) ? (gameData.charAt(1) == 'L') : false);
 		dbc.addBoolean("scale right", () -> (gameData != null) ? (gameData.charAt(1) == 'R') : false);
 		dbc.addBoolean("far switch left", () -> (gameData != null) ? (gameData.charAt(2) == 'L') : false);
@@ -175,8 +180,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("auto chooser", autoChooser);
 		SmartDashboard.putData("start side chooser", startSideChooser);
 		// locker commands
-		SmartDashboard.putData("unlock",
-				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
+		SmartDashboard.putData("keep unlock", new KeepLockOpen());
 		SmartDashboard.putData("lock", new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
 		// lift commands
