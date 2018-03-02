@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
 	public static SendableChooser<String> autoChooser = new SendableChooser<>();
 	public static SendableChooser<Character> startSideChooser = new SendableChooser<>();
 
-	public static Command autoCommand;
+	public static Command autoCommand = new PassAutoLine();
 	// public static boolean waitForData = true;
 
 	@Override
