@@ -162,12 +162,18 @@ public class Robot extends TimedRobot {
 		dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
 
 		// game state
-		dbc.addBoolean("close switch left", () -> (gameData != null) ? (gameData.charAt(0) == 'L') : false);
-		dbc.addBoolean("close switch right", () -> (gameData != null) ? (gameData.charAt(0) == 'R') : false);
-		dbc.addBoolean("scale left", () -> (gameData != null) ? (gameData.charAt(1) == 'L') : false);
-		dbc.addBoolean("scale right", () -> (gameData != null) ? (gameData.charAt(1) == 'R') : false);
-		dbc.addBoolean("far switch left", () -> (gameData != null) ? (gameData.charAt(2) == 'L') : false);
-		dbc.addBoolean("far switch right", () -> (gameData != null) ? (gameData.charAt(2) == 'R') : false);
+		dbc.addBoolean("close switch left",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(0) == 'L') : false);
+		dbc.addBoolean("close switch right",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(0) == 'R') : false);
+		dbc.addBoolean("scale left",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(1) == 'L') : false);
+		dbc.addBoolean("scale right",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(1) == 'R') : false);
+		dbc.addBoolean("far switch left",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(2) == 'L') : false);
+		dbc.addBoolean("far switch right",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(2) == 'R') : false);
 	}
 
 	public static void initDashboard() {
