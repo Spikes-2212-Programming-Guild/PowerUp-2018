@@ -53,14 +53,12 @@ public class Robot extends TimedRobot {
 	public static CamerasHandler camerasHandler;
 
 	// defining autonomous variables
-
 	public static String gameData;
-
+	
 	public static SendableChooser<String> autoChooser = new SendableChooser<>();
 	public static SendableChooser<Character> startSideChooser = new SendableChooser<>();
-	
-	// this is the default auto command in case no game data is received
-	public static Command autoCommand = new PassAutoLine();
+
+	public static Command autoCommand;
 
 	@Override
 	public void robotInit() {
@@ -269,6 +267,8 @@ public class Robot extends TimedRobot {
 				"auto command - " + autoChooser.getSelected() + " , starting side - " + startSideChooser.getSelected());
 		if (autoCommand != null)
 			autoCommand.start();
+		else
+			new PassAutoLine().start();
 
 	}
 
