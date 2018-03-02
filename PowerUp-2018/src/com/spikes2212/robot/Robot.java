@@ -53,14 +53,12 @@ public class Robot extends TimedRobot {
 	public static CamerasHandler camerasHandler;
 
 	// defining autonomous variables
-
-	public static String gameData;
+	public static String gameData = "";
 
 	public static SendableChooser<String> autoChooser = new SendableChooser<>();
 	public static SendableChooser<Character> startSideChooser = new SendableChooser<>();
 
 	public static Command autoCommand;
-	public static boolean waitForData = true;
 
 	@Override
 	public void robotInit() {
@@ -162,12 +160,18 @@ public class Robot extends TimedRobot {
 		dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
 
 		// game state
-		dbc.addBoolean("close switch left", () -> (gameData != null) ? (gameData.charAt(0) == 'L') : false);
-		dbc.addBoolean("close switch right", () -> (gameData != null) ? (gameData.charAt(0) == 'R') : false);
-		dbc.addBoolean("scale left", () -> (gameData != null) ? (gameData.charAt(1) == 'L') : false);
-		dbc.addBoolean("scale right", () -> (gameData != null) ? (gameData.charAt(1) == 'R') : false);
-		dbc.addBoolean("far switch left", () -> (gameData != null) ? (gameData.charAt(2) == 'L') : false);
-		dbc.addBoolean("far switch right", () -> (gameData != null) ? (gameData.charAt(2) == 'R') : false);
+		dbc.addBoolean("close switch left",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(0) == 'L') : false);
+		dbc.addBoolean("close switch right",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(0) == 'R') : false);
+		dbc.addBoolean("scale left",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(1) == 'L') : false);
+		dbc.addBoolean("scale right",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(1) == 'R') : false);
+		dbc.addBoolean("far switch left",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(2) == 'L') : false);
+		dbc.addBoolean("far switch right",
+				() -> (gameData != null && gameData.length() > 0) ? (gameData.charAt(2) == 'R') : false);
 	}
 
 	public static void initDashboard() {
@@ -213,6 +217,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED).start();
+		gameData = "";
 	}
 
 	@Override
@@ -220,13 +225,13 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		dbc.update();
 
-		// try to receive data if not already received
-		if (waitForData)
+		// try to receive data if exists
+		if (DriverStation.getInstance().getGameSpecificMessage() != null
+				&& DriverStation.getInstance().getGameSpecificMessage().length() > 0)
 			gameData = DriverStation.getInstance().getGameSpecificMessage();
 
 		// got the data
-		if (gameData.length() != 0) {
-			waitForData = false;
+		if (gameData.length() > 0) {
 			char side = startSideChooser.getSelected();
 
 			switch (autoChooser.getSelected()) {
@@ -254,11 +259,14 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
-		System.out.println(
-				"auto command - " + autoChooser.getSelected() + " , starting side - " + startSideChooser.getSelected());
-  if (autoCommand != null)
+		System.out.println("auto chooser command - " + autoChooser.getSelected() + " , starting side - "
+				+ startSideChooser.getSelected() + " , game data:" + gameData);
+		if (autoCommand != null)
 			autoCommand.start();
-
+		else {
+			System.out.println("no game data recieved. running pass line");
+			new PassAutoLine().start();
+		}
 	}
 
 	@Override
@@ -285,5 +293,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
+		System.out.println("auto command - " + autoChooser.getSelected() + " , starting side - "
+				+ startSideChooser.getSelected() + " , game data:" + gameData);
 	}
 }
