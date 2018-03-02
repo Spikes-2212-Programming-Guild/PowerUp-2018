@@ -58,9 +58,9 @@ public class Robot extends TimedRobot {
 
 	public static SendableChooser<String> autoChooser = new SendableChooser<>();
 	public static SendableChooser<Character> startSideChooser = new SendableChooser<>();
-
+	
+	// this is the default auto command in case no game data is received
 	public static Command autoCommand = new PassAutoLine();
-	// public static boolean waitForData = true;
 
 	@Override
 	public void robotInit() {
@@ -219,7 +219,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED).start();
-		// waitForData = true;
 		gameData = "";
 	}
 
@@ -239,7 +238,6 @@ public class Robot extends TimedRobot {
 
 		// got the data
 		if (gameData.length() > 0) {
-			// waitForData = false;
 			char side = startSideChooser.getSelected();
 
 			switch (autoChooser.getSelected()) {
