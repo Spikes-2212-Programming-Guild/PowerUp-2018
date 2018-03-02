@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
 	public static SendableChooser<Character> startSideChooser = new SendableChooser<>();
 
 	public static Command autoCommand;
-	public static boolean waitForData = true;
+	// public static boolean waitForData = true;
 
 	@Override
 	public void robotInit() {
@@ -219,7 +219,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED).start();
-		waitForData = true;
+		// waitForData = true;
 		gameData = "";
 	}
 
@@ -228,13 +228,18 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		dbc.update();
 
-		// try to receive data if not already received
-		if (waitForData)
+		// try to receive data if exists
+		if (DriverStation.getInstance().getGameSpecificMessage() != null
+				&& DriverStation.getInstance().getGameSpecificMessage().length() > 0)
 			gameData = DriverStation.getInstance().getGameSpecificMessage();
 
+		// debugging prints. delete when finish
+		System.out.println("auto command - " + autoChooser.getSelected() + " , starting side - "
+				+ startSideChooser.getSelected() + " , game data:" + gameData);
+
 		// got the data
-		if (gameData.length() != 0) {
-			waitForData = false;
+		if (gameData.length() > 0) {
+			// waitForData = false;
 			char side = startSideChooser.getSelected();
 
 			switch (autoChooser.getSelected()) {
@@ -293,5 +298,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
+		System.out.println("auto command - " + autoChooser.getSelected() + " , starting side - "
+				+ startSideChooser.getSelected() + " , game data:" + gameData);
 	}
 }
