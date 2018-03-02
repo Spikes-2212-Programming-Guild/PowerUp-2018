@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
 
 	// defining autonomous variables
 	public static String gameData;
-	
+
 	public static SendableChooser<String> autoChooser = new SendableChooser<>();
 	public static SendableChooser<Character> startSideChooser = new SendableChooser<>();
 
@@ -230,10 +230,6 @@ public class Robot extends TimedRobot {
 				&& DriverStation.getInstance().getGameSpecificMessage().length() > 0)
 			gameData = DriverStation.getInstance().getGameSpecificMessage();
 
-		// debugging prints. delete when finish
-		System.out.println("auto command - " + autoChooser.getSelected() + " , starting side - "
-				+ startSideChooser.getSelected() + " , game data:" + gameData);
-
 		// got the data
 		if (gameData.length() > 0) {
 			char side = startSideChooser.getSelected();
@@ -263,13 +259,14 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
-		System.out.println(
-				"auto command - " + autoChooser.getSelected() + " , starting side - " + startSideChooser.getSelected());
+		System.out.println("auto chooser command - " + autoChooser.getSelected() + " , starting side - "
+				+ startSideChooser.getSelected() + " , game data:" + gameData);
 		if (autoCommand != null)
 			autoCommand.start();
-		else
+		else {
+			System.out.println("no game data recieved. running pass line");
 			new PassAutoLine().start();
-
+		}
 	}
 
 	@Override
