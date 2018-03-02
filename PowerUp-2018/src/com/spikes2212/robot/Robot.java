@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
 	public static CamerasHandler camerasHandler;
 
 	// defining autonomous variables
-	public static String gameData;
+	public static String gameData = "";
 
 	public static SendableChooser<String> autoChooser = new SendableChooser<>();
 	public static SendableChooser<Character> startSideChooser = new SendableChooser<>();
