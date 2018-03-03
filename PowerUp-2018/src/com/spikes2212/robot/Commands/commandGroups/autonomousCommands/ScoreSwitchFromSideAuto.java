@@ -18,17 +18,19 @@ public class ScoreSwitchFromSideAuto extends CommandGroup {
 
 	// defining turning constants
 	public static final Supplier<Double> TURNING_SPEED = ConstantHandler
-			.addConstantDouble("score switch from side auto - turning speed", 0.7);
+			.addConstantDouble("score switch from side auto - turning speed", 0.5);
 	public static final Supplier<Double> TURNING_TIME_OUT = ConstantHandler
 			.addConstantDouble("score switch from side auto - turning timeout", 1.2);
 
 	public static final Supplier<Double> FORWARD_SPEED = ConstantHandler
-			.addConstantDouble("score switch from side auto - forward speed", 0.3);
+			.addConstantDouble("score switch from side auto - forward speed", 0.4);
 	public static final Supplier<Double> FORWARD_TIME_OUT = ConstantHandler
-			.addConstantDouble("score switch from side auto - forward timeout", 2);
+			.addConstantDouble("score switch from side auto - forward timeout", 1.5);
 
 	public ScoreSwitchFromSideAuto(char startSide) {
 
+		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
+		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 		// driving to the correct set point according to target's properties
 		addSequential(new MoveToSwitchWithEncoders());
 
@@ -37,8 +39,6 @@ public class ScoreSwitchFromSideAuto extends CommandGroup {
 				() -> startSide == 'L' ? -TURNING_SPEED.get() : TURNING_SPEED.get()), TURNING_TIME_OUT.get());
 
 		// moving the lift to the right height and placing the cube
-		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
-		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 		addSequential(new DriveArcade(Robot.drivetrain, FORWARD_SPEED, () -> 0.0), FORWARD_TIME_OUT.get());
 		addSequential(new PlaceCube());
 	}

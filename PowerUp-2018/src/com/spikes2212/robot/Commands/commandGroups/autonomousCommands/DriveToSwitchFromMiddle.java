@@ -19,7 +19,7 @@ public class DriveToSwitchFromMiddle extends CommandGroup {
 	public static final Supplier<Double> ROTATION_SPEED = ConstantHandler
 			.addConstantDouble("switch from middle auto - rotation speed", 0.6);
 	public static final Supplier<Double> ROTATION_TIME = ConstantHandler
-			.addConstantDouble("switch from middle auto  - rotation time", 2.0);
+			.addConstantDouble("switch from middle auto  - rotation time", 0.5);
 
 	// orienting constants
 	public static final Supplier<Double> TOLERANCE = ConstantHandler

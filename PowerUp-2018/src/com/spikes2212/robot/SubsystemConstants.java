@@ -16,9 +16,9 @@ public class SubsystemConstants {
 	}
 
 	public static interface Folder {
-		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.5);
+		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.3);
 		public static final Supplier<Double> PULSE_DOWN_SPEED = ConstantHandler
-				.addConstantDouble("Folder pulse Down Speed", -0.7);
+				.addConstantDouble("Folder pulse Down Speed", -0.5);
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Folder Staying speed",
 				-0.2);
 		public static final Supplier<Double> DOWN_SPEED_SUPPLIER = () -> SubsystemComponents.Folder.MIN_LIMIT.get()
@@ -27,7 +27,7 @@ public class SubsystemConstants {
 	}
 
 	public static interface Roller {
-		public static final Supplier<Double> ROLL_IN_SPEED = ConstantHandler.addConstantDouble("Roller In Speed", -0.7);
+		public static final Supplier<Double> ROLL_IN_SPEED = ConstantHandler.addConstantDouble("Roller In Speed", -0.9);
 		public static final Supplier<Double> ROLL_OUT_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed",
 				0.8);
 		public static final Supplier<Integer> LASER_SENSOR_CONSTANT = ConstantHandler.addConstantInt("laser sensor",
