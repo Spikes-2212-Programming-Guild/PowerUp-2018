@@ -68,8 +68,8 @@ public class Robot extends TimedRobot {
 		}, new TwoLimits(() -> false, () -> SubsystemComponents.Roller.hasCube()));
 
 		// TODO - check which side is really inverted
-		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
-				new InvertedConsumer(SubsystemComponents.Drivetrain.RIGHT_MOTOR::set));
+		drivetrain = new TankDrivetrain(new InvertedConsumer(SubsystemComponents.Drivetrain.LEFT_MOTOR::set),
+				SubsystemComponents.Drivetrain.RIGHT_MOTOR::set);
 
 		folder = new BasicSubsystem(new InvertedConsumer(SubsystemComponents.Folder.MOTORS::set),
 				new TwoLimits(SubsystemComponents.Folder.MAX_LIMIT::get, () -> false));
