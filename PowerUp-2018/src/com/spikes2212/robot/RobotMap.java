@@ -38,7 +38,7 @@ public class RobotMap {
 		public static final int LIFT_LOCKER_UNLOCKED_LIMIT = 0;
 		public static final int LIFT_LOCKER_LOCKED_LIMIT = 1;
 
-		public static final int LIFT_HALL_EFFECTS_SWITCH = 9/*21*/;
+		public static final int LIFT_HALL_EFFECTS_SWITCH = 21;
 		public static final int LIFT_HALL_EFFECTS_LOW_SCALE = 22;
 		public static final int LIFT_HALL_EFFECTS_MID_SCALE = 23;
 
