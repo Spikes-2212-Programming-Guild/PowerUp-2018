@@ -45,6 +45,5 @@ public class DriveToSwitchFromMiddle extends CommandGroup {
 						SubsystemConstants.Drivetrain.ORIENTATION_KI.get(),
 						SubsystemConstants.Drivetrain.ORIENTATION_KD.get(), TOLERANCE.get(), PID_WAIT_TIME.get()),
 				ImageProcessingConstants.RANGE), ORIENTATION_TIME_OUT.get());
-		// place cube
 	}
 }
