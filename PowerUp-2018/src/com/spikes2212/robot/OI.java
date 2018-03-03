@@ -8,6 +8,7 @@
 package com.spikes2212.robot;
 
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystemWithTimeSinceReachingLimit;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
@@ -36,6 +37,7 @@ public class OI /* GEVALD */ {
 	private Button pickUpCube;
 	private Button stop;
 	private Button folderUp;
+	private Button folderDown;
 	private Button liftUp;
 	private Button liftDown;
 
@@ -50,6 +52,7 @@ public class OI /* GEVALD */ {
 		placeCube = navigator.getUpButton();
 		pickUpCube = navigator.getLeftButton();
 		folderUp = navigator.getLBButton();
+		folderDown = navigator.getDownButton();
 		liftUp = navigator.getRBButton();
 		liftDown = navigator.getRightStickButton();
 		stop = navigator.getLeftStickButton();
@@ -61,6 +64,7 @@ public class OI /* GEVALD */ {
 		pickUpCube.toggleWhenPressed(new PickUpCube());
 		stop.whenPressed(new StopEverything());
 		folderUp.whenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED.get()));
+		folderDown.whenPressed(new MoveBasicSubsystemWithTimeSinceReachingLimit(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER, 10));
 		liftUp.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.UP_SPEED));
 		liftDown.toggleWhenPressed(new MoveLift(
 				() -> SubsystemComponents.Lift.getPosition() < SubsystemComponents.Lift.HallEffects.SWITCH.getIndex()
