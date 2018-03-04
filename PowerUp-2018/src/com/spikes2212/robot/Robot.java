@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
 		camerasHandler = new CamerasHandler(640, 360, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
-		camerasHandler.setExposure(47);
+		camerasHandler.setExposure(80);
 
 		dbc = new DashBoardController();
 
@@ -155,9 +155,6 @@ public class Robot extends TimedRobot {
 
 		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.getDistance()));
 		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.getDistance()));
-
-		// general information - image processing
-		dbc.addDouble("center", ImageProcessingConstants.TWO_OBJECTS_CENTER);
 
 		// game state
 		dbc.addBoolean("close switch left",
