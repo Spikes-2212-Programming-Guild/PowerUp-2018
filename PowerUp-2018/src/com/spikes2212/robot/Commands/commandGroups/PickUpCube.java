@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class PickUpCube extends CommandGroup {
 
-	public static final Supplier<Double> ROLL_IN_WAIT_TIME = ConstantHandler.addConstantDouble("roll in time", 0.5);
+	public static final Supplier<Double> ROLL_IN_WAIT_TIME = ConstantHandler.addConstantDouble("roll in time", 2);
 
 	public PickUpCube() {
 		addParallel(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
