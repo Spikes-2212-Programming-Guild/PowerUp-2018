@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class MiddleToSwitchAuto extends CommandGroup {
 
+	// initial turning constants
 	public static final Supplier<Double> FORWARD_SPEED = ConstantHandler
 			.addConstantDouble("switch from middle auto - forward speed", 0.4);
 	public static final Supplier<Double> ROTATION_SPEED = ConstantHandler
@@ -55,7 +56,6 @@ public class MiddleToSwitchAuto extends CommandGroup {
 	}
 
 	public class DriveToSwitchFromMiddle extends CommandGroup {
-		// initial turning constants
 
 		public DriveToSwitchFromMiddle(String gameData) {
 			// turn to the correct direction
