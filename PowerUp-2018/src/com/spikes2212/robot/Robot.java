@@ -198,8 +198,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("move folder down",
 				new MoveBasicSubsystem(folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
 		// roller commands
-		SmartDashboard.putData("roll in",
-				new MoveBasicSubsystemWithTimeSinceReachingLimit(roller, SubsystemConstants.Roller.ROLL_IN_SPEED, 20));
+		SmartDashboard.putData("roll in", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_IN_SPEED));
 		SmartDashboard.putData("roll out", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_OUT_SPEED));
 
 		// command groups
