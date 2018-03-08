@@ -20,7 +20,7 @@ public class SubsystemConstants {
 		public static final Supplier<Double> PULSE_DOWN_SPEED = ConstantHandler
 				.addConstantDouble("Folder pulse Down Speed", -0.5);
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Folder Staying speed",
-				-0.2);
+				-0.35);
 		public static final Supplier<Double> DOWN_SPEED_SUPPLIER = () -> SubsystemComponents.Folder.MIN_LIMIT.get()
 				? STAYING_SPEED.get() : PULSE_DOWN_SPEED.get();
 		public static final Supplier<Double> UP_WAIT_TIME = ConstantHandler.addConstantDouble("folder up waitTime", 1);
@@ -29,7 +29,7 @@ public class SubsystemConstants {
 	public static interface Roller {
 		public static final Supplier<Double> ROLL_IN_SPEED = ConstantHandler.addConstantDouble("Roller In Speed", -0.9);
 		public static final Supplier<Double> ROLL_OUT_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed",
-				0.8);
+				0.7);
 		public static final Supplier<Integer> LASER_SENSOR_CONSTANT = ConstantHandler.addConstantInt("laser sensor",
 				27);
 		// TODO find out the real distance of the cube from the sensor
