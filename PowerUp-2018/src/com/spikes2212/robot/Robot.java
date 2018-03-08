@@ -20,7 +20,7 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.DriveAndScoreSwitchAuto;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.StraightToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
@@ -243,7 +243,7 @@ public class Robot extends TimedRobot {
 				}
 			case "straight to switch":
 				if (side == gameData.charAt(0)) {
-					autoCommand = new DriveAndScoreSwitchAuto();
+					autoCommand = new StraightToSwitchAuto();
 					break;
 				}
 			default:
