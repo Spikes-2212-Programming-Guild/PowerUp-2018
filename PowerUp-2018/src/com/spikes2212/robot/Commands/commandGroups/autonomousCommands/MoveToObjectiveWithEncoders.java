@@ -13,26 +13,24 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class MoveToSwitchWithEncoders extends CommandGroup {
-
-	// defining PID set point of the switch
-	public static final Supplier<Double> SET_POINT = ConstantHandler
-			.addConstantDouble("move to switch - switch set point", 135);
+public class MoveToObjectiveWithEncoders extends CommandGroup {
 
 	// defining PID constants
-	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("move to switch - tolerance",
+	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("PID - tolerance",
 			10);
 	public static final Supplier<Double> PID_WAIT_TIME = ConstantHandler
-			.addConstantDouble("move to switch - pid wait time", 1);
+			.addConstantDouble("PID- pid wait time", 1);
 
-	public static final Supplier<Double> DRIVING_KP = ConstantHandler.addConstantDouble("move to switch - driving kp",
+	public static final Supplier<Double> DRIVING_KP = ConstantHandler.addConstantDouble("PID - driving kp",
 			0.004);
-	public static final Supplier<Double> DRIVING_KI = ConstantHandler.addConstantDouble("move to switch - driving ki",
+	public static final Supplier<Double> DRIVING_KI = ConstantHandler.addConstantDouble("PID - driving ki",
 			0.000025);
-	public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("move to switch - driving kd",
+	public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("PID - driving kd",
 			0.0);
 
-	public MoveToSwitchWithEncoders() {
+	public MoveToObjectiveWithEncoders(Supplier<Double> SET_POINT) {
+		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
+		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		PIDSettings settings = new PIDSettings(DRIVING_KP.get(), DRIVING_KI.get(), DRIVING_KD.get(), TOLERANCE.get(),
 				PID_WAIT_TIME.get());
 		addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
