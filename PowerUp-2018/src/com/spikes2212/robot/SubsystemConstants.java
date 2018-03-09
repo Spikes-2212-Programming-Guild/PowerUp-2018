@@ -13,6 +13,10 @@ public class SubsystemConstants {
 				.addConstantDouble("drivetrain - oriantation ki", 0.01);
 		public static final Supplier<Double> ORIENTATION_KD = ConstantHandler
 				.addConstantDouble("drivetrain - oriantation kd", 0.1);
+		public static final Supplier<Double> ROTATION_SPEED = ConstantHandler
+				.addConstantDouble("scale auto - rotation speed", 0.6);
+		public static final Supplier<Double> ROTATION_TIME = ConstantHandler
+				.addConstantDouble("scale auto  - rotation time", 0.5);
 	}
 
 	public static interface Folder {
@@ -22,7 +26,8 @@ public class SubsystemConstants {
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Folder Staying speed",
 				-0.35);
 		public static final Supplier<Double> DOWN_SPEED_SUPPLIER = () -> SubsystemComponents.Folder.MIN_LIMIT.get()
-				? STAYING_SPEED.get() : PULSE_DOWN_SPEED.get();
+				? STAYING_SPEED.get()
+				: PULSE_DOWN_SPEED.get();
 		public static final Supplier<Double> UP_WAIT_TIME = ConstantHandler.addConstantDouble("folder up waitTime", 1);
 	}
 
@@ -51,6 +56,9 @@ public class SubsystemConstants {
 				.addConstantDouble("Lift First Down Speed", -0.12);
 		public static final Supplier<Double> SECOND_DOWN_SPEED = ConstantHandler
 				.addConstantDouble("Lift Second Down Speed", -0.2);
+		public static final Supplier<Double> DOWN_SPEED = () -> SubsystemComponents.Lift
+				.getPosition() < SubsystemComponents.Lift.HallEffects.SWITCH.getIndex() ? SECOND_DOWN_SPEED.get()
+						: FIRST_DOWN_SPEED.get();
 
 	}
 

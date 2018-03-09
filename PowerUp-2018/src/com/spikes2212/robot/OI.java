@@ -34,7 +34,7 @@ public class OI /* GEVALD */ {
 	// driver
 	private Button switchToFront;
 	private Button switchToRear;
-	
+
 	// navigator
 	private Button liftSwitch;
 	private Button liftLowScale;
@@ -51,12 +51,15 @@ public class OI /* GEVALD */ {
 		initNavigator();
 		initDriver();
 	}
-	private void initDriver(){
+
+	private void initDriver() {
 		switchToFront = new JoystickButton(driverRight, 1);
 		switchToRear = new JoystickButton(driverRight, 2);
-		
-		switchToFront.whenPressed(new RunnableCommand(()->Robot.camerasHandler.switchCamera(RobotMap.USB.FRONT_CAMERA)));
-		switchToRear.whenPressed(new RunnableCommand(()->Robot.camerasHandler.switchCamera(RobotMap.USB.REAR_CAMERA)));
+
+		switchToFront
+				.whenPressed(new RunnableCommand(() -> Robot.camerasHandler.switchCamera(RobotMap.USB.FRONT_CAMERA)));
+		switchToRear
+				.whenPressed(new RunnableCommand(() -> Robot.camerasHandler.switchCamera(RobotMap.USB.REAR_CAMERA)));
 	}
 
 	private void initNavigator() {
@@ -79,10 +82,7 @@ public class OI /* GEVALD */ {
 		stop.whenPressed(new StopEverything());
 		folderUp.whenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED.get()));
 		liftUp.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.UP_SPEED));
-		liftDown.toggleWhenPressed(new MoveLift(
-				() -> SubsystemComponents.Lift.getPosition() < SubsystemComponents.Lift.HallEffects.SWITCH.getIndex()
-						? SubsystemConstants.Lift.SECOND_DOWN_SPEED.get()
-						: SubsystemConstants.Lift.FIRST_DOWN_SPEED.get()));
+		liftDown.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED));
 		folderDown.whenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
 	}
 
