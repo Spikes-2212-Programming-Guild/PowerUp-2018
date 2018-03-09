@@ -30,8 +30,6 @@ public class MiddleToSwitchAuto extends CommandGroup {
 			.addConstantDouble("switch from middle auto - rotation speed", 0.6);
 	public static final Supplier<Double> ROTATION_TIME = ConstantHandler
 			.addConstantDouble("switch from middle auto  - rotation time", 0.5);
-	public static final Supplier<Double> SET_POINT = ConstantHandler
-				.addConstantDouble("move to switch - switch set point", 135);
 
 	// orienting constants
 	public static final Supplier<Double> TOLERANCE = ConstantHandler

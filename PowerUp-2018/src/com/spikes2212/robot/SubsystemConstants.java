@@ -13,6 +13,10 @@ public class SubsystemConstants {
 				.addConstantDouble("drivetrain - oriantation ki", 0.01);
 		public static final Supplier<Double> ORIENTATION_KD = ConstantHandler
 				.addConstantDouble("drivetrain - oriantation kd", 0.1);
+		public static final Supplier<Double> ROTATION_SPEED = ConstantHandler
+				.addConstantDouble("scale auto - rotation speed", 0.6);
+		public static final Supplier<Double> ROTATION_TIME = ConstantHandler
+				.addConstantDouble("scale auto  - rotation time", 0.5);
 	}
 
 	public static interface Folder {

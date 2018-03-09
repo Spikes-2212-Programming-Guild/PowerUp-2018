@@ -28,12 +28,12 @@ public class MoveToObjectiveWithEncoders extends CommandGroup {
 	public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("Move To Objective - driving kd",
 			0.0);
 
-	public MoveToObjectiveWithEncoders(Supplier<Double> SET_POINT) {
+	public MoveToObjectiveWithEncoders(Supplier<Double> setPoint) {
 		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		PIDSettings settings = new PIDSettings(DRIVING_KP.get(), DRIVING_KI.get(), DRIVING_KD.get(), TOLERANCE.get(),
 				PID_WAIT_TIME.get());
 		addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
-				SubsystemComponents.Drivetrain.RIGHT_ENCODER, SET_POINT, settings));
+				SubsystemComponents.Drivetrain.RIGHT_ENCODER, setPoint, settings));
 	}
 }

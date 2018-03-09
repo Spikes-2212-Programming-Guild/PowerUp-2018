@@ -26,6 +26,8 @@ public class ScoreSwitchFromSideAuto extends CommandGroup {
 			.addConstantDouble("score switch from side auto - forward speed", 0.4);
 	public static final Supplier<Double> FORWARD_TIME_OUT = ConstantHandler
 			.addConstantDouble("score switch from side auto - forward timeout", 1.5);
+	public static final Supplier<Double> SET_POINT = ConstantHandler
+			.addConstantDouble("move to switch - switch set point", 135);
 	
 
 	public ScoreSwitchFromSideAuto(char startSide) {
@@ -33,7 +35,7 @@ public class ScoreSwitchFromSideAuto extends CommandGroup {
 		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 		// driving to the correct set point according to target's properties
-		addSequential(new MoveToObjectiveWithEncoders(MiddleToSwitchAuto.SET_POINT));
+		addSequential(new MoveToObjectiveWithEncoders(SET_POINT));
 
 		// turning towards the target(switch/scale)
 		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0,
