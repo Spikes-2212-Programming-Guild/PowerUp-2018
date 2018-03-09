@@ -16,16 +16,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class MoveToObjectiveWithEncoders extends CommandGroup {
 
 	// defining PID constants
-	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("PID - tolerance",
+	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("Move To Objective- tolerance",
 			10);
 	public static final Supplier<Double> PID_WAIT_TIME = ConstantHandler
-			.addConstantDouble("PID- pid wait time", 1);
+			.addConstantDouble("Move To Objective - pid wait time", 1);
 
-	public static final Supplier<Double> DRIVING_KP = ConstantHandler.addConstantDouble("PID - driving kp",
+	public static final Supplier<Double> DRIVING_KP = ConstantHandler.addConstantDouble("Move To Objective - driving kp",
 			0.004);
-	public static final Supplier<Double> DRIVING_KI = ConstantHandler.addConstantDouble("PID - driving ki",
+	public static final Supplier<Double> DRIVING_KI = ConstantHandler.addConstantDouble("Move To Objective - driving ki",
 			0.000025);
-	public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("PID - driving kd",
+	public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("Move To Objective - driving kd",
 			0.0);
 
 	public MoveToObjectiveWithEncoders(Supplier<Double> SET_POINT) {
