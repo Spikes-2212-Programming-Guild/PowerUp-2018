@@ -9,7 +9,7 @@ import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ScoreScaleAuto extends CommandGroup {
+public class FastYetStupidScoreScaleAuto extends CommandGroup {
 	// defining PID set point of the point between switch and scale on the y
 	// axis
 	public static final Supplier<Double> BETWEEN_SWITCH_AND_SCALE = ConstantHandler
@@ -57,7 +57,7 @@ public class ScoreScaleAuto extends CommandGroup {
 				.addConstantDouble("score scale - far forward timeout", 5);
 	}
 
-	public ScoreScaleAuto(String gameData, char startSide) {
+	public FastYetStupidScoreScaleAuto(String gameData, char startSide) {
 
 		// driving to the correct scale set point
 		addSequential(new MoveToSetpointWithEncoders(BETWEEN_SWITCH_AND_SCALE));

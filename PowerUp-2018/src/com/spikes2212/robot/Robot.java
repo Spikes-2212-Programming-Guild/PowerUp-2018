@@ -22,7 +22,7 @@ import com.spikes2212.robot.Commands.commandGroups.StopEverything;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreScaleAuto;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.FastYetStupidScoreScaleAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.StraightToSwitchAuto;
 import com.spikes2212.utils.CamerasHandler;
 
@@ -245,7 +245,7 @@ public class Robot extends TimedRobot {
 					break;
 				}
 			case "simple scale from side":
-				autoCommand = new ScoreScaleAuto(gameData, side);
+				autoCommand = new FastYetStupidScoreScaleAuto(gameData, side);
 			default:
 				autoCommand = new PassAutoLine();
 				break;

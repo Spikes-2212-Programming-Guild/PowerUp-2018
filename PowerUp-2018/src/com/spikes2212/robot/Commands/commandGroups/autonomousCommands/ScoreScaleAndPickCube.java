@@ -111,6 +111,6 @@ public class ScoreScaleAndPickCube extends CommandGroup {
 		}
 		// the wrong side
 		else
-			new ScoreScaleAuto(gameData, startSide).start();
+			new FastYetStupidScoreScaleAuto(gameData, startSide).start();
 	}
 }
