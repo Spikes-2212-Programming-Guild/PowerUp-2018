@@ -1,6 +1,8 @@
 package com.spikes2212.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.spikes2212.robot.sensors.ADIS16448_IMU;
+import com.spikes2212.robot.sensors.ADIS16448_IMU.Axis;
 import com.spikes2212.utils.DoubleSpeedcontroller;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -30,6 +32,9 @@ public class SubsystemComponents {
 		public static final Encoder LEFT_ENCODER = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A,
 				RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
 		public static final Gyro GYRO = new ADXRS450_Gyro();
+
+		// TODO check axis
+		public static final ADIS16448_IMU IMU = new ADIS16448_IMU(Axis.kX);
 	}
 
 	public static class Roller {
