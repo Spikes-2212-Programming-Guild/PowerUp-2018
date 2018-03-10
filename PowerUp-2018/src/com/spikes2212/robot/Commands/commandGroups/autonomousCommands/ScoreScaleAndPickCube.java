@@ -52,7 +52,7 @@ public class ScoreScaleAndPickCube extends CommandGroup {
 	public ScoreScaleAndPickCube(String gameData, char startSide) {
 		// switch to the power cube pipeline
 		addSequential(new RunnableCommand(
-				() -> ImageProcessingConstants.NETWORK_TABLE.getEntry("pipeline").setString(POWER_CUBE_PIPELINE_NAME)));
+				() -> ImageProcessingConstants.NETWORK_TABLE.getEntry("pipelineName").setString(POWER_CUBE_PIPELINE_NAME)));
 
 		// score scale
 		addSequential(new ScoreScaleAuto(gameData, startSide));

@@ -57,13 +57,13 @@ public class MiddleToSwitchAuto extends CommandGroup {
 	}
 
 	public class DriveToSwitchFromMiddle extends CommandGroup {
-		public static final String reflectivesPipelineName = "reflectives";
+		public static final String reflectivesPipelineName = "ref";
 
 		public DriveToSwitchFromMiddle(String gameData) {
 			// switch to the reflectives pipeline
-			addSequential(new RunnableCommand(() -> ImageProcessingConstants.NETWORK_TABLE.getEntry("pipeline")
+			addSequential(new RunnableCommand(() -> ImageProcessingConstants.NETWORK_TABLE.getEntry("pipelineName")
 					.setString(reflectivesPipelineName)));
-			
+
 			// turn to the correct direction
 			addSequential(
 					new DriveArcade(Robot.drivetrain, FORWARD_SPEED,
