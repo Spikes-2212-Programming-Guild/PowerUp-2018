@@ -1,3 +1,4 @@
+package com.spikes2212.robot.sensors;
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) FIRST 2016. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
