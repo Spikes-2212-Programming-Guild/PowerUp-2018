@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ScoreScaleAndPickCube extends CommandGroup {
 
 	// the powerCube pipeline name
-	public static final String powerCubePipelineName = "power-cube";
+	public static final String POWER_CUBE_PIPELINE_NAME = "power-cube";
 
 	// defining PID set point of the point between switch and scale on the y
 	// axis
@@ -52,7 +52,7 @@ public class ScoreScaleAndPickCube extends CommandGroup {
 	public ScoreScaleAndPickCube(String gameData, char startSide) {
 		// switch to the power cube pipeline
 		addSequential(new RunnableCommand(
-				() -> ImageProcessingConstants.NETWORK_TABLE.getEntry("pipeline").setString(powerCubePipelineName)));
+				() -> ImageProcessingConstants.NETWORK_TABLE.getEntry("pipeline").setString(POWER_CUBE_PIPELINE_NAME)));
 
 		// score scale
 		addSequential(new ScoreScaleAuto(gameData, startSide));
