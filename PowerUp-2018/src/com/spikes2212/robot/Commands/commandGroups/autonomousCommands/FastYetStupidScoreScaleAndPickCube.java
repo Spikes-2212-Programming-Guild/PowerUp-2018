@@ -18,7 +18,7 @@ import com.spikes2212.utils.RunnableCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ScoreScaleAndPickCube extends CommandGroup {
+public class FastYetStupidScoreScaleAndPickCube extends CommandGroup {
 
 	// the powerCube pipeline name
 	public static final String powerCubePipelineName = "powercube";
@@ -52,7 +52,7 @@ public class ScoreScaleAndPickCube extends CommandGroup {
 	public static final Supplier<Double> PID_WAIT_TIME = ConstantHandler
 			.addConstantDouble("auto pick cube - PID waitTime", 1);
 
-	public ScoreScaleAndPickCube(String gameData, char startSide) {
+	public FastYetStupidScoreScaleAndPickCube(String gameData, char startSide) {
 		// switch to the power cube pipeline
 		addSequential(new RunnableCommand(
 				() -> ImageProcessingConstants.NETWORK_TABLE.getEntry("pipeline").setString(powerCubePipelineName)));
