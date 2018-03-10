@@ -47,10 +47,15 @@ public class SubsystemConstants {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Lift Up Speed", 0.9);
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Lift Staying Speed",
 				0.2);
-		public static final Supplier<Double> FIRST_DOWN_SPEED = ConstantHandler
-				.addConstantDouble("Lift First Down Speed", -0.12);
-		public static final Supplier<Double> SECOND_DOWN_SPEED = ConstantHandler
-				.addConstantDouble("Lift Second Down Speed", -0.2);
+		 public static final Supplier<Double> FIRST_DOWN_SPEED =
+		 ConstantHandler
+		 .addConstantDouble("Lift First Down Speed", -0.12);
+		 public static final Supplier<Double> SECOND_DOWN_SPEED =
+		 ConstantHandler
+		 .addConstantDouble("Lift Second Down Speed", -0.2);
+		public static final Supplier<Double> DOWN_SPEED_SUPPLIER = () -> SubsystemComponents.Lift
+				.getPosition() < SubsystemComponents.Lift.HallEffects.SWITCH.getIndex() ? SECOND_DOWN_SPEED.get()
+						: FIRST_DOWN_SPEED.get();
 
 	}
 
