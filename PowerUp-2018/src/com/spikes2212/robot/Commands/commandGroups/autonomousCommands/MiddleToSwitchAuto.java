@@ -13,6 +13,7 @@ import com.spikes2212.robot.SubsystemConstants;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.utils.PIDSettings;
+import com.spikes2212.utils.RunnableCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -56,8 +57,13 @@ public class MiddleToSwitchAuto extends CommandGroup {
 	}
 
 	public class DriveToSwitchFromMiddle extends CommandGroup {
+		public static final String reflectivesPipelineName = "reflectives";
 
 		public DriveToSwitchFromMiddle(String gameData) {
+			// switch to the reflectives pipeline
+			addSequential(new RunnableCommand(() -> ImageProcessingConstants.NETWORK_TABLE.getEntry("pipeline")
+					.setString(reflectivesPipelineName)));
+			
 			// turn to the correct direction
 			addSequential(
 					new DriveArcade(Robot.drivetrain, FORWARD_SPEED,
