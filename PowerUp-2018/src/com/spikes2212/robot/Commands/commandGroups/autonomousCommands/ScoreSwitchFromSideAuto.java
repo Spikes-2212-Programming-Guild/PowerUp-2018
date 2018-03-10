@@ -34,14 +34,14 @@ public class ScoreSwitchFromSideAuto extends CommandGroup {
 
 		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
-		// driving to the correct set point according to target's properties
+		// driving to the correct switch set point
 		addSequential(new MoveToSetpointWithEncoders(SWITCH_SET_POINT));
 
-		// turning towards the target(switch/scale)
+		// turning towards the switch
 		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0,
 				() -> startSide == 'L' ? -TURNING_SPEED.get() : TURNING_SPEED.get()), TURNING_TIME_OUT.get());
 
-		// moving the lift to the right height and placing the cube
+		// moving to the switch and placing the cube
 		addSequential(new DriveArcade(Robot.drivetrain, FORWARD_SPEED, () -> 0.0), FORWARD_TIME_OUT.get());
 		addSequential(new PlaceCube());
 	}
