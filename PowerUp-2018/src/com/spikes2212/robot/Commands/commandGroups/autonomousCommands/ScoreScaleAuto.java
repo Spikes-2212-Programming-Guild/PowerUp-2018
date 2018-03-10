@@ -22,7 +22,7 @@ public class ScoreScaleAuto extends CommandGroup {
 	// defining PID set point of the point between switch and scale on the y
 	// axis
 	public static final Supplier<Double> BETWEEN_SWITCH_AND_SCALE = ConstantHandler
-			.addConstantDouble("between objectives", 160);
+			.addConstantDouble("between objectives", 240);
 
 	// defining 90 degrees rotations data
 	public static final Supplier<Double> TURNING_SPEED = ConstantHandler
@@ -48,7 +48,7 @@ public class ScoreScaleAuto extends CommandGroup {
 		// rotate 90 degrees
 		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0,
 				() -> startSide == 'L' ? -TURNING_SPEED.get() : TURNING_SPEED.get()), TURNING_TIME_OUT.get());
-
+		
 		// drive to the correct x position of the scale
 		addSequential(new MoveToSetpointWithEncoders(
 				gameData.charAt(1) == startSide ? CLOSE_SCALE_X_SET_POINT : FAR_SCALE_X_SET_POINT));
