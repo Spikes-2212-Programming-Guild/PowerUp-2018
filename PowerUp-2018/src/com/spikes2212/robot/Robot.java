@@ -249,13 +249,13 @@ public class Robot extends TimedRobot {
 					break;
 				}
 			case "simple scale from side":
-				if (side != 'n')
+				if (side != 'N')
 					autoCommand = new FastYetStupidScoreScaleAuto(gameData, side);
 			case "score scale":
-				if (side != 'n')
+				if (side != 'N')
 					autoCommand = new ScoreScaleAuto(gameData, side);
 			case "scale and pick cube":
-				if (side != 'n')
+				if (side != 'N')
 					autoCommand = new ScoreScaleAndPickCube(gameData, side);
 			default:
 				autoCommand = new PassAutoLine();
