@@ -183,10 +183,7 @@ public class Robot extends TimedRobot {
 
 		// lift commands
 		SmartDashboard.putData("move lift up", new MoveLift(SubsystemConstants.Lift.UP_SPEED));
-		SmartDashboard.putData("move lift down", new MoveLift(
-				() -> SubsystemComponents.Lift.getPosition() > SubsystemComponents.Lift.HallEffects.LOW_SCALE.getIndex()
-						? SubsystemConstants.Lift.FIRST_DOWN_SPEED.get()
-						: SubsystemConstants.Lift.SECOND_DOWN_SPEED.get()));
+		SmartDashboard.putData("move lift down", new MoveLift(SubsystemConstants.Lift.DOWN_SPEED_SUPPLIER));
 		SmartDashboard.putData("move lift to switch",
 				new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		SmartDashboard.putData("move lift to low scale",
