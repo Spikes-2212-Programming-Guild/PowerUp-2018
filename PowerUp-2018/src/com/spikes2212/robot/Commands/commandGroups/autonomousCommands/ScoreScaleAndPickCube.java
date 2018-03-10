@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ScoreScaleAndPickCube extends CommandGroup {
 
 	// the powerCube pipeline name
-	public static final String powerCubePipelineName = "powercube";
+	public static final String powerCubePipelineName = "power-cube";
 
 	// defining PID set point of the point between switch and scale on the y
 	// axis
