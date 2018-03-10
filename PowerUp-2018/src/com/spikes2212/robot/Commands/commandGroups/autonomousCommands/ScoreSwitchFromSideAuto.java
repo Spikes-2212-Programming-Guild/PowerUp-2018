@@ -31,7 +31,7 @@ public class ScoreSwitchFromSideAuto extends CommandGroup {
 		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 		// driving to the correct set point according to target's properties
-		addSequential(new MoveToObjectiveWithEncoders(Objectives.SWITCH_SET_POINT));
+		addSequential(new MoveToSetpointWithEncoders(Setpoints.SWITCH_FROM_WALL));
 
 		// turning towards the target(switch/scale)
 		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0,
