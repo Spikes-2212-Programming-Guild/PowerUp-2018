@@ -7,6 +7,6 @@ import com.spikes2212.dashboard.ConstantHandler;
 public interface Objectives {
 	
 	// defining PID set point of the switch
-	public static final Supplier<Double> SET_POINT = ConstantHandler
+	public static final Supplier<Double> SWITCH_SET_POINT = ConstantHandler
 			.addConstantDouble("move to switch - switch set point", 135);
 }

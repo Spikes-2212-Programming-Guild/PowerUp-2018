@@ -15,10 +15,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class MoveToObjectiveWithEncoders extends CommandGroup {
 
-	// defining PID set point of the switch
-	public static final Supplier<Double> SET_POINT = ConstantHandler
-			.addConstantDouble("move to switch - switch set point", 135);
-
 	// defining PID constants
 	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("move to switch - tolerance",
 			10);
@@ -32,10 +28,10 @@ public class MoveToObjectiveWithEncoders extends CommandGroup {
 	public static final Supplier<Double> DRIVING_KD = ConstantHandler.addConstantDouble("move to switch - driving kd",
 			0.0);
 
-	public MoveToObjectiveWithEncoders() {
+	public MoveToObjectiveWithEncoders(Supplier<Double> setPoint) {
 		PIDSettings settings = new PIDSettings(DRIVING_KP.get(), DRIVING_KI.get(), DRIVING_KD.get(), TOLERANCE.get(),
 				PID_WAIT_TIME.get());
 		addSequential(new DriveTankWithPID(Robot.drivetrain, SubsystemComponents.Drivetrain.LEFT_ENCODER,
-				SubsystemComponents.Drivetrain.RIGHT_ENCODER, SET_POINT, settings));
+				SubsystemComponents.Drivetrain.RIGHT_ENCODER, setPoint, settings));
 	}
 }
