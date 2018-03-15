@@ -10,16 +10,19 @@ package com.spikes2212.robot;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystemWithTimeSinceReachingLimit;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.robot.Commands.TurnWithEncoders;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchThenBackAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreScale;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
@@ -99,7 +102,8 @@ public class Robot extends TimedRobot {
 		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
 				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
 
-		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
+		 liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker,
+		 SubsystemConstants.LiftLocker.LOCK_SPEED));
 
 		camerasHandler = new CamerasHandler(320, 240, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		camerasHandler.setExposure(80);
@@ -120,6 +124,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("switch from side", "switch from side");
 		autoChooser.addObject("straight to switch", "straight to switch");
 		autoChooser.addObject("score scale", "score scale");
+		autoChooser.addObject("switch from middle 2.0", "switch from middle 2.0");
 
 		startSideChooser.addDefault("none", 'N');
 		startSideChooser.addObject("right", 'R');
@@ -155,8 +160,12 @@ public class Robot extends TimedRobot {
 		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
 
-		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.getDistance()));
-		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.getDistance()));
+		dbc.addDouble("encoder left", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.get()));
+		dbc.addDouble("encoder right", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.get()));
+		dbc.addDouble("encoder left distance",
+				() -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.getDistance()));
+		dbc.addDouble("encoder right distance",
+				() -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.getDistance()));
 
 		// game state
 		dbc.addBoolean("close switch left",
@@ -174,13 +183,17 @@ public class Robot extends TimedRobot {
 	}
 
 	public static void initDashboard() {
+		// turning with encoders
+		SmartDashboard.putData("turn to 90 degrees", new TurnWithEncoders(90));
+		SmartDashboard.putData("turn to 45 degrees", new TurnWithEncoders(45));
 		// auto
 		SmartDashboard.putData("auto chooser", autoChooser);
 		SmartDashboard.putData("start side chooser", startSideChooser);
 		// locker commands
 		SmartDashboard.putData("unlock",
 				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
-		SmartDashboard.putData("lock", new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
+		SmartDashboard.putData("lock", new MoveBasicSubsystemWithTimeSinceReachingLimit(liftLocker,
+				SubsystemConstants.LiftLocker.LOCK_SPEED, SubsystemConstants.LiftLocker.LOCK_TIMEOUT.get()));
 
 		// lift commands
 		SmartDashboard.putData("move lift up", new MoveLift(SubsystemConstants.Lift.UP_SPEED));
@@ -212,7 +225,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED).start();
+		// new MoveBasicSubsystem(liftLocker,
+		// SubsystemConstants.LiftLocker.LOCK_SPEED).start();
 		gameData = "";
 	}
 
@@ -234,6 +248,9 @@ public class Robot extends TimedRobot {
 			case "switch from middle":
 				autoCommand = new MiddleToSwitchAuto(gameData);
 				break;
+			case "switch from middle 2.0":
+				autoCommand = new MiddleToSwitchThenBackAuto(gameData);
+				break;
 			case "switch from side":
 				if (side == gameData.charAt(0)) {
 					autoCommand = new ScoreSwitchFromSideAuto(side);
@@ -245,7 +262,7 @@ public class Robot extends TimedRobot {
 					break;
 				}
 			case "score scale":
-				if (side != 'N') {
+				if (side == gameData.charAt(1)) {
 					autoCommand = new ScoreScale(gameData, side);
 					break;
 				}

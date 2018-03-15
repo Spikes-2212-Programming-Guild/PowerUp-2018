@@ -55,8 +55,8 @@ public class OI /* GEVALD */ {
 		switchToFront = new JoystickButton(driverRight, 1);
 		switchToRear = new JoystickButton(driverRight, 2);
 		
-		switchToFront.whenPressed(new RunnableCommand(()->Robot.camerasHandler.switchCamera(RobotMap.USB.FRONT_CAMERA)));
-		switchToRear.whenPressed(new RunnableCommand(()->Robot.camerasHandler.switchCamera(RobotMap.USB.REAR_CAMERA)));
+//		switchToFront.whenPressed(new RunnableCommand(()->Robot.camerasHandler.switchCamera(RobotMap.USB.FRONT_CAMERA)));
+//		switchToRear.whenPressed(new RunnableCommand(()->Robot.camerasHandler.switchCamera(RobotMap.USB.REAR_CAMERA)));
 	}
 
 	private void initNavigator() {
@@ -77,7 +77,7 @@ public class OI /* GEVALD */ {
 		placeCube.toggleWhenPressed(new PlaceCube());
 		pickUpCube.toggleWhenPressed(new PickUpCube());
 		stop.whenPressed(new StopEverything());
-		folderUp.whenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED.get()));
+		folderUp.toggleWhenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED.get()));
 		liftUp.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.UP_SPEED));
 		liftDown.toggleWhenPressed(new MoveLift(
 				SubsystemConstants.Lift.DOWN_SPEED_SUPPLIER));

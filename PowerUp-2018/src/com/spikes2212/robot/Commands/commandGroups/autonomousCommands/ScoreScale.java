@@ -3,8 +3,12 @@ package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
 import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
+import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.robot.Robot;
+import com.spikes2212.robot.SubsystemComponents;
+import com.spikes2212.robot.SubsystemConstants;
+import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -29,7 +33,7 @@ public class ScoreScale extends CommandGroup {
 		public static final Supplier<Double> FORWARD_SPEED = ConstantHandler
 				.addConstantDouble("score scale  - close forward speed", 0.4);
 		public static final Supplier<Double> FORWARD_TIME_OUT = ConstantHandler
-				.addConstantDouble("score scale - close forward timeout", 2);
+				.addConstantDouble("score scale - close forward timeout", 1.5);
 	}
 
 	/**
@@ -56,6 +60,9 @@ public class ScoreScale extends CommandGroup {
 							() -> startSide == 'L' ? -CloseScale.TURNING_SPEED.get() : CloseScale.TURNING_SPEED.get()),
 					CloseScale.TURNING_TIME_OUT.get());
 
+			// move lift up
+			addSequential(new MoveLift(SubsystemConstants.Lift.UP_SPEED));
+			addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 			// drive closer to scale
 			addSequential(new DriveArcade(Robot.drivetrain, CloseScale.FORWARD_SPEED, () -> 0.0),
 					CloseScale.FORWARD_TIME_OUT.get());
