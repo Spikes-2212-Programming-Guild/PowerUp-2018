@@ -177,9 +177,6 @@ public class Robot extends TimedRobot {
 	}
 
 	public static void initDashboard() {
-		// turning with encoders
-		SmartDashboard.putData("turn to 90 degrees", new TurnWithEncoders(90));
-		SmartDashboard.putData("turn to 45 degrees", new TurnWithEncoders(45));
 		// auto
 		SmartDashboard.putData("auto chooser", autoChooser);
 		SmartDashboard.putData("start side chooser", startSideChooser);
