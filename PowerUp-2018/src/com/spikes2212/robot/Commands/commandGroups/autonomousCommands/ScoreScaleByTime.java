@@ -12,7 +12,7 @@ import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ScoreScale extends CommandGroup {
+public class ScoreScaleByTime extends CommandGroup {
 	// defining PID set point of the point between switch and scale on the y
 	// axis
 	public static final Supplier<Double> BETWEEN_SWITCH_AND_SCALE = ConstantHandler
@@ -46,7 +46,7 @@ public class ScoreScale extends CommandGroup {
 				.addConstantDouble("score scale - far turning timeout", 1.3);
 	}
 
-	public ScoreScale(String gameData, char startSide) {
+	public ScoreScaleByTime(String gameData, char startSide) {
 
 		// driving to the correct scale set point
 		addSequential(new MoveToSetpointWithEncoders(BETWEEN_SWITCH_AND_SCALE));

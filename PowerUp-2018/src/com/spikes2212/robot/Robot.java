@@ -23,7 +23,7 @@ import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreScale;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreScaleByTime;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.StraightToSwitchAuto;
 import com.spikes2212.utils.CamerasHandler;
@@ -256,7 +256,7 @@ public class Robot extends TimedRobot {
 				}
 			case "score scale":
 				if (side == gameData.charAt(1)) {
-					autoCommand = new ScoreScale(gameData, side);
+					autoCommand = new ScoreScaleByTime(gameData, side);
 					break;
 				}
 			default:
