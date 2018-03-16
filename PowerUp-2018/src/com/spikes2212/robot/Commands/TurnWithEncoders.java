@@ -1,4 +1,4 @@
-package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
+package com.spikes2212.robot.Commands;
 
 import java.util.function.Supplier;
 
@@ -25,8 +25,7 @@ public class TurnWithEncoders extends Command {
 	public static final Supplier<Double> TOLERANCE = ConstantHandler
 			.addConstantDouble("auto turn with encoders - tolerance", 4);
 
-	public static final Supplier<Double> ROBOT_WIDTH = ConstantHandler
-			.addConstantDouble("auto turn with encoders - Robot width", 4);
+	public static final double ROBOT_WIDTH = 24;
 
 	private Command turn;
 
@@ -43,10 +42,13 @@ public class TurnWithEncoders extends Command {
 		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 
-		double radians = 2 * Math.PI / 180 * angle;
+		double radians = Math.PI / 180 * angle;
 
-		double rightSetPoint = -radians * ROBOT_WIDTH.get() / 2;
-		double leftSetPoint = radians * ROBOT_WIDTH.get() / 2;
+		System.out.println("radians" + radians);
+		double rightSetPoint = -radians * ROBOT_WIDTH / 2;
+		double leftSetPoint = radians * ROBOT_WIDTH / 2;
+
+		System.out.println("right setpoint" + rightSetPoint);
 
 		PIDSettings settings = new PIDSettings(TURNING_KP.get(), 0, 0, TOLERANCE.get(), PID_WAIT_TIME.get());
 
@@ -96,7 +98,7 @@ public class TurnWithEncoders extends Command {
 
 		@Override
 		public double pidGet() {
-			return -SubsystemComponents.Drivetrain.RIGHT_ENCODER.get();
+			return SubsystemComponents.Drivetrain.RIGHT_ENCODER.get();
 		}
 
 		@Override
