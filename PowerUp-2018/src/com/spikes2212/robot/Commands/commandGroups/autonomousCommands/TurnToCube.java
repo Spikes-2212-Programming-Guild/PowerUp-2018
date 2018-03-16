@@ -3,9 +3,9 @@ package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
 import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
-import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.robot.ImageProcessingConstants;
+import com.spikes2212.robot.Robot;
 import com.spikes2212.utils.RunnableCommand;
 
 /**
@@ -18,9 +18,8 @@ public class TurnToCube extends DriveArcade {
 	// rotation tolerance
 	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("turn to cube - tolerance", 0.2);
 
-	public TurnToCube(TankDrivetrain drivetrain, Supplier<Double> moveValueSupplier,
-			Supplier<Double> rotateValueSupplier) {
-		super(drivetrain, moveValueSupplier, rotateValueSupplier);
+	public TurnToCube(Supplier<Double> rotateValueSupplier) {
+		super(Robot.drivetrain, () -> 0.0, rotateValueSupplier);
 
 	}
 
