@@ -6,7 +6,6 @@ import com.spikes2212.dashboard.ConstantHandler;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.robot.Robot;
-import com.spikes2212.robot.SubsystemComponents;
 import com.spikes2212.robot.SubsystemConstants;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
@@ -27,7 +26,7 @@ public class ScoreScale extends CommandGroup {
 		public static final Supplier<Double> TURNING_SPEED = ConstantHandler
 				.addConstantDouble("score scale  - close turning speed", 0.6);
 		public static final Supplier<Double> TURNING_TIME_OUT = ConstantHandler
-				.addConstantDouble("score scale - close turning timeout", 0.75);
+				.addConstantDouble("score scale - close turning timeout", 0.5);
 
 		// defining forward constants
 		public static final Supplier<Double> FORWARD_SPEED = ConstantHandler
