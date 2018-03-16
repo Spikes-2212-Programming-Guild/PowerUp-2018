@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("switch from middle", "switch from middle");
 		autoChooser.addObject("switch from side", "switch from side");
 		autoChooser.addObject("straight to switch", "straight to switch");
-		autoChooser.addObject("score scale", "score scale");
+		autoChooser.addObject("score scale by time", "score scale by time");
 
 		startSideChooser.addDefault("none", 'N');
 		startSideChooser.addObject("right", 'R');
@@ -254,7 +254,7 @@ public class Robot extends TimedRobot {
 					autoCommand = new StraightToSwitchAuto();
 					break;
 				}
-			case "score scale":
+			case "score scale by time":
 				if (side == gameData.charAt(1)) {
 					autoCommand = new ScoreScaleByTime(gameData, side);
 					break;
