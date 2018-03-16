@@ -21,6 +21,8 @@ public class ScoreCloseScale extends CommandGroup {
 			.addConstantDouble("score close scale  - slow driving speed", 0.4);
 	public static final Supplier<Double> SLOW_DRIVING_TIME_OUT = ConstantHandler
 			.addConstantDouble("score close scale  - slow driving timeout", 1.5);
+	
+	public static final double TURNING_ANGLE = 45;
 
 	/**
 	 * Score to the close scale and drives backwards. This should only run if
@@ -34,7 +36,7 @@ public class ScoreCloseScale extends CommandGroup {
 		addSequential(new MoveToSetpointWithEncoders(MoveToSetpointWithEncoders.BETWEEN_SWITCH_AND_SCALE));
 
 		// rotate 45 degrees
-		addSequential(new TurnWithEncoders(startSide == 'L' ? -45 : 45));
+		addSequential(new TurnWithEncoders(startSide == 'L' ? -TURNING_ANGLE : TURNING_ANGLE));
 
 		// move lift up
 		addSequential(new MoveLift(SubsystemConstants.Lift.UP_SPEED));
