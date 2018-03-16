@@ -1,4 +1,4 @@
-package com.spikes2212.robot.Commands.commandGroups.autonomousCommands;
+package com.spikes2212.robot.Commands.commandGroups.autonomousCommands.scaleCommands;
 
 import java.util.function.Supplier;
 
@@ -9,6 +9,7 @@ import com.spikes2212.robot.Robot;
 import com.spikes2212.robot.SubsystemConstants;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MoveToSetpointWithEncoders;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
