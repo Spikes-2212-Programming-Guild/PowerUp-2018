@@ -22,7 +22,6 @@ import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchThenBackAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreScale;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
@@ -123,7 +122,6 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("switch from side", "switch from side");
 		autoChooser.addObject("straight to switch", "straight to switch");
 		autoChooser.addObject("score scale", "score scale");
-		autoChooser.addObject("switch from middle 2.0", "switch from middle 2.0");
 
 		startSideChooser.addDefault("none", 'N');
 		startSideChooser.addObject("right", 'R');
@@ -245,9 +243,6 @@ public class Robot extends TimedRobot {
 			switch (autoChooser.getSelected()) {
 			case "switch from middle":
 				autoCommand = new MiddleToSwitchAuto(gameData);
-				break;
-			case "switch from middle 2.0":
-				autoCommand = new MiddleToSwitchThenBackAuto(gameData);
 				break;
 			case "switch from side":
 				if (side == gameData.charAt(0)) {
