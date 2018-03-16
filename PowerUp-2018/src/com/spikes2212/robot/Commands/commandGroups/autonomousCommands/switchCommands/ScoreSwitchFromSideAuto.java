@@ -17,10 +17,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ScoreSwitchFromSideAuto extends CommandGroup {
 
-	// defining PID set point of the switch
-	public static final Supplier<Double> SWITCH_SET_POINT = ConstantHandler
-			.addConstantDouble("move to switch - switch set point", 135);
-
 	// defining turning constants
 	// public static final Supplier<Double> TURNING_SPEED = ConstantHandler
 	// .addConstantDouble("score switch from side auto - turning speed", 0.5);
@@ -37,7 +33,7 @@ public class ScoreSwitchFromSideAuto extends CommandGroup {
 		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 		// driving to the correct switch set point
-		addSequential(new MoveToSetpointWithEncoders(SWITCH_SET_POINT));
+		addSequential(new MoveToSetpointWithEncoders(MoveToSetpointWithEncoders.SWITCH_SET_POINT));
 
 		// turning towards the switch
 		// addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0,

@@ -20,11 +20,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class ScoreScaleAuto extends CommandGroup {
 
-	// defining PID set point of the point between switch and scale on the y
-	// axis
-	public static final Supplier<Double> BETWEEN_SWITCH_AND_SCALE = ConstantHandler
-			.addConstantDouble("between objectives", 240);
-
 	// defining 90 degrees rotations data
 	public static final Supplier<Double> TURNING_SPEED = ConstantHandler
 			.addConstantDouble("score scale  -  turning speed", 0.5);
@@ -45,7 +40,7 @@ public class ScoreScaleAuto extends CommandGroup {
 
 	public ScoreScaleAuto(String gameData, char startSide) {
 		// driving to the scale set point
-		addSequential(new MoveToSetpointWithEncoders(BETWEEN_SWITCH_AND_SCALE));
+		addSequential(new MoveToSetpointWithEncoders(MoveToSetpointWithEncoders.BETWEEN_SWITCH_AND_SCALE));
 		// rotate 90 degrees
 		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0,
 				() -> startSide == 'L' ? -TURNING_SPEED.get() : TURNING_SPEED.get()), TURNING_TIME_OUT.get());

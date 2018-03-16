@@ -15,6 +15,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class MoveToSetpointWithEncoders extends CommandGroup {
 
+	// setPoints
+	public static final Supplier<Double> SWITCH_SET_POINT = ConstantHandler.addConstantDouble("switch set point", 135);
+	public static final Supplier<Double> BETWEEN_SWITCH_AND_SCALE = ConstantHandler
+			.addConstantDouble("between objectives", 240);
+	public static final Supplier<Double> SCORE_SCALE_WITH_TIME_SET_POINT = ConstantHandler
+			.addConstantDouble("score scale with time setpoint", 190);
+
 	// defining PID constants
 	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("move to switch - tolerance",
 			10);
