@@ -102,8 +102,7 @@ public class Robot extends TimedRobot {
 		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
 				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
 
-		 liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker,
-		 SubsystemConstants.LiftLocker.LOCK_SPEED));
+		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
 		camerasHandler = new CamerasHandler(320, 240, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
 		camerasHandler.setExposure(80);
@@ -225,8 +224,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		// new MoveBasicSubsystem(liftLocker,
-		// SubsystemConstants.LiftLocker.LOCK_SPEED).start();
+		new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED).start();
 		gameData = "";
 	}
 
