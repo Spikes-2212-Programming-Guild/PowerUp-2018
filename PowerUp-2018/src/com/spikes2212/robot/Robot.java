@@ -22,7 +22,7 @@ import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreScaleByTime;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreCloseScaleByTime;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.StraightToSwitchAuto;
 import com.spikes2212.utils.CamerasHandler;
@@ -120,7 +120,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("switch from middle", "switch from middle");
 		autoChooser.addObject("switch from side", "switch from side");
 		autoChooser.addObject("straight to switch", "straight to switch");
-		autoChooser.addObject("score scale by time", "score scale by time");
+		autoChooser.addObject("score close scale by time", "score close scale by time");
 
 		startSideChooser.addDefault("none", 'N');
 		startSideChooser.addObject("right", 'R');
@@ -250,9 +250,9 @@ public class Robot extends TimedRobot {
 					autoCommand = new StraightToSwitchAuto();
 					break;
 				}
-			case "score scale by time":
+			case "score close scale by time":
 				if (side == gameData.charAt(1)) {
-					autoCommand = new ScoreScaleByTime(gameData, side);
+					autoCommand = new ScoreCloseScaleByTime(gameData, side);
 					break;
 				}
 			default:
