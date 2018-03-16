@@ -19,9 +19,9 @@ import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.FastYetStupidScoreScaleAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreCloseScaleByTime;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreScaleAndPickCube;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreScaleAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("switch from middle", "switch from middle");
 		autoChooser.addObject("switch from side", "switch from side");
 		autoChooser.addObject("straight to switch", "straight to switch");
-		autoChooser.addObject("simple scale from side", "simple scale from side");
+		autoChooser.addObject("score close scale by time", "score close scale by time");
 		autoChooser.addObject("scale and pick cube", "scale and pick cube");
 		autoChooser.addObject("score scale", "score scale");
 
@@ -248,9 +248,9 @@ public class Robot extends TimedRobot {
 					autoCommand = new StraightToSwitchAuto();
 					break;
 				}
-			case "simple scale from side":
+			case "score close scale by time":
 				if (side != 'N')
-					autoCommand = new FastYetStupidScoreScaleAuto(gameData, side);
+					autoCommand = new ScoreCloseScaleByTime(side);
 			case "score scale":
 				if (side != 'N')
 					autoCommand = new ScoreScaleAuto(gameData, side);
