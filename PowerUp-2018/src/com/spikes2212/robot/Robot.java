@@ -20,9 +20,10 @@ import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.scaleCommands.ScoreCloseScale;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.scaleCommands.ScoreCloseScaleByTime;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.scaleCommands.ScoreFarScale;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.scaleCommands.ScoreScaleAndPickCube;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.scaleCommands.ScoreScaleAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.switchCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.switchCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.switchCommands.StraightToSwitchAuto;
@@ -117,13 +118,16 @@ public class Robot extends TimedRobot {
 		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 
+		// auto chooser options initiation
 		autoChooser.addDefault("pass auto line", "pass auto line");
+		// switch
 		autoChooser.addObject("switch from middle", "switch from middle");
 		autoChooser.addObject("switch from side", "switch from side");
 		autoChooser.addObject("straight to switch", "straight to switch");
-		autoChooser.addObject("score close scale by time", "score close scale by time");
-		autoChooser.addObject("scale and pick cube", "scale and pick cube");
+		// scale
+		autoChooser.addObject("close scale by time", "close scale by time");
 		autoChooser.addObject("score scale", "score scale");
+		autoChooser.addObject("scale and pick cube", "scale and pick cube");
 
 		startSideChooser.addDefault("none", 'N');
 		startSideChooser.addObject("right", 'R');
@@ -235,6 +239,8 @@ public class Robot extends TimedRobot {
 			char side = startSideChooser.getSelected();
 
 			switch (autoChooser.getSelected()) {
+
+			// switch
 			case "switch from middle":
 				autoCommand = new MiddleToSwitchAuto(gameData);
 				break;
@@ -248,15 +254,29 @@ public class Robot extends TimedRobot {
 					autoCommand = new StraightToSwitchAuto();
 					break;
 				}
-			case "score close scale by time":
-				if (side != 'N')
+
+			// scale
+			case "close scale by time":
+				if (side != 'N') {
 					autoCommand = new ScoreCloseScaleByTime(side);
+					break;
+				}
 			case "score scale":
-				if (side != 'N')
-					autoCommand = new ScoreScaleAuto(gameData, side);
+				// close scale
+				if (side == gameData.charAt(1)) {
+					autoCommand = new ScoreCloseScale(side);
+					break;
+				}
+				// far scale
+				else if (side == gameData.charAt(1)) {
+					autoCommand = new ScoreFarScale(side);
+					break;
+				}
 			case "scale and pick cube":
 				if (side != 'N')
 					autoCommand = new ScoreScaleAndPickCube(gameData, side);
+			
+			// default pass line
 			default:
 				autoCommand = new PassAutoLine();
 				break;
