@@ -8,18 +8,15 @@
 package com.spikes2212.robot;
 
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
-import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystemWithTimeSinceReachingLimit;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
-import com.spikes2212.utils.RunnableCommand;
 import com.spikes2212.utils.XboXUID;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -31,10 +28,6 @@ public class OI /* GEVALD */ {
 
 	private XboXUID navigator = new XboXUID(2);
 
-	// driver
-	private Button switchToFront;
-	private Button switchToRear;
-	
 	// navigator
 	private Button liftSwitch;
 	private Button liftLowScale;
@@ -49,14 +42,6 @@ public class OI /* GEVALD */ {
 
 	public OI() {
 		initNavigator();
-		initDriver();
-	}
-	private void initDriver(){
-		switchToFront = new JoystickButton(driverRight, 1);
-		switchToRear = new JoystickButton(driverRight, 2);
-		
-//		switchToFront.whenPressed(new RunnableCommand(()->Robot.camerasHandler.switchCamera(RobotMap.USB.FRONT_CAMERA)));
-//		switchToRear.whenPressed(new RunnableCommand(()->Robot.camerasHandler.switchCamera(RobotMap.USB.REAR_CAMERA)));
 	}
 
 	private void initNavigator() {
@@ -79,8 +64,7 @@ public class OI /* GEVALD */ {
 		stop.whenPressed(new StopEverything());
 		folderUp.toggleWhenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED.get()));
 		liftUp.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.UP_SPEED));
-		liftDown.toggleWhenPressed(new MoveLift(
-				SubsystemConstants.Lift.DOWN_SPEED_SUPPLIER));
+		liftDown.toggleWhenPressed(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED_SUPPLIER));
 		folderDown.whenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
 	}
 
