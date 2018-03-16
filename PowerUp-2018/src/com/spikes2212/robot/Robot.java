@@ -249,7 +249,7 @@ public class Robot extends TimedRobot {
 				}
 			case "score close scale by time":
 				if (side == gameData.charAt(1)) {
-					autoCommand = new ScoreCloseScaleByTime(gameData, side);
+					autoCommand = new ScoreCloseScaleByTime(side);
 					break;
 				}
 			default:

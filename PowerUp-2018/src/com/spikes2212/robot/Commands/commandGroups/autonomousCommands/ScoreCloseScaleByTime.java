@@ -40,7 +40,7 @@ public class ScoreCloseScaleByTime extends CommandGroup {
 	 * @param startSide-
 	 *            the side which the robot starts at
 	 */
-	public ScoreCloseScaleByTime(String gameData, char startSide) {
+	public ScoreCloseScaleByTime(char startSide) {
 
 		// driving to the correct scale set point
 		addSequential(new MoveToSetpointWithEncoders(BETWEEN_SWITCH_AND_SCALE));
