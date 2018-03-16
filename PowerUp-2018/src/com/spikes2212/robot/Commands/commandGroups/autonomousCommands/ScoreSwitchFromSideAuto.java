@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import com.spikes2212.dashboard.ConstantHandler;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
-import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.robot.Robot;
 import com.spikes2212.robot.SubsystemComponents;
 import com.spikes2212.robot.SubsystemConstants;
@@ -15,6 +14,10 @@ import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ScoreSwitchFromSideAuto extends CommandGroup {
+
+	// defining PID set point of the switch
+	public static final Supplier<Double> SWITCH_SET_POINT = ConstantHandler
+			.addConstantDouble("move to switch - switch set point", 135);
 
 	// defining turning constants
 	public static final Supplier<Double> TURNING_SPEED = ConstantHandler
@@ -32,7 +35,7 @@ public class ScoreSwitchFromSideAuto extends CommandGroup {
 		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 		// driving to the correct set point according to target's properties
-		addSequential(new MoveToSwitchWithEncoders());
+		addSequential(new MoveToSetpointWithEncoders(SWITCH_SET_POINT));
 
 		// turning towards the target(switch/scale)
 		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0,
