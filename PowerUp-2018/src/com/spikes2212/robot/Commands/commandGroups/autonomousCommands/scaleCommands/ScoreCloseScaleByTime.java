@@ -13,6 +13,7 @@ import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MoveToSetp
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+@Deprecated
 public class ScoreCloseScaleByTime extends CommandGroup {
 	// defining turning constants
 	public static final Supplier<Double> TURNING_SPEED = ConstantHandler
