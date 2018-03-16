@@ -68,6 +68,15 @@ public class ScoreScaleByTime extends CommandGroup {
 
 			// put cube
 			addSequential(new PlaceCube());
+
+			// drive backwards
+			addSequential(new DriveArcade(Robot.drivetrain, () -> -CloseScale.FORWARD_SPEED.get(), () -> 0.0),
+					CloseScale.FORWARD_TIME_OUT.get());
+
+			// close lift
+			addSequential(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED_SUPPLIER));
+			addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
+
 		}
 
 		// the scale is in the far side
