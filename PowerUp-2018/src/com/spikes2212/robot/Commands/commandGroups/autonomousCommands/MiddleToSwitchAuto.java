@@ -48,12 +48,9 @@ public class MiddleToSwitchAuto extends CommandGroup {
 		// move lift
 		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
-	}
 
-	@Override
-	protected void end() {
-		super.end();
-		new PlaceCube().start();
+		// put cube
+		addSequential(new PlaceCube());
 	}
 
 	public class DriveToSwitchFromMiddle extends CommandGroup {
