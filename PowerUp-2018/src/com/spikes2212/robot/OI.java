@@ -68,12 +68,16 @@ public class OI /* GEVALD */ {
 		folderDown.whenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
 	}
 
+	public double adjustInput(double value) {
+		return Math.abs(value) * value;
+	}
+
 	public double getForward() {
-		return -driverRight.getY();
+		return adjustInput(-driverRight.getY());
 	}
 
 	public double getRotation() {
-		return -driverLeft.getX();
+		return adjustInput(-driverLeft.getX());
 	}
 
 }
