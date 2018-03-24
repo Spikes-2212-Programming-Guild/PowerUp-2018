@@ -36,6 +36,13 @@ public class SubsystemConstants {
 		public static final Supplier<Double> CUBE_DISTANCE = ConstantHandler.addConstantDouble("Cube Distance", 17);
 	}
 
+	public static interface Climber {
+		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("climber up speed", 0.7);
+		public static final Supplier<Double> STALL_SPEED = ConstantHandler.addConstantDouble("climbre stall speed",
+				0.65);
+		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("climber down speed", -0.2);
+	}
+
 	public static interface LiftLocker {
 		public static final Supplier<Double> LOCK_SPEED = ConstantHandler.addConstantDouble("LiftLocker Close Speed",
 				-0.5);
