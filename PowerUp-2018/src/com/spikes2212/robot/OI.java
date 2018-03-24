@@ -17,6 +17,7 @@ import com.spikes2212.utils.XboXUID;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -40,8 +41,21 @@ public class OI /* GEVALD */ {
 	private Button liftUp;
 	private Button liftDown;
 
+	// driver
+	private Button climbeUp;
+	private Button climbeStall;
+
 	public OI() {
 		initNavigator();
+		initDriver();
+	}
+
+	private void initDriver() {
+		climbeUp = new JoystickButton(driverRight, 7);
+		climbeStall = new JoystickButton(driverRight, 8);
+
+		climbeUp.whenPressed(new MoveBasicSubsystem(Robot.climber, SubsystemConstants.Climber.UP_SPEED));
+		climbeStall.whenPressed(new MoveBasicSubsystem(Robot.climber, SubsystemConstants.Climber.STALL_SPEED));
 	}
 
 	private void initNavigator() {
