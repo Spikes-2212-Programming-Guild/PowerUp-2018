@@ -15,6 +15,12 @@ public class SubsystemConstants {
 				.addConstantDouble("drivetrain - oriantation kd", 0.1);
 	}
 
+	public static interface Climber {
+		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("climber up speed", 0.7);
+		public static final Supplier<Double> STALL_SPEED = ConstantHandler.addConstantDouble("climbre stall speed", 0.65);
+		public static final Supplier<Double> DOWN_SPEED = ConstantHandler.addConstantDouble("climber down speed", -0.2);
+	}
+	
 	public static interface Folder {
 		public static final Supplier<Double> UP_SPEED = ConstantHandler.addConstantDouble("Folder Up Speed", 0.2);
 		public static final Supplier<Double> PULSE_DOWN_SPEED = ConstantHandler
@@ -41,6 +47,9 @@ public class SubsystemConstants {
 				-0.5);
 		public static final Supplier<Double> UNLOCK_SPEED = ConstantHandler.addConstantDouble("LiftLocker Open Speed",
 				0.5);
+		public static final Supplier<Double> LOCK_WAIT_TIME = ConstantHandler.addConstantDouble("LiftLocker Open Speed",
+				0.5);
+
 	}
 
 	public static interface Lift {
