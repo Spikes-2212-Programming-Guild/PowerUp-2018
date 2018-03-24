@@ -13,6 +13,7 @@ import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
+import com.spikes2212.genericsubsystems.utils.limitationFunctions.Limitless;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
@@ -43,6 +44,8 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem folder;
 	public static BasicSubsystem roller;
 
+	public static BasicSubsystem climber;
+
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
 
@@ -68,7 +71,8 @@ public class Robot extends TimedRobot {
 			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
 		}, new TwoLimits(() -> false, () -> SubsystemComponents.Roller.hasCube()));
 
-		// TODO - check which side is really inverted
+		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set, new Limitless());
+
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				new InvertedConsumer(SubsystemComponents.Drivetrain.RIGHT_MOTOR::set));
 

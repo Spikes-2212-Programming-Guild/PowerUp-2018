@@ -18,6 +18,10 @@ public class SubsystemComponents {
 		public static final DigitalInput MAX_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MAX_LIMIT);
 		public static final DigitalInput MIN_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MIN_LIMIT);
 	}
+	
+	public static class Climber{
+		public static final WPI_TalonSRX MOTOR = new WPI_TalonSRX(RobotMap.CAN.CLIMBER);
+	}
 
 	public static class Drivetrain {
 		public static final DoubleSpeedcontroller RIGHT_MOTOR = new DoubleSpeedcontroller(

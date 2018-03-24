@@ -10,11 +10,13 @@ public class RobotMap {
 
 	public static interface CAN {
 		public static final int DRIVE_RIGHT1 = 2;
-		public static final int DRIVE_RIGHT2 = 0/*3*/;
+		public static final int DRIVE_RIGHT2 = 0/* 3 */;
 		public static final int DRIVE_LEFT1 = 4;
 		public static final int DRIVE_LEFT2 = 5;
 		public static final int LIFT_MOTOR_A = 1;
 		public static final int LIFT_MOTOR_B = 9;
+		// TODO - set real port
+		public static final int CLIMBER = 2212;
 	}
 
 	public static interface PWM {
