@@ -13,7 +13,7 @@ public class RobotMap {
 		public static final int DRIVE_RIGHT2 = 0/*3*/;
 		public static final int DRIVE_LEFT1 = 4;
 		public static final int DRIVE_LEFT2 = 5;
-		public static final int LIFT_MOTOR_A = 1;
+		public static final int CLIMBER_MOTOR = 1;
 		public static final int LIFT_MOTOR_B = 9;
 	}
 
@@ -23,7 +23,7 @@ public class RobotMap {
 		public static final int LIFT_LOCKER = 2;
 		public static final int ROLLER_LEFT = 4;
 		public static final int ROLLER_RIGHT = 5;
-
+		public static final int LIFT_MOTOR_A = 6;
 	}
 
 	public static interface DIO {

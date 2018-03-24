@@ -1,5 +1,6 @@
 package com.spikes2212.robot;
 
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.spikes2212.utils.DoubleSpeedcontroller;
 
@@ -16,6 +17,10 @@ public class SubsystemComponents {
 				new VictorSP(RobotMap.PWM.FOLDER_1), new VictorSP(RobotMap.PWM.FOLDER_2));
 		public static final DigitalInput MAX_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MAX_LIMIT);
 		public static final DigitalInput MIN_LIMIT = new DigitalInput(RobotMap.DIO.FOLDER_MIN_LIMIT);
+	}
+	
+	public static class Climber {
+		public static final WPI_TalonSRX MOTOR = new WPI_TalonSRX(RobotMap.CAN.CLIMBER_MOTOR);
 	}
 
 	public static class Drivetrain {
@@ -69,7 +74,7 @@ public class SubsystemComponents {
 			}
 		}
 
-		public static final WPI_TalonSRX LIFT_MOTOR_A = new WPI_TalonSRX(RobotMap.CAN.LIFT_MOTOR_A);
+		public static final VictorSP LIFT_MOTOR_A = new VictorSP(RobotMap.PWM.LIFT_MOTOR_A);
 		public static final WPI_TalonSRX LIFT_MOTOR_B = new WPI_TalonSRX(RobotMap.CAN.LIFT_MOTOR_B);
 
 		public static final DoubleSpeedcontroller MOTORS = new DoubleSpeedcontroller(LIFT_MOTOR_A, LIFT_MOTOR_B);
