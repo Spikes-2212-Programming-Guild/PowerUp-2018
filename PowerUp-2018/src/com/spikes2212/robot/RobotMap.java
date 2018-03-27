@@ -15,8 +15,6 @@ public class RobotMap {
 		public static final int DRIVE_LEFT2 = 5;
 		public static final int LIFT_MOTOR_A = 1;
 		public static final int LIFT_MOTOR_B = 9;
-		// TODO - set real port
-		public static final int CLIMBER = 2212;
 	}
 
 	public static interface PWM {

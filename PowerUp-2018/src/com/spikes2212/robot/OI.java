@@ -47,15 +47,6 @@ public class OI /* GEVALD */ {
 
 	public OI() {
 		initNavigator();
-		initDriver();
-	}
-
-	private void initDriver() {
-		climbeUp = new JoystickButton(driverRight, 7);
-		climbeStall = new JoystickButton(driverRight, 8);
-
-		climbeUp.whenPressed(new MoveBasicSubsystem(Robot.climber, SubsystemConstants.Climber.UP_SPEED));
-		climbeStall.whenPressed(new MoveBasicSubsystem(Robot.climber, SubsystemConstants.Climber.STALL_SPEED));
 	}
 
 	private void initNavigator() {

@@ -44,8 +44,6 @@ public class Robot extends TimedRobot {
 	public static BasicSubsystem folder;
 	public static BasicSubsystem roller;
 
-	public static BasicSubsystem climber;
-
 	public static BasicSubsystem liftLocker;
 	public static BasicSubsystem lift;
 
@@ -70,8 +68,6 @@ public class Robot extends TimedRobot {
 			SubsystemComponents.Roller.MOTOR_RIGHT.set(speed);
 			SubsystemComponents.Roller.MOTOR_LEFT.set(-speed);
 		}, new TwoLimits(() -> false, () -> SubsystemComponents.Roller.hasCube()));
-
-		climber = new BasicSubsystem(SubsystemComponents.Climber.MOTOR::set, new Limitless());
 
 		drivetrain = new TankDrivetrain(SubsystemComponents.Drivetrain.LEFT_MOTOR::set,
 				new InvertedConsumer(SubsystemComponents.Drivetrain.RIGHT_MOTOR::set));
