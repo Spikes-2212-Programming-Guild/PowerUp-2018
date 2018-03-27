@@ -21,23 +21,23 @@ public class TurnWithIMU extends DriveArcade {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		double currentAngle = SubsystemComponents.Drivetrain.IMU.getAngleZ();
+		double currentAngle = SubsystemComponents.Drivetrain.IMU.getAngleY();
 
 		wantedAngle = currentAngle + angle;
 
 		System.out.println("wanted angle" + wantedAngle);
-		System.out.println("init z angle "+SubsystemComponents.Drivetrain.IMU.getAngleZ());
+		System.out.println("init y angle "+SubsystemComponents.Drivetrain.IMU.getAngleY());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		System.out.println("yaw angle" + SubsystemComponents.Drivetrain.IMU.getAngleZ());
+		System.out.println("yaw angle" + SubsystemComponents.Drivetrain.IMU.getAngleY());
 		
 			
 		
-		if(Math.abs(wantedAngle - SubsystemComponents.Drivetrain.IMU.getAngleZ()) < tolerance){
-			System.out.println("end z angle "+SubsystemComponents.Drivetrain.IMU.getAngleZ());	
+		if(Math.abs(wantedAngle - SubsystemComponents.Drivetrain.IMU.getAngleY()) < tolerance){
+			System.out.println("end Y angle "+SubsystemComponents.Drivetrain.IMU.getAngleY());	
 		}
-		return Math.abs(wantedAngle - SubsystemComponents.Drivetrain.IMU.getAngleZ()) < tolerance;
+		return Math.abs(wantedAngle - SubsystemComponents.Drivetrain.IMU.getAngleY()) < tolerance;
 	}
 }

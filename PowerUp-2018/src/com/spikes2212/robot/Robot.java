@@ -13,8 +13,8 @@ import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
-import com.spikes2212.genericsubsystems.utils.limitationFunctions.Limitless;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.robot.Commands.TurnWithIMU;
 import com.spikes2212.robot.Commands.commandGroups.KeepLockerOpen;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
@@ -132,7 +132,10 @@ public class Robot extends TimedRobot {
 	}
 
 	public static void initDBC() {
-
+		// imu data
+		dbc.addDouble("angle Y", SubsystemComponents.Drivetrain.IMU::getAngleY);
+		
+		
 		// locker data
 		dbc.addBoolean("locker - is locked", SubsystemComponents.LiftLocker.LIMIT_LOCKED::get);
 		dbc.addBoolean("locker - is unlocked", SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get);
