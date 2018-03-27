@@ -39,6 +39,6 @@ public class StraightToSwitchAuto extends CommandGroup {
 						SubsystemConstants.Drivetrain.ORIENTATION_KD.get(), TOLERANCE.get(), PID_WAIT_TIME.get()),
 				ImageProcessingConstants.RANGE), ORIENTATION_TIME_OUT.get());
 		// place cube
-		addSequential(new PlaceCube());
+		addSequential(new PlaceCube(SubsystemConstants.Roller.SLOW_ROLL_OUT_SPEED));
 	}
 }

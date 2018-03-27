@@ -43,6 +43,6 @@ public class ScoreSwitchFromSideAuto extends CommandGroup {
 
 		// moving the lift to the right height and placing the cube
 		addSequential(new DriveArcade(Robot.drivetrain, FORWARD_SPEED, () -> 0.0), FORWARD_TIME_OUT.get());
-		addSequential(new PlaceCube());
+		addSequential(new PlaceCube(SubsystemConstants.Roller.SLOW_ROLL_OUT_SPEED));
 	}
 }

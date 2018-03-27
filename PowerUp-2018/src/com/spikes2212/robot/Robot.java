@@ -101,8 +101,9 @@ public class Robot extends TimedRobot {
 
 		liftLocker.setDefaultCommand(new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
 
-		camerasHandler = new CamerasHandler(320, 240, RobotMap.USB.FRONT_CAMERA, RobotMap.USB.REAR_CAMERA);
-		camerasHandler.setExposure(80);
+		camerasHandler = new CamerasHandler(/* 320 */256, /* 240 */256, RobotMap.USB.FRONT_CAMERA,
+				RobotMap.USB.REAR_CAMERA);
+		camerasHandler.setExposure(60);
 
 		dbc = new DashBoardController();
 
@@ -155,10 +156,8 @@ public class Robot extends TimedRobot {
 		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
 
-		dbc.addDouble("encoder left distance",
-				() -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.getDistance()));
-		dbc.addDouble("encoder right distance",
-				() -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.getDistance()));
+		dbc.addDouble("encoder left distance", () -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.get()));
+		dbc.addDouble("encoder right distance", () -> ((double) SubsystemComponents.Drivetrain.RIGHT_ENCODER.get()));
 
 		// game state
 		dbc.addBoolean("close switch left",
@@ -199,11 +198,15 @@ public class Robot extends TimedRobot {
 				new MoveBasicSubsystem(folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
 		// roller commands
 		SmartDashboard.putData("roll in", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_IN_SPEED));
-		SmartDashboard.putData("roll out", new MoveBasicSubsystem(roller, SubsystemConstants.Roller.ROLL_OUT_SPEED));
+		SmartDashboard.putData("roll out fast",
+				new MoveBasicSubsystem(roller, SubsystemConstants.Roller.FAST_ROLL_OUT_SPEED));
+		SmartDashboard.putData("roll out slow",
+				new MoveBasicSubsystem(roller, SubsystemConstants.Roller.SLOW_ROLL_OUT_SPEED));
 
 		// command groups
 		SmartDashboard.putData("pickup cube", new PickUpCube());
-		SmartDashboard.putData("place cube", new PlaceCube());
+		SmartDashboard.putData("place cube", new PlaceCube(SubsystemConstants.Roller.SLOW_ROLL_OUT_SPEED));
+		SmartDashboard.putData("shoot cube", new PlaceCube(SubsystemConstants.Roller.FAST_ROLL_OUT_SPEED));
 		SmartDashboard.putData("stop everything", new StopEverything());
 	}
 

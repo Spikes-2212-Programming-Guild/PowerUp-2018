@@ -28,8 +28,10 @@ public class SubsystemConstants {
 
 	public static interface Roller {
 		public static final Supplier<Double> ROLL_IN_SPEED = ConstantHandler.addConstantDouble("Roller In Speed", -0.9);
-		public static final Supplier<Double> ROLL_OUT_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed",
+		public static final Supplier<Double> FAST_ROLL_OUT_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed",
 				0.7);
+		public static final Supplier<Double> SLOW_ROLL_OUT_SPEED = ConstantHandler.addConstantDouble("Roller Out Speed",
+				0.4);
 		public static final Supplier<Integer> LASER_SENSOR_CONSTANT = ConstantHandler.addConstantInt("laser sensor",
 				27);
 		// TODO find out the real distance of the cube from the sensor

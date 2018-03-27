@@ -16,9 +16,9 @@ public class PlaceCube extends CommandGroup {
 
 	public static final Supplier<Double> ROLL_OUT_TIME = ConstantHandler.addConstantDouble("Roll Out Time", 1.0);
 
-	public PlaceCube() {
+	public PlaceCube(Supplier<Double> rollOutSpeed) {
 		addParallel(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER));
-		addSequential(new MoveBasicSubsystem(Robot.roller, SubsystemConstants.Roller.ROLL_OUT_SPEED),
+		addSequential(new MoveBasicSubsystem(Robot.roller, rollOutSpeed),
 				ROLL_OUT_TIME.get());
 
 	}

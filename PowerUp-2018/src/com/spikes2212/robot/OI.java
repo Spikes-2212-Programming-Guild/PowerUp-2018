@@ -33,6 +33,7 @@ public class OI /* GEVALD */ {
 	private Button liftSwitch;
 	private Button liftLowScale;
 	private Button liftMidScale;
+	private Button shootCube;
 	private Button placeCube;
 	private Button pickUpCube;
 	private Button stop;
@@ -53,7 +54,8 @@ public class OI /* GEVALD */ {
 		liftSwitch = navigator.getGreenButton();
 		liftLowScale = navigator.getRedButton();
 		liftMidScale = navigator.getYellowButton();
-		placeCube = navigator.getUpButton();
+		placeCube = navigator.getRightButton();
+		shootCube = navigator.getUpButton();
 		pickUpCube = navigator.getLeftButton();
 		folderUp = navigator.getLBButton();
 		folderDown = navigator.getDownButton();
@@ -64,7 +66,8 @@ public class OI /* GEVALD */ {
 		liftSwitch.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		liftLowScale.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.LOW_SCALE));
 		liftMidScale.toggleWhenPressed(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.MID_SCALE));
-		placeCube.toggleWhenPressed(new PlaceCube());
+		placeCube.toggleWhenPressed(new PlaceCube(SubsystemConstants.Roller.SLOW_ROLL_OUT_SPEED));
+		shootCube.toggleWhenPressed(new PlaceCube(SubsystemConstants.Roller.FAST_ROLL_OUT_SPEED));
 		pickUpCube.toggleWhenPressed(new PickUpCube());
 		stop.whenPressed(new StopEverything());
 		folderUp.toggleWhenPressed(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.UP_SPEED.get()));
