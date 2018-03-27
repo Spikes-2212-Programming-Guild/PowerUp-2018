@@ -42,10 +42,6 @@ public class OI /* GEVALD */ {
 	private Button liftUp;
 	private Button liftDown;
 
-	// driver
-	private Button climbeUp;
-	private Button climbeStall;
-
 	public OI() {
 		initNavigator();
 	}

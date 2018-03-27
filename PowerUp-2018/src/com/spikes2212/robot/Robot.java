@@ -15,6 +15,7 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.Limitless;
 import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.robot.Commands.commandGroups.KeepLockerOpen;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
@@ -182,6 +183,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("unlock",
 				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
 		SmartDashboard.putData("lock", new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
+		SmartDashboard.putData("KeepUnlock", new KeepLockerOpen());
 
 		// lift commands
 		SmartDashboard.putData("move lift up", new MoveLift(SubsystemConstants.Lift.UP_SPEED));

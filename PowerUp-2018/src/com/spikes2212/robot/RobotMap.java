@@ -30,10 +30,10 @@ public class RobotMap {
 		public static final int FOLDER_MAX_LIMIT = 5;
 		public static final int FOLDER_MIN_LIMIT = 4;
 
-		public static final int DRIVE_RIGHT_ENCODER_A = 10;
-		public static final int DRIVE_RIGHT_ENCODER_B = 11;
-		public static final int DRIVE_LEFT_ENCODER_A = 12;
-		public static final int DRIVE_LEFT_ENCODER_B = 13;
+		public static final int DRIVE_RIGHT_ENCODER_A = /* 10 */6;
+		public static final int DRIVE_RIGHT_ENCODER_B = /* 11 */7;
+		public static final int DRIVE_LEFT_ENCODER_A = /* 12 */8;
+		public static final int DRIVE_LEFT_ENCODER_B = /* 13 */9;
 
 		public static final int LIFT_LOCKER_UNLOCKED_LIMIT = 0;
 		public static final int LIFT_LOCKER_LOCKED_LIMIT = 1;

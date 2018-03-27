@@ -15,6 +15,7 @@ import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.utils.PIDSettings;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  * 
@@ -43,16 +44,24 @@ public class MiddleToSwitchAuto extends CommandGroup {
 			.addConstantDouble("switch from middle auto - oriantation timeout", 3.8);
 
 	public MiddleToSwitchAuto(String gameData) {
+		// drive to switch
 		addParallel(new DriveToSwitchFromMiddle(gameData));
+
 		// move lift
 		addSequential(new MoveLiftToTarget(SubsystemComponents.Lift.HallEffects.SWITCH));
 		addSequential(new MoveBasicSubsystem(Robot.liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED));
+
+		// wait to get to position then place cube
+		addSequential(new WaitCommand(ORIENTATION_TIME_OUT.get() - ROTATION_TIME.get()));
+		
+		// place cube
+		addSequential(new PlaceCube(SubsystemConstants.Roller.SLOW_ROLL_OUT_SPEED));
+
 	}
 
 	@Override
 	protected void end() {
 		super.end();
-		new PlaceCube(SubsystemConstants.Roller.SLOW_ROLL_OUT_SPEED).start();
 	}
 
 	public class DriveToSwitchFromMiddle extends CommandGroup {
@@ -71,8 +80,6 @@ public class MiddleToSwitchAuto extends CommandGroup {
 							SubsystemConstants.Drivetrain.ORIENTATION_KI.get(),
 							SubsystemConstants.Drivetrain.ORIENTATION_KD.get(), TOLERANCE.get(), PID_WAIT_TIME.get()),
 					ImageProcessingConstants.RANGE), ORIENTATION_TIME_OUT.get());
-			// put cube
-			// addSequential(new PlaceCube(), 0.5);
 		}
 
 	}
