@@ -15,6 +15,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class MoveToSetpointWithEncoders extends CommandGroup {
 
+	// set points
+	// the point between switch and scale on the y
+	// axis
+	public static final Supplier<Double> BETWEEN_SWITCH_AND_SCALE = ConstantHandler
+			.addConstantDouble("between objectives", 190);
+
 	// defining PID constants
 	public static final Supplier<Double> TOLERANCE = ConstantHandler.addConstantDouble("move with encoders - tolerance",
 			10);

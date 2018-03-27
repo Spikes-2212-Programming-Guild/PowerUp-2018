@@ -13,11 +13,6 @@ import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ScoreCloseScaleByTime extends CommandGroup {
-	// defining PID set point of the point between switch and scale on the y
-	// axis
-	public static final Supplier<Double> BETWEEN_SWITCH_AND_SCALE = ConstantHandler
-			.addConstantDouble("between objectives", 190);
-
 	// defining turning constants
 	public static final Supplier<Double> TURNING_SPEED = ConstantHandler
 			.addConstantDouble("score scale  - close turning speed", 0.6);
@@ -43,7 +38,7 @@ public class ScoreCloseScaleByTime extends CommandGroup {
 	public ScoreCloseScaleByTime(char startSide) {
 
 		// driving to the correct scale set point
-		addSequential(new MoveToSetpointWithEncoders(BETWEEN_SWITCH_AND_SCALE));
+		addSequential(new MoveToSetpointWithEncoders(MoveToSetpointWithEncoders.BETWEEN_SWITCH_AND_SCALE));
 
 		// turning towards the scale
 		addSequential(new DriveArcade(Robot.drivetrain, () -> 0.0,
