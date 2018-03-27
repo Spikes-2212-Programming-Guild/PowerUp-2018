@@ -26,6 +26,8 @@ import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLi
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreCloseScaleByTime;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.StraightToSwitchAuto;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.temp.CloseScaleAuto;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.temp.FarScaleAuto;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -122,6 +124,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("switch from side", "switch from side");
 		autoChooser.addObject("straight to switch", "straight to switch");
 		autoChooser.addObject("score close scale by time", "score close scale by time");
+		autoChooser.addObject("TEMP - score scale", "TEMP - score scale");
 
 		startSideChooser.addDefault("none", 'N');
 		startSideChooser.addObject("right", 'R');
@@ -259,6 +262,12 @@ public class Robot extends TimedRobot {
 					autoCommand = new ScoreCloseScaleByTime(side);
 					break;
 				}
+			case "TEMP - score scale":
+				if (side == gameData.charAt(1))
+					autoCommand = new CloseScaleAuto(side);
+				else
+					autoCommand = new FarScaleAuto(side);
+				break;
 			default:
 				autoCommand = new PassAutoLine();
 				break;
