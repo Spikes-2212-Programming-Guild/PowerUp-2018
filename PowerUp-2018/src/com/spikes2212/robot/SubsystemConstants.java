@@ -13,6 +13,13 @@ public class SubsystemConstants {
 				.addConstantDouble("drivetrain - oriantation ki", 0.01);
 		public static final Supplier<Double> ORIENTATION_KD = ConstantHandler
 				.addConstantDouble("drivetrain - oriantation kd", 0.1);
+
+		public static final Supplier<Double> SIMPLE_SPEED = ConstantHandler
+				.addConstantDouble("drivetrain - simple speed", 0.3);
+		public static final Supplier<Double> SIMPLE_TURN_RIGHT_SPEED = ConstantHandler
+				.addConstantDouble("drivetrain - simple turn right speed", 0.3);
+		public static final Supplier<Double> SIMPLE_TURN_LEFT_SPEED = ConstantHandler
+				.addConstantDouble("drivetrain - simple turn left speed", -0.3);
 	}
 
 	public static interface Folder {
@@ -22,7 +29,8 @@ public class SubsystemConstants {
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Folder Staying speed",
 				-0.35);
 		public static final Supplier<Double> DOWN_SPEED_SUPPLIER = () -> SubsystemComponents.Folder.MIN_LIMIT.get()
-				? STAYING_SPEED.get() : PULSE_DOWN_SPEED.get();
+				? STAYING_SPEED.get()
+				: PULSE_DOWN_SPEED.get();
 		public static final Supplier<Double> UP_WAIT_TIME = ConstantHandler.addConstantDouble("folder up waitTime", 1);
 	}
 
