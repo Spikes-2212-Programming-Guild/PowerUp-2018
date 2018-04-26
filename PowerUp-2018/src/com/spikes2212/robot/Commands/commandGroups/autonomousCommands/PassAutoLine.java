@@ -7,6 +7,7 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class PassAutoLine extends CommandGroup {
 	public static final Supplier<Double> FORWARD_SPEED = ConstantHandler
@@ -15,6 +16,7 @@ public class PassAutoLine extends CommandGroup {
 
 	public PassAutoLine() {
 		addSequential(new DriveArcade(Robot.drivetrain, FORWARD_SPEED, () -> 0.0), TIME_OUT.get());
+		addSequential(new WaitCommand(12.5));
 	}
 
 }

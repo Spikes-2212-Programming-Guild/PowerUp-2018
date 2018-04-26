@@ -18,6 +18,9 @@ public class PlaceCube extends CommandGroup {
 
 	public static final Supplier<Double> ROLL_OUT_TIME = ConstantHandler.addConstantDouble("Roll Out Time", 1.0);
 	public static final Supplier<Double> FOLDER_DOWN_TIME = ConstantHandler.addConstantDouble("Folder Down Time", 1.5);
+	// place cube wait time
+	public static final Supplier<Double> PLACE_CUBE_WAIT_TIME = ConstantHandler
+			.addConstantDouble("middle to switch place cube time", 1);
 
 	public PlaceCube(Supplier<Double> rollOutSpeed) {
 		// addSequntial(new MoveBasicSubsystemToTarget(Robot.folder,

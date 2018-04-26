@@ -10,6 +10,7 @@ import com.spikes2212.robot.ImageProcessingConstants;
 import com.spikes2212.robot.Robot;
 import com.spikes2212.robot.SubsystemComponents;
 import com.spikes2212.robot.SubsystemConstants;
+import com.spikes2212.robot.Commands.TurnWithIMU;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.utils.PIDSettings;
@@ -41,7 +42,7 @@ public class MiddleToSwitchAuto extends CommandGroup {
 	public static final Supplier<Double> ORIENTATION_FORWARD_SPEED = ConstantHandler
 			.addConstantDouble("switch from middle auto - orientation forward speed", 0.45);
 	public static final Supplier<Double> ORIENTATION_TIME_OUT = ConstantHandler
-			.addConstantDouble("switch from middle auto - oriantation timeout", 3.8);
+			.addConstantDouble("switch from middle auto - oriantation timeout", 3.2);
 
 	public MiddleToSwitchAuto(String gameData) {
 		// drive to switch
@@ -53,10 +54,9 @@ public class MiddleToSwitchAuto extends CommandGroup {
 
 		// wait to get to position then place cube
 		addSequential(new WaitCommand(ORIENTATION_TIME_OUT.get() - ROTATION_TIME.get()));
-		
-		// place cube
-		addSequential(new PlaceCube(SubsystemConstants.Roller.SLOW_ROLL_OUT_SPEED));
 
+		// place cube
+		addSequential(new PlaceCube(SubsystemConstants.Roller.SLOW_ROLL_OUT_SPEED), PlaceCube.PLACE_CUBE_WAIT_TIME.get());
 	}
 
 	@Override

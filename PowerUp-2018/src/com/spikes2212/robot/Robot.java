@@ -23,11 +23,11 @@ import com.spikes2212.robot.Commands.commandGroups.PlaceCube;
 import com.spikes2212.robot.Commands.commandGroups.StopEverything;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.MiddleToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLine;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreCloseScaleByTime;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.StraightToSwitchAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.temp.CloseScaleAuto;
-import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.temp.FarScaleAuto;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.temp.MiddleToSwitchAuto2;
+import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.temp.MiddleToSwitchAuto3;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
 
 		oi = new OI();
 
-		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotation));
+		drivetrain.setDefaultCommand(new DriveArcade(drivetrain, oi::getForward, oi::getRotationTwo));
 
 		lift.setDefaultCommand(new MoveBasicSubsystem(lift, () -> SubsystemComponents.LiftLocker.LIMIT_LOCKED.get()
 				? 0.0 : SubsystemConstants.Lift.STAYING_SPEED.get()));
@@ -119,12 +119,16 @@ public class Robot extends TimedRobot {
 		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 
+		SubsystemComponents.Drivetrain.IMU.reset();
+
 		autoChooser.addDefault("pass auto line", "pass auto line");
 		autoChooser.addObject("switch from middle", "switch from middle");
 		autoChooser.addObject("switch from side", "switch from side");
 		autoChooser.addObject("straight to switch", "straight to switch");
-		autoChooser.addObject("score close scale by time", "score close scale by time");
-		autoChooser.addObject("TEMP - score scale", "TEMP - score scale");
+		autoChooser.addObject("score scale or pass line", "score scale or pass line");
+		autoChooser.addObject("score scale or score switch", "score scale or score switch");
+		autoChooser.addObject("switch from middle 2", "switch from middle 2");
+		autoChooser.addObject("switch from middle 3", "switch from middle 3");
 
 		startSideChooser.addDefault("none", 'N');
 		startSideChooser.addObject("right", 'R');
@@ -137,8 +141,7 @@ public class Robot extends TimedRobot {
 	public static void initDBC() {
 		// imu data
 		dbc.addDouble("angle Y", SubsystemComponents.Drivetrain.IMU::getAngleY);
-		
-		
+
 		// locker data
 		dbc.addBoolean("locker - is locked", SubsystemComponents.LiftLocker.LIMIT_LOCKED::get);
 		dbc.addBoolean("locker - is unlocked", SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get);
@@ -182,6 +185,12 @@ public class Robot extends TimedRobot {
 	}
 
 	public static void initDashboard() {
+		SmartDashboard.putData("drive test", new DriveArcade(drivetrain, 0.1, 0.0));
+		
+		
+		// turning
+		SmartDashboard.putData("turn 45 degrees", new TurnWithIMU(drivetrain, () -> 0.4, 45, 2));
+
 		// auto
 		SmartDashboard.putData("auto chooser", autoChooser);
 		SmartDashboard.putData("start side chooser", startSideChooser);
@@ -227,6 +236,7 @@ public class Robot extends TimedRobot {
 	public void disabledInit() {
 		new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.LOCK_SPEED).start();
 		gameData = "";
+		SubsystemComponents.Drivetrain.IMU.reset();
 	}
 
 	@Override
@@ -247,6 +257,12 @@ public class Robot extends TimedRobot {
 			case "switch from middle":
 				autoCommand = new MiddleToSwitchAuto(gameData);
 				break;
+			case "switch from middle 2":
+				autoCommand = new MiddleToSwitchAuto2(gameData);
+				break;
+			case "switch from middle 3":
+				autoCommand = new MiddleToSwitchAuto3(gameData);
+				break;
 			case "switch from side":
 				if (side == gameData.charAt(0)) {
 					autoCommand = new ScoreSwitchFromSideAuto(side);
@@ -257,17 +273,18 @@ public class Robot extends TimedRobot {
 					autoCommand = new StraightToSwitchAuto();
 					break;
 				}
-			case "score close scale by time":
-				if (side == gameData.charAt(1)) {
-					autoCommand = new ScoreCloseScaleByTime(side);
-					break;
-				}
-			case "TEMP - score scale":
+			case "score scale or pass line":
 				if (side == gameData.charAt(1))
 					autoCommand = new CloseScaleAuto(side);
-				else
-					autoCommand = new FarScaleAuto(side);
 				break;
+			case "score scale or score switch":
+				if (side == gameData.charAt(1)) {
+					autoCommand = new CloseScaleAuto(side);
+					break;
+				} else if (side == gameData.charAt(0)) {
+					autoCommand = new ScoreSwitchFromSideAuto(side);
+					break;
+				}
 			default:
 				autoCommand = new PassAutoLine();
 				break;

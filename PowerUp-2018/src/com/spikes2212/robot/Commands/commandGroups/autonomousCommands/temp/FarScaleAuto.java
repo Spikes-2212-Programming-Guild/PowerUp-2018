@@ -15,7 +15,7 @@ public class FarScaleAuto extends CommandGroup {
 			250);
 
 	public FarScaleAuto(char startSide) {
-		// drive to scale setPoint/
+		// drive to scale setPoint
 		addSequential(new MoveToSetpointWithEncoders(MoveToSetpointWithEncoders.BETWEEN_SWITCH_AND_SCALE));
 
 		// turn 90 degrees

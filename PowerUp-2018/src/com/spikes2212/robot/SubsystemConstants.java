@@ -20,7 +20,7 @@ public class SubsystemConstants {
 		public static final Supplier<Double> FIRST_DOWN_SPEED = ConstantHandler
 				.addConstantDouble("Folder pulse Down Speed", -0.6);
 		public static final Supplier<Double> STAYING_SPEED = ConstantHandler.addConstantDouble("Folder Staying speed",
-				-0.18);
+				-0.25);
 		public static final Supplier<Double> DOWN_SPEED_SUPPLIER = () -> SubsystemComponents.Folder.MIN_LIMIT.get()
 				? STAYING_SPEED.get() : FIRST_DOWN_SPEED.get();
 		public static final Supplier<Double> UP_WAIT_TIME = ConstantHandler.addConstantDouble("folder up waitTime", 1);

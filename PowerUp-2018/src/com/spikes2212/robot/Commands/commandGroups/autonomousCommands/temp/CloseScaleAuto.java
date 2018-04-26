@@ -19,17 +19,19 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CloseScaleAuto extends CommandGroup {
 
 	public static final Supplier<Double> FORWARD_SPEED = ConstantHandler.addConstantDouble("close scale forward speed",
-			0.2);
+			0.3);
 	public static final Supplier<Double> FORWARD_TIME = ConstantHandler.addConstantDouble("close scale forward time",
-			1.5);
+			2);
+
+	public static final Supplier<Double> ANGLE = ConstantHandler.addConstantDouble("close scale rotate angle", 25);
 
 	public CloseScaleAuto(char startSide) {
-		// drive to scale setPoint/
+		// drive to scale setPoint
 		addSequential(new MoveToSetpointWithEncoders(MoveToSetpointWithEncoders.BETWEEN_SWITCH_AND_SCALE));
 
-		// turn 45 degrees
+		// turn 30 degrees
 		addSequential(new TurnWithIMU(Robot.drivetrain,
-				() -> startSide == 'L' ? -TurnWithIMU.ROTATE_SPEED.get() : TurnWithIMU.ROTATE_SPEED.get(), 45,
+				() -> startSide == 'L' ? -TurnWithIMU.ROTATE_SPEED.get() : TurnWithIMU.ROTATE_SPEED.get(), ANGLE.get(),
 				TurnWithIMU.ROTATE_TOLERANCE.get()));
 
 		// open lift
@@ -40,12 +42,14 @@ public class CloseScaleAuto extends CommandGroup {
 		addSequential(new DriveArcade(Robot.drivetrain, FORWARD_SPEED, () -> 0.0), FORWARD_TIME.get());
 
 		// score cube
-		addSequential(new PlaceCube(SubsystemConstants.Roller.SLOW_ROLL_OUT_SPEED));
+		addSequential(new PlaceCube(SubsystemConstants.Roller.SLOW_ROLL_OUT_SPEED),
+				PlaceCube.PLACE_CUBE_WAIT_TIME.get());
 
 		// drive backwards
 		addSequential(new DriveArcade(Robot.drivetrain, () -> -FORWARD_SPEED.get(), () -> 0.0), FORWARD_TIME.get());
 
 		// move lift down
+		addParallel(new MoveBasicSubsystem(Robot.folder, SubsystemConstants.Folder.DOWN_SPEED_SUPPLIER), 3);
 		addSequential(new MoveLift(SubsystemConstants.Lift.DOWN_SPEED_SUPPLIER));
 	}
 }

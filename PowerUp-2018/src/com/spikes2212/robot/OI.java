@@ -8,6 +8,7 @@
 package com.spikes2212.robot;
 
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
@@ -18,6 +19,7 @@ import com.spikes2212.utils.XboXUID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.PrintCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -28,6 +30,9 @@ public class OI /* GEVALD */ {
 	private Joystick driverRight = new Joystick(1);
 
 	private XboXUID navigator = new XboXUID(2);
+
+	private Button oneJoystick;
+	private Button twoJoysticks;
 
 	// navigator
 	private Button liftSwitch;
@@ -44,6 +49,26 @@ public class OI /* GEVALD */ {
 
 	public OI() {
 		initNavigator();
+
+		oneJoystick = new Button() {
+
+			@Override
+			public boolean get() {
+				return driverRight.getTop();
+			}
+		};
+
+		oneJoystick.whenPressed(new DriveArcade(Robot.drivetrain, this::getForward, this::getRotationOne));
+
+		twoJoysticks = new Button() {
+
+			@Override
+			public boolean get() {
+				return driverLeft.getTop();
+			}
+		};
+
+		twoJoysticks.whenPressed(new DriveArcade(Robot.drivetrain, this::getForward, this::getRotationTwo));
 	}
 
 	private void initNavigator() {
@@ -76,8 +101,12 @@ public class OI /* GEVALD */ {
 		return -driverRight.getY();
 	}
 
-	public double getRotation() {
+	public double getRotationTwo() {
 		return -driverLeft.getX();
+	}
+
+	public double getRotationOne() {
+		return -driverRight.getX();
 	}
 
 }
