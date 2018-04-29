@@ -24,6 +24,7 @@ import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLi
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreCloseScaleByTime;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.StraightToSwitchAuto;
+import com.spikes2212.robot.simpleCommand.TurnWithIMU;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -134,7 +135,7 @@ public class Robot extends TimedRobot {
 		// locker data
 		dbc.addBoolean("locker - is locked", SubsystemComponents.LiftLocker.LIMIT_LOCKED::get);
 		dbc.addBoolean("locker - is unlocked", SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get);
-
+		
 		// lift data
 		dbc.addBoolean("Lift - up", SubsystemComponents.Lift.LIMIT_UP::get);
 		dbc.addBoolean("Lift - mid scale", () -> !SubsystemComponents.Lift.HallEffects.MID_SCALE.getHallEffect().get());
@@ -154,6 +155,8 @@ public class Robot extends TimedRobot {
 		// general information - robot
 		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
+		
+		dbc.addDouble("IMU - degrees", SubsystemComponents.Drivetrain.IMU::getAngleY);
 
 		dbc.addDouble("encoder left distance",
 				() -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.getDistance()));
@@ -179,6 +182,10 @@ public class Robot extends TimedRobot {
 		// auto
 		SmartDashboard.putData("auto chooser", autoChooser);
 		SmartDashboard.putData("start side chooser", startSideChooser);
+		
+		//simple commands
+		SmartDashboard.putData("turn with IMU", new TurnWithIMU(drivetrain, TurnWithIMU.ROTATE_SPEED, 90.0, TurnWithIMU.ROTATE_TOLERANCE.get()));
+		
 		// locker commands
 		SmartDashboard.putData("unlock",
 				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
