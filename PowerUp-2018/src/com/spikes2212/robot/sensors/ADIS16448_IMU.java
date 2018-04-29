@@ -1,4 +1,4 @@
-package com.spikes2212.robot;
+package com.spikes2212.robot.sensors;
 /*----------------------------------------------------------------------------*/
 
 /* Copyright (c) FIRST 2016. All Rights Reserved.                             */

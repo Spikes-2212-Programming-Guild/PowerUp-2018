@@ -1,7 +1,8 @@
 package com.spikes2212.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.spikes2212.robot.ADIS16448_IMU.Axis;
+import com.spikes2212.robot.sensors.ADIS16448_IMU;
+import com.spikes2212.robot.sensors.ADIS16448_IMU.Axis;
 import com.spikes2212.utils.DoubleSpeedcontroller;
 
 import edu.wpi.first.wpilibj.AnalogInput;
