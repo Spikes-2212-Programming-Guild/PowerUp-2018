@@ -24,6 +24,12 @@ import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLi
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreCloseScaleByTime;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.StraightToSwitchAuto;
+import com.spikes2212.robot.simpleCommand.Move;
+import com.spikes2212.robot.simpleCommand.MoveLiftDown;
+import com.spikes2212.robot.simpleCommand.MoveLiftUp;
+import com.spikes2212.robot.simpleCommand.TurnLeft;
+import com.spikes2212.robot.simpleCommand.TurnRight;
+import com.spikes2212.robot.simpleCommand.TurnWithIMU;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -155,7 +161,7 @@ public class Robot extends TimedRobot {
 		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
 		
-//		dbc.addDouble("IMU - degrees", SubsystemComponents.Drivetrain.IMU::getAngleY);
+		dbc.addDouble("IMU - degrees", SubsystemComponents.Drivetrain.IMU::getAngleY);
 
 		dbc.addDouble("encoder left distance",
 				() -> ((double) SubsystemComponents.Drivetrain.LEFT_ENCODER.getDistance()));
@@ -183,7 +189,14 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("start side chooser", startSideChooser);
 		
 		//simple commands
-//		SmartDashboard.putData("turn with IMU", new TurnWithIMU(drivetrain, TurnWithIMU.ROTATE_SPEED, 90.0, TurnWithIMU.ROTATE_TOLERANCE.get()));
+		SmartDashboard.putData("Turn left", new TurnLeft());
+		SmartDashboard.putData("Turn right", new TurnRight());
+		SmartDashboard.putData("Move lift up", new MoveLiftUp());
+		SmartDashboard.putData("Move lift down", new MoveLiftDown());
+		SmartDashboard.putData("Move", new Move(0.5));
+		SmartDashboard.putData("Place cube", new PlaceCube());
+
+
 		
 		// locker commands
 		SmartDashboard.putData("unlock",
