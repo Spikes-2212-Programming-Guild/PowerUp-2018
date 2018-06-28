@@ -29,8 +29,8 @@ public class SubsystemComponents {
 				RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
 		public static final Encoder LEFT_ENCODER = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A,
 				RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
-	
-		public static final ADIS16448_IMU IMU = new ADIS16448_IMU(Axis.kZ);
+
+		public static final ADIS16448_IMU IMU = new ADIS16448_IMU();
 	}
 
 	public static class Roller {

@@ -20,6 +20,12 @@ public class SubsystemConstants {
 				.addConstantDouble("drivetrain - simple turn right speed", 0.3);
 		public static final Supplier<Double> SIMPLE_TURN_LEFT_SPEED = ConstantHandler
 				.addConstantDouble("drivetrain - simple turn left speed", -0.3);
+		public static final Supplier<Double> SIMPLE_TURN_LEFT_ANGLE = ConstantHandler
+		.addConstantDouble("drivetrain - simple turn left angle", 90);
+		public static final Supplier<Double> SIMPLE_TURN_RIGHT_ANGLE = ConstantHandler
+		.addConstantDouble("drivetrain - simple turn right angle", 90);
+
+	
 	}
 
 	public static interface Folder {
@@ -64,5 +70,6 @@ public class SubsystemConstants {
 						: FIRST_DOWN_SPEED.get();
 
 	}
+	
 
 }

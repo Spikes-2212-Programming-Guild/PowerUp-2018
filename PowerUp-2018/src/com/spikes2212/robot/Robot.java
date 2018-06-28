@@ -7,6 +7,8 @@
 
 package com.spikes2212.robot;
 
+import javax.management.ImmutableDescriptor;
+
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
@@ -135,11 +137,16 @@ public class Robot extends TimedRobot {
 	}
 
 	public static void initDBC() {
+		// simple command data
 
+		dbc.addDouble("imu yaw angle", SubsystemComponents.Drivetrain.IMU::getAngleZ);
+
+		dbc.addDouble("Simple commands - turn right angle", SubsystemConstants.Drivetrain.SIMPLE_TURN_RIGHT_ANGLE);
+		dbc.addDouble("Simple commands - turn left angle", SubsystemConstants.Drivetrain.SIMPLE_TURN_LEFT_ANGLE);
 		// locker data
 		dbc.addBoolean("locker - is locked", SubsystemComponents.LiftLocker.LIMIT_LOCKED::get);
 		dbc.addBoolean("locker - is unlocked", SubsystemComponents.LiftLocker.LIMIT_UNLOCKED::get);
-		
+
 		// lift data
 		dbc.addBoolean("Lift - up", SubsystemComponents.Lift.LIMIT_UP::get);
 		dbc.addBoolean("Lift - mid scale", () -> !SubsystemComponents.Lift.HallEffects.MID_SCALE.getHallEffect().get());
@@ -159,7 +166,7 @@ public class Robot extends TimedRobot {
 		// general information - robot
 		dbc.addDouble("laser distance", () -> (SubsystemConstants.Roller.LASER_SENSOR_CONSTANT.get()
 				/ SubsystemComponents.Roller.LASER_SENSOR.getVoltage()));
-		
+
 		dbc.addDouble("IMU - degrees", SubsystemComponents.Drivetrain.IMU::getAngleY);
 
 		dbc.addDouble("encoder left distance",
@@ -186,16 +193,15 @@ public class Robot extends TimedRobot {
 		// auto
 		SmartDashboard.putData("auto chooser", autoChooser);
 		SmartDashboard.putData("start side chooser", startSideChooser);
-		
-		//simple commands
-		SmartDashboard.putData("Turn left", new TurnLeft(90));
-		SmartDashboard.putData("Turn right", new TurnRight(90));
+
+		// simple commands
+		SmartDashboard.putData("Turn left", new TurnLeft(SubsystemConstants.Drivetrain.SIMPLE_TURN_LEFT_ANGLE.get()));
+		SmartDashboard.putData("Turn right",
+				new TurnRight(SubsystemConstants.Drivetrain.SIMPLE_TURN_RIGHT_ANGLE.get()));
 		SmartDashboard.putData("Move lift up", new MoveLiftUp());
 		SmartDashboard.putData("Move lift down", new MoveLiftDown());
 		SmartDashboard.putData("Place cube", new PlaceCube());
 
-
-		
 		// locker commands
 		SmartDashboard.putData("unlock",
 				new MoveBasicSubsystem(liftLocker, SubsystemConstants.LiftLocker.UNLOCK_SPEED));
