@@ -24,6 +24,7 @@ import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLi
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreCloseScaleByTime;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.StraightToSwitchAuto;
+import com.spikes2212.robot.simpleCommand.AutoCommand;
 import com.spikes2212.robot.simpleCommand.Move;
 import com.spikes2212.robot.simpleCommand.MoveLiftDown;
 import com.spikes2212.robot.simpleCommand.MoveLiftUp;
@@ -283,12 +284,7 @@ public class Robot extends TimedRobot {
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		System.out.println("auto chooser command - " + autoChooser.getSelected() + " , starting side - "
 				+ startSideChooser.getSelected() + " , game data:" + gameData);
-		if (autoCommand != null)
-			autoCommand.start();
-		else {
-			System.out.println("no game data recieved. running pass line");
-			new PassAutoLine().start();
-		}
+		new AutoCommand().start();
 	}
 
 	@Override
