@@ -284,6 +284,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
+		autoCommand = new Yellow();
 		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		System.out.println("auto chooser command - " + autoChooser.getSelected() + " , starting side - "
