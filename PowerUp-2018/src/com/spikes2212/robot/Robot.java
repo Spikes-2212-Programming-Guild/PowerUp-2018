@@ -10,12 +10,11 @@ package com.spikes2212.robot;
 import javax.management.ImmutableDescriptor;
 
 import com.spikes2212.dashboard.DashBoardController;
-import com.spikes2212.genericsubsystems.BasicSubsystem;
-import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcade;
-import com.spikes2212.genericsubsystems.utils.InvertedConsumer;
-import com.spikes2212.genericsubsystems.utils.limitationFunctions.TwoLimits;
 import com.spikes2212.robot.Commands.commandGroups.MoveLift;
 import com.spikes2212.robot.Commands.commandGroups.MoveLiftToTarget;
 import com.spikes2212.robot.Commands.commandGroups.PickUpCube;
@@ -31,7 +30,9 @@ import com.spikes2212.robot.simpleCommand.MoveLiftUp;
 import com.spikes2212.robot.simpleCommand.TurnLeft;
 import com.spikes2212.robot.simpleCommand.TurnRight;
 import com.spikes2212.robot.simpleCommand.TurnWithIMU;
+import com.spikes2212.robot.simpleCommand.Yellow;
 import com.spikes2212.utils.CamerasHandler;
+import com.spikes2212.utils.InvertedConsumer;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -275,7 +276,7 @@ public class Robot extends TimedRobot {
 					break;
 				}
 			default:
-				autoCommand = new PassAutoLine();
+				autoCommand = new Yellow();
 				break;
 			}
 		}
