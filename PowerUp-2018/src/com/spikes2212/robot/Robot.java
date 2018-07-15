@@ -26,6 +26,7 @@ import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLi
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreCloseScaleByTime;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.StraightToSwitchAuto;
+import com.spikes2212.robot.simpleCommand.Blue;
 import com.spikes2212.robot.simpleCommand.MoveLiftDown;
 import com.spikes2212.robot.simpleCommand.MoveLiftUp;
 import com.spikes2212.robot.simpleCommand.TurnLeft;
@@ -287,6 +288,7 @@ public class Robot extends TimedRobot {
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		System.out.println("auto chooser command - " + autoChooser.getSelected() + " , starting side - "
 				+ startSideChooser.getSelected() + " , game data:" + gameData);
+		autoCommand = new Blue();
 		if (autoCommand != null)
 			autoCommand.start();
 		else {
