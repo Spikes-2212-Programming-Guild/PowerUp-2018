@@ -21,8 +21,18 @@ public class Green extends CommandGroup {
     	addSequential(new Drive(0.3,0.3,1.2));
     	addSequential(new TurnLeft (90));
     	addSequential(new PlaceCube());
+    	addSequential(new TurnLeft(90));
+    	addSequential(new Drive(0.3,0.3,0.5));
+    	addSequential(new TurnRight(90));
+    	addSequential(new Drive(0.3,0.3,0.5));
+    	addSequential(new TurnRight(90));
+    	addSequential(new Drive(0.3,0.3,0.5));
+    	addSequential(new TurnLeft(90));
+    	addSequential(new Drive(0.3,0.3,1.2));
+    	addSequential(new TurnLeft(90));
+    	addSequential(new Drive (0.5,0.5,1.5));
     	
-    	
+
     	
     	
     }
