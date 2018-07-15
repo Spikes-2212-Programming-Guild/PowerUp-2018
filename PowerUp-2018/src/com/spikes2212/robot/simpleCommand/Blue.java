@@ -11,11 +11,10 @@ public class Blue extends CommandGroup {
 
 	public Blue() {
 
-		addSequential(new Drive(0.25, 0.25, 1));
-		addSequential(new TurnLeft(50));
-		addSequential(new Drive(0.25, 0.15, 0.5));
-		addSequential(new TurnRight(95));
+		addSequential(new Drive(0.5, 0.5, 1));
+		addSequential(new TurnLeft(25));
+		addSequential(new Drive(0.5, 0.3, 0.2));
+		addSequential(new TurnRight(120));
 		addSequential(new PlaceCube());
-
 	}
 }
