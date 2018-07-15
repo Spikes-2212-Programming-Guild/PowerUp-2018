@@ -7,6 +7,8 @@
 
 package com.spikes2212.robot;
 
+import javax.script.SimpleScriptContext;
+
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.BasicSubsystem;
 import com.spikes2212.genericsubsystems.commands.MoveBasicSubsystem;
@@ -24,6 +26,7 @@ import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.PassAutoLi
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreCloseScaleByTime;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.ScoreSwitchFromSideAuto;
 import com.spikes2212.robot.Commands.commandGroups.autonomousCommands.StraightToSwitchAuto;
+import com.spikes2212.robot.simpleCommand.Green;
 import com.spikes2212.robot.simpleCommand.MoveLiftDown;
 import com.spikes2212.robot.simpleCommand.MoveLiftUp;
 import com.spikes2212.robot.simpleCommand.TurnLeft;
@@ -277,6 +280,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
+		autoCommand = new Green();
 		SubsystemComponents.Drivetrain.LEFT_ENCODER.reset();
 		SubsystemComponents.Drivetrain.RIGHT_ENCODER.reset();
 		System.out.println("auto chooser command - " + autoChooser.getSelected() + " , starting side - "
