@@ -10,11 +10,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Yellow extends CommandGroup {
 
     public Yellow() {
-      addSequential(new Drive(0.32,0.3,3));
-      addSequential(new Drive(0.3,0.4,2));
-      addSequential(new TurnLeft(90));
-      addSequential(new Drive(0.3,0.4,2));
-      addSequential(new Drive(0.32,0.3,3));
-      addSequential(new PlaceCube());
+      addSequential(new Drive(0.5,0.5,2));
+      addSequential(new TurnLeft(45));
+      addSequential(new Drive(0.5,0.5,1));
+      addSequential(new Drive(0.4,0.5,1));
+      addSequential(new TurnLeft(45));
+      addSequential(new Drive(0.5,0.5,2));
+      
     }
 }
